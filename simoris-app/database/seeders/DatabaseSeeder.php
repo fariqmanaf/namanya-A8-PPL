@@ -4,6 +4,22 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\UserAccounts;
+use App\Models\Individuals;
+use App\Models\Roles;
+use App\Models\SuratIzin;
+use App\Models\JenisSemen;
+use App\Models\StokSB;
+use App\Models\StokMantri;
+use App\Models\PengajuanSB;
+use App\Models\LaporanIB;
+use App\Models\TotalIB;
+use App\Models\DataSapi;
+use App\Models\Kecamatan;
+use App\Models\Kabupaten;
+use App\Models\Kelurahan;
+use App\Models\Alamat;
+use App\Models\JenisSapi;
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,11 +28,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        //
     }
 }
