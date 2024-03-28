@@ -15,5 +15,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('general.layouts.landing');
 });
+
+Route::get('/login', function () {
+    return view('general.layouts.landing');
+});
+

@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('user_accounts', function (Blueprint $table) {
+        Schema::create('sertifikasi', function (Blueprint $table) {
             $table->integer('id')->primary();
-            $table->integer('id_individual')->nullable()->index('id_individual');
-            $table->string('email')->nullable()->unique('email');
-            $table->string('password')->nullable();
-            $table->integer('id_roles')->nullable()->index('id_roles');
+            $table->integer('nomor_sertifikasi')->nullable();
+            $table->binary('bukti')->nullable();
+            $table->boolean('is_accepted')->nullable();
+            $table->integer('id_mantri')->nullable()->index('id_mantri');
         });
     }
 
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_accounts');
+        Schema::dropIfExists('sertifikasi');
     }
 };

@@ -14,7 +14,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property integer $id
  * @property integer $id_individual
  * @property integer $id_roles
- * @property string $username
+ * @property string $email
  * @property string $password
  * @property Individual $individual
  * @property Role $role
@@ -33,7 +33,7 @@ class UserAccounts extends Authenticatable
     /**
      * @var array
      */
-    protected $fillable = ['id_individual', 'id_roles', 'username', 'password'];
+    protected $fillable = ['id_individual', 'id_roles', 'email', 'password'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
