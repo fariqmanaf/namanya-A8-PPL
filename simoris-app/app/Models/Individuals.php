@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\UserAccounts;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -42,7 +43,7 @@ class Individuals extends Model
      */
     public function userAccounts()
     {
-        return $this->hasMany('App\Models\UserAccount', 'id_individual');
+        return $this->hasMany(UserAccounts::class, 'id_individual');
     }
 
     /**

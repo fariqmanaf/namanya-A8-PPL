@@ -1,7 +1,9 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
+use Doctrine\DBAL\Driver\Middleware;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardDinasController;
+use App\Http\Controllers\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,11 +16,30 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('general.layouts.landing');
+Route::get('/', [LoginController::class, 'index'])->name('awal')->middleware('guest');
+Route::post('/', [LoginController::class, 'login']);;
+
+Route::middleware('auth')->group(function(){
+    Route::post('/logout', [LoginController::class, 'logout']);
 });
 
-Route::get('/login', function () {
-    return view('general.layouts.landing');
+Route::middleware('dinas')->group(function(){
+    Route::get('/dashboard', [DashboardDinasController::class, 'index']);
+    Route::get('/dashboard', [DashboardDinasController::class, 'index']);
 });
 
+Route::middleware('mantri')->group(function(){
+    Route::get('/home', function(){
+        return view('mantri.layouts.home');
+    });
+});
+
+Route::middleware('peternak')->group(function(){
+    Route::get('/main', function(){
+        return view('peternak.layouts.peternak');
+    });
+});
+
+Route::get('/logout', function(){
+    return redirect('/');
+});

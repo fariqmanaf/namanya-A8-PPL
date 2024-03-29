@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Individuals;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-// use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 
 /**
@@ -16,12 +17,13 @@ use Laravel\Sanctum\HasApiTokens;
  * @property integer $id_roles
  * @property string $email
  * @property string $password
+ * @property string $status
  * @property Individual $individual
  * @property Role $role
  */
 class UserAccounts extends Authenticatable
 {
-    use HasApiTokens, HasFactory;
+    use HasApiTokens, HasFactory, Notifiable;
     /**
      * Indicates if the IDs are auto-incrementing.
      * 
@@ -33,14 +35,15 @@ class UserAccounts extends Authenticatable
     /**
      * @var array
      */
-    protected $fillable = ['id_individual', 'id_roles', 'email', 'password'];
+    protected $fillable = ['id_individual', 'id_roles', 'email', 'password', 'status'];
+    protected $casts = ['password' => 'hashed'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function individual()
     {
-        return $this->belongsTo('App\Models\Individual', 'id_individual');
+        return $this->belongsTo(Individuals::class, 'id_individual');
     }
 
     /**
