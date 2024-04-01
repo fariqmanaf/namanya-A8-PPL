@@ -18,7 +18,7 @@ class DinasMiddleware
         if(auth()->guest()){
             return redirect('/');
         }
-        else if(auth()->user()->id_roles != 1){
+        else if(auth()->user()->roles_id != 1){
             abort(403);
         }
         return $next($request);

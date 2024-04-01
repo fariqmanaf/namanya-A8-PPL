@@ -13,9 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('kabupaten', function (Blueprint $table) {
-            $table->integer('id')->primary();
-            $table->string('kabupaten')->nullable();
+        Schema::create('sertifikasi', function (Blueprint $table) {
+            $table->id();
+            $table->integer('nomor_sertifikasi')->nullable();
+            $table->binary('bukti')->nullable();
+            $table->boolean('is_accepted')->nullable();
+            $table->foreignId('individuals_id')->index('id_mantri');
         });
     }
 
@@ -26,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('kabupaten');
+        Schema::dropIfExists('sertifikasi');
     }
 };

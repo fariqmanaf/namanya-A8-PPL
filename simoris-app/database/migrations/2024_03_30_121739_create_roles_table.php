@@ -13,8 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('surat_izin', function (Blueprint $table) {
-            $table->foreign(['id_mantri'], 'surat_izin_ibfk_1')->references(['id'])->on('individuals')->onUpdate('no action')->onDelete('no action');
+        Schema::create('roles', function (Blueprint $table) {
+            $table->id();
+            $table->string('role_name')->nullable();
         });
     }
 
@@ -25,8 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('surat_izin', function (Blueprint $table) {
-            $table->dropForeign('surat_izin_ibfk_1');
-        });
+        Schema::dropIfExists('roles');
     }
 };

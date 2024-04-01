@@ -14,13 +14,12 @@ return new class extends Migration
     public function up()
     {
         Schema::create('laporan_ib', function (Blueprint $table) {
-            $table->integer('id')->primary();
-            $table->integer('id_sapi')->nullable()->index('id_sapi');
+            $table->id();
+            $table->integer('data_sapi_id')->index('id_sapi');
             $table->integer('kode_pejantan')->nullable();
             $table->integer('kode_pembuatan')->nullable();
             $table->boolean('status_bunting')->nullable()->default(false);
-            $table->integer('id_peternak')->nullable()->index('id_peternak');
-            $table->integer('id_mantri')->nullable()->index('id_mantri');
+            $table->foreignId('individuals_id')->index('id_user');
         });
     }
 

@@ -4,6 +4,7 @@ use Doctrine\DBAL\Driver\Middleware;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardDinasController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,15 +17,20 @@ use App\Http\Controllers\LoginController;
 |
 */
 
-Route::get('/', [LoginController::class, 'index'])->name('awal')->middleware('guest');
-Route::post('/', [LoginController::class, 'login']);;
+Route::middleware('guest')->group(function(){
+    Route::get('/', [LoginController::class, 'index'])->name('awal');
+    Route::post('/', [LoginController::class, 'login']);
+    Route::get('/register', [RegisterController::class, 'index']);
+    Route::get('/register/mantri', [RegisterController::class, 'mregist']);
+    Route::get('/register/peternak', [RegisterController::class, 'pregist']);
+    Route::post('/register/peternak', [RegisterController::class, 'storePeternak']);
+});
 
 Route::middleware('auth')->group(function(){
     Route::post('/logout', [LoginController::class, 'logout']);
 });
 
 Route::middleware('dinas')->group(function(){
-    Route::get('/dashboard', [DashboardDinasController::class, 'index']);
     Route::get('/dashboard', [DashboardDinasController::class, 'index']);
 });
 

@@ -13,12 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('stok_sb', function (Blueprint $table) {
-            $table->integer('id')->primary();
-            $table->integer('id_kecamatan')->nullable()->index('id_kecamatan');
-            $table->integer('id_jenis')->nullable()->index('id_jenis');
-            $table->integer('jumlah')->nullable();
-            $table->integer('used')->nullable();
+        Schema::create('jenis_sapi', function (Blueprint $table) {
+            $table->id();
+            $table->string('jenis')->nullable();
         });
     }
 
@@ -29,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('stok_sb');
+        Schema::dropIfExists('jenis_sapi');
     }
 };

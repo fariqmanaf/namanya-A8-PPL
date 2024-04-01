@@ -10,7 +10,6 @@
 </head>
 <body class="flex flex-col justify-center items-center">
     @include('general.partials.navbar')
-    @include('general.partials.formLogin')
-    @yield('footer')
+    @yield('content')
 </body>
 </html>

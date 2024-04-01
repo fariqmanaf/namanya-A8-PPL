@@ -28,6 +28,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        UserAccounts::create([
+            'name' => 'Fariq Abdhe Manaf',
+            'username' => 'frqmnf',
+            'email' => 'fariqmanaf24@gmail.com',
+            'password' => bcrypt('password')
+        ]);
     }
 }

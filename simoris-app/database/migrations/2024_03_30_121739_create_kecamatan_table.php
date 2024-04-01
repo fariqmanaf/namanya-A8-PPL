@@ -13,12 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('stok_mantri', function (Blueprint $table) {
-            $table->integer('id')->primary();
-            $table->integer('id_mantri')->nullable()->index('id_mantri');
-            $table->integer('id_semen')->nullable()->index('id_semen');
-            $table->integer('total')->nullable();
-            $table->integer('used')->nullable();
+        Schema::create('kecamatan', function (Blueprint $table) {
+            $table->id();
+            $table->string('kecamatan')->nullable();
         });
     }
 
@@ -29,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('stok_mantri');
+        Schema::dropIfExists('kecamatan');
     }
 };

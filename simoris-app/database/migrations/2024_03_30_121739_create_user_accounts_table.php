@@ -1,9 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
@@ -15,12 +14,12 @@ return new class extends Migration
     public function up()
     {
         Schema::create('user_accounts', function (Blueprint $table) {
-            $table->integer('id')->primary();
-            $table->integer('id_individual')->nullable()->index('id_individual');
+            $table->id();
+            $table->foreignId('individuals_id')->nullable();
             $table->string('email')->nullable()->unique('email');
-            $table->string('password')->static::$password ??= Hash::make('password');
-            $table->string('status')->default('disable');
-            $table->integer('id_roles')->nullable()->index('id_roles');
+            $table->string('password')->nullable();
+            $table->string('status')->nullable()->default('disable');
+            $table->foreignId('roles_id')->nullable();
         });
     }
 

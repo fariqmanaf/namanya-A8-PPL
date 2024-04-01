@@ -35,7 +35,7 @@ class UserAccounts extends Authenticatable
     /**
      * @var array
      */
-    protected $fillable = ['id_individual', 'id_roles', 'email', 'password', 'status'];
+    protected $fillable = ['id','individuals_id', 'roles_id', 'email', 'password', 'status'];
     protected $casts = ['password' => 'hashed'];
 
     /**
@@ -43,7 +43,7 @@ class UserAccounts extends Authenticatable
      */
     public function individual()
     {
-        return $this->belongsTo(Individuals::class, 'id_individual');
+        return $this->belongsTo(Individuals::class);
     }
 
     /**
@@ -51,6 +51,6 @@ class UserAccounts extends Authenticatable
      */
     public function role()
     {
-        return $this->belongsTo('App\Models\Role', 'id_roles');
+        return $this->belongsTo(Roles::class);
     }
 }

@@ -18,7 +18,7 @@ class MantriMiddleware
         if(auth()->guest()){
             return redirect('/');
         }
-        else if(auth()->user()->id_roles != 2){
+        else if(auth()->user()->roles_id != 2){
             abort(403);
         }
         return $next($request);

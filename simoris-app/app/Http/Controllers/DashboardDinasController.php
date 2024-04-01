@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Individuals;
 use App\Models\UserAccounts;
 use Illuminate\Http\Request;
 
@@ -13,9 +14,9 @@ class DashboardDinasController extends Controller
     public function index()
     {
         return view('dinas.layouts.dashboard', [
-            'mantri' => UserAccounts::where('id_roles', 2)
-            ->with('individual:id,name')
-            ->get()
+            $role =  UserAccounts::where('roles_id', 2)->pluck('individuals_id'),
+            $mantri = Individuals::whereIn('id', $role)->get(),
+            'mantri' => $mantri
         ]);
     }
 

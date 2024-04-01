@@ -24,7 +24,6 @@ class Alamat extends Model
      * 
      * @var string
      */
-    protected $guarded = 'id';
 
     /**
      * Indicates if the IDs are auto-incrementing.
@@ -44,7 +43,7 @@ class Alamat extends Model
      */
     public function kabupaten()
     {
-        return $this->belongsTo('App\Models\Kabupaten', 'id_kabupaten');
+        return $this->belongsTo(Kabupaten::class);
     }
 
     /**
@@ -52,7 +51,7 @@ class Alamat extends Model
      */
     public function kecamatan()
     {
-        return $this->belongsTo('App\Models\Kecamatan', 'id_kecamatan');
+        return $this->belongsTo(Kecamatan::class);
     }
 
     /**
@@ -60,7 +59,7 @@ class Alamat extends Model
      */
     public function kelurahan()
     {
-        return $this->belongsTo('App\Models\Kelurahan', 'id_kelurahan');
+        return $this->belongsTo(Kecamatan::class);
     }
 
     /**
@@ -68,6 +67,6 @@ class Alamat extends Model
      */
     public function individuals()
     {
-        return $this->hasMany('App\Models\Individual', 'id_alamat');
+        return $this->hasMany(Individuals::class);
     }
 }

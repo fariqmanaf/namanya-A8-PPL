@@ -25,7 +25,6 @@ class Kelurahan extends Model
      * 
      * @var bool
      */
-    public $incrementing = false;
     public $timestamps = false;
 
     /**
@@ -36,8 +35,8 @@ class Kelurahan extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function alamats()
+    public function alamat()
     {
-        return $this->hasMany('App\Models\Alamat', 'id_kelurahan');
+        return $this->hasMany(Alamat::class);
     }
 }

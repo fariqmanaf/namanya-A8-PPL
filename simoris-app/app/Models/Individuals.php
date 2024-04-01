@@ -36,14 +36,14 @@ class Individuals extends Model
     /**
      * @var array
      */
-    protected $fillable = ['id_alamat', 'nik', 'name', 'tgl_lahir', 'no_telp'];
+    protected $fillable = ['id', 'nik', 'name', 'tgl_lahir', 'no_telp', 'alamats_id'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function userAccounts()
     {
-        return $this->hasMany(UserAccounts::class, 'id_individual');
+        return $this->hasMany(UserAccounts::class);
     }
 
     /**
@@ -51,7 +51,7 @@ class Individuals extends Model
      */
     public function suratIzins()
     {
-        return $this->hasMany('App\Models\SuratIzin', 'id_mantri');
+        return $this->hasMany(SuratIzin::class);
     }
 
     /**
@@ -59,7 +59,7 @@ class Individuals extends Model
      */
     public function dataSapis()
     {
-        return $this->hasMany('App\Models\DataSapi', 'id_peternak');
+        return $this->hasMany(DataSapi::class);
     }
 
     /**
@@ -67,7 +67,7 @@ class Individuals extends Model
      */
     public function stokMantris()
     {
-        return $this->hasMany('App\Models\StokMantri', 'id_mantri');
+        return $this->hasMany(StokMantri::class);
     }
 
     /**
@@ -75,7 +75,7 @@ class Individuals extends Model
      */
     public function alamat()
     {
-        return $this->belongsTo('App\Models\Alamat', 'id_alamat');
+        return $this->belongsTo(Alamat::class);
     }
 
     /**
@@ -83,7 +83,7 @@ class Individuals extends Model
      */
     public function pengajuanSbs()
     {
-        return $this->hasMany('App\Models\PengajuanSb', 'id_mantri');
+        return $this->hasMany(PengajuanSb::class);
     }
 
     /**
@@ -91,7 +91,6 @@ class Individuals extends Model
      */
     public function laporanIbs()
     {
-        return $this->hasMany('App\Models\LaporanIb', 'id_peternak');
-        return $this->hasMany('App\Models\LaporanIb', 'id_mantri');
+        return $this->hasMany(LaporanIb::class);
     }
 }

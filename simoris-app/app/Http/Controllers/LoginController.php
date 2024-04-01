@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class LoginController extends Controller
 {
     public function index() {
-      return view('general.layouts.main');
+      return view('general.layouts.login');
     }
 
     public function login(Request $request){
@@ -28,13 +28,27 @@ class LoginController extends Controller
       if(Auth::attempt($credentials)){
         $request->session()->regenerate();
         $user = Auth::user();
-        if ($user->id_roles === 1) {
+
+        if ($user->roles_id === 1) {
             return redirect('/dashboard');
-        } elseif ($user->id_roles === 2) {
+        } 
+        else if($user->roles_id === 2 && $user->status === "enable") {
             return redirect('/home');
-        } else if($user->id_roles === 3){
+        } 
+        else if($user->status === "disable"){
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+            return redirect('/')->withErrors('Surat Izin anda sudah kadaluarsa')->onlyInput('email');
+        } 
+        else if($user->status === "pending"){
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+            return redirect('/')->withErrors('Akun anda masih dalam pengecekan dinas')->onlyInput('email');
+        } 
+        else if($user->roles_id === 3){
             return redirect('/main');
-        }else{
+        }
+        else{
           return redirect('/');
         }
       }

@@ -13,12 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('surat_izin', function (Blueprint $table) {
-            $table->integer('id')->primary();
-            $table->integer('nomor_surat')->nullable();
-            $table->binary('bukti')->nullable();
-            $table->boolean('is_accepted')->nullable();
-            $table->integer('id_mantri')->nullable()->index('id_mantri');
+        Schema::create('total_ib', function (Blueprint $table) {
+            $table->id();
+            $table->integer('laporan_ib_id')->index('id_laporan');
+            $table->integer('jenis_semen')->index('id_semen');
+            $table->dateTime('tgl_ib')->nullable();
         });
     }
 
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('surat_izin');
+        Schema::dropIfExists('total_ib');
     }
 };

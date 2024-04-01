@@ -13,8 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('individuals', function (Blueprint $table) {
-            $table->foreign(['id_alamat'], 'individuals_ibfk_1')->references(['id'])->on('alamat')->onUpdate('no action')->onDelete('no action');
+        Schema::create('kabupaten', function (Blueprint $table) {
+            $table->id();
+            $table->string('kabupaten')->nullable();
         });
     }
 
@@ -25,8 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('individuals', function (Blueprint $table) {
-            $table->dropForeign('individuals_ibfk_1');
-        });
+        Schema::dropIfExists('kabupaten');
     }
 };

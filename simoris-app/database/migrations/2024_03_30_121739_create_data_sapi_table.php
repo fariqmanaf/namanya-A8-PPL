@@ -13,11 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('alamat', function (Blueprint $table) {
-            $table->integer('id')->primary();
-            $table->integer('id_kabupaten')->nullable()->index('id_kabupaten');
-            $table->integer('id_kecamatan')->nullable()->index('id_kecamatan');
-            $table->integer('id_kelurahan')->nullable()->index('id_kelurahan');
+        Schema::create('data_sapi', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('jenis_sapi_id')->index('id_jenis');
+            $table->foreignId('individuals_id')->index('id_peternak');
             $table->string('detail')->nullable();
         });
     }
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('alamat');
+        Schema::dropIfExists('data_sapi');
     }
 };

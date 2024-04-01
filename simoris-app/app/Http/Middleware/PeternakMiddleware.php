@@ -18,7 +18,7 @@ class PeternakMiddleware
         if(auth()->guest()){
             return redirect('/');
         }
-        else if(auth()->user()->id_roles != 3){
+        else if(auth()->user()->roles_id != 3){
             abort(403);
         }
         return $next($request);

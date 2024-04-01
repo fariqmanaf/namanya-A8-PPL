@@ -35,7 +35,7 @@ class StokMantri extends Model
     /**
      * @var array
      */
-    protected $fillable = ['id_mantri', 'id_semen', 'total', 'used'];
+    protected $fillable = ['id_mantri', 'id_jenis', 'total', 'used'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -48,8 +48,8 @@ class StokMantri extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function jenisSeman()
+    public function jenisSemen()
     {
-        return $this->belongsTo('App\Models\JenisSeman', 'id_semen');
+        return $this->belongsTo('App\Models\JenisSemen', 'id_jenis');
     }
 }

@@ -1,3 +1,6 @@
+@extends('general.layouts.main')
+
+@section('content')
   <div class="formcontainer h-[90vh] w-screen flex flex-col justify-center items-center">
     @if($errors->any())
       <div class="alert">
@@ -6,6 +9,11 @@
             <li>{{ $error }}</li>
           @endforeach
         </ul>
+      </div>
+    @endif
+    @if(session()->has('success'))
+      <div class="p-1 bg-slate-400">
+        {{ session('success') }}
       </div>
     @endif
     <form action="" method="POST" class="flex flex-col gap-5">
@@ -17,4 +25,6 @@
       <input type="password" class="" name="password" placeholder="*********" required>
       <button type="submit" class="p-2 bg-black text-white">Login</button>
     </form>
+    <a href="/register" class="mt-4">REGISTER</a>
   </div>
+@endsection

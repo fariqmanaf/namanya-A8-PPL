@@ -14,9 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::create('pengajuan_sb', function (Blueprint $table) {
-            $table->integer('id')->primary();
-            $table->integer('id_mantri')->nullable()->index('id_mantri');
-            $table->integer('id_jenis')->nullable()->index('id_jenis');
+            $table->id();
+            $table->foreignId('individuals_id')->index('id_mantri');
+            $table->foreignId('jenis_semen_id')->index('id_jenis');
             $table->integer('jumlah')->nullable();
             $table->boolean('is_taken')->nullable();
             $table->dateTime('tanggal')->nullable();

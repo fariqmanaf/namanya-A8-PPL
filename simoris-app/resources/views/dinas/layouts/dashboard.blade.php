@@ -9,7 +9,7 @@
 <body>
   <p>Daftar Mantri: </p>
   @foreach ($mantri as $user)
-    <p>{{ $user->individual->name }}</p>
+    <p>{{ $user->name }}</p>
   @endforeach 
   <form action="/logout" method="POST">
     @csrf

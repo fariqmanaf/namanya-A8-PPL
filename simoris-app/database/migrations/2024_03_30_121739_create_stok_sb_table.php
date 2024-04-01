@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('sertifikasi', function (Blueprint $table) {
-            $table->integer('id')->primary();
-            $table->integer('nomor_sertifikasi')->nullable();
-            $table->binary('bukti')->nullable();
-            $table->boolean('is_accepted')->nullable();
-            $table->integer('id_mantri')->nullable()->index('id_mantri');
+        Schema::create('stok_sb', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('kecamatan_id')->index('id_kecamatan');
+            $table->integer('jenis_semen_id')->index('id_jenis');
+            $table->integer('jumlah')->nullable();
+            $table->integer('used')->nullable();
         });
     }
 
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sertifikasi');
+        Schema::dropIfExists('stok_sb');
     }
 };

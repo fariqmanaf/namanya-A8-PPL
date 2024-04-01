@@ -26,7 +26,6 @@ class Kecamatan extends Model
      * 
      * @var bool
      */
-    public $incrementing = false;
     public $timestamps = false;
 
     /**
@@ -37,9 +36,9 @@ class Kecamatan extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function alamats()
+    public function alamat()
     {
-        return $this->hasMany('App\Models\Alamat', 'id_kecamatan');
+        return $this->hasMany(Alamat::class);
     }
 
     /**
@@ -47,6 +46,6 @@ class Kecamatan extends Model
      */
     public function stokSbs()
     {
-        return $this->hasMany('App\Models\StokSb', 'id_kecamatan');
+        return $this->hasMany(StokSb::class);
     }
 }

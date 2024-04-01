@@ -18,19 +18,18 @@ class Roles extends Model
      * 
      * @var bool
      */
-    public $incrementing = false;
     public $timestamps = false;
 
     /**
      * @var array
      */
-    protected $fillable = ['role_name'];
+    protected $fillable = ['id','role_name'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function userAccounts()
     {
-        return $this->hasMany('App\Models\UserAccount', 'id_roles');
+        return $this->hasMany(UserAccounts::class);
     }
 }

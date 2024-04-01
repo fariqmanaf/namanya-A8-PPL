@@ -13,11 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('data_sapi', function (Blueprint $table) {
-            $table->integer('id')->primary();
-            $table->integer('id_jenis')->nullable()->index('id_jenis');
-            $table->integer('id_peternak')->nullable()->index('id_peternak');
-            $table->text('detail')->nullable();
+        Schema::create('stok_mantri', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('individuals_id')->index('id_mantri');
+            $table->foreignId('jenis_semen_id')->index('id_jenis');
+            $table->integer('total')->nullable();
+            $table->integer('used')->nullable();
         });
     }
 
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('data_sapi');
+        Schema::dropIfExists('stok_mantri');
     }
 };
