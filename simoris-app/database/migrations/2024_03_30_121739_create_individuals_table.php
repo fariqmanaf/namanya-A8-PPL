@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('nik')->nullable()->unique('nik');
             $table->string('name')->nullable();
-            $table->dateTime('tgl_lahir')->nullable();
+            $table->date('tgl_lahir')->nullable();
             $table->string('no_telp')->nullable();
             $table->foreignId('alamats_id')->index('id_alamat');
         });

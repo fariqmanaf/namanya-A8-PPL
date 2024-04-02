@@ -32,7 +32,7 @@ class Sertifikasi extends Model
     /**
      * @var array
      */
-    protected $fillable = ['id_mantri', 'nomor_sertifikasi', 'bukti', 'is_accepted'];
+    protected $fillable = ['individuals_id', 'nomor_sertifikasi', 'bukti', 'is_accepted'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

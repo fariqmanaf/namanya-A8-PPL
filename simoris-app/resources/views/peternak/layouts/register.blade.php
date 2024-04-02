@@ -17,11 +17,11 @@
         <div class="container flex flex-col gap-3">
           <input type="text" name="nik" placeholder="NIK : 12361273">
           <input type="email" name="email" class="@error('email') is-invalid @enderror" placeholder="example@mail.com" value="{{ old('email') }}" required>
-          @error('email')
+          {{-- @error('email')
           <div class="invalid-feedback">{{ $message }}</div>
-          @enderror
+          @enderror --}}
           <input type="text" name="nama" placeholder="Nama Lengkap" required>
-          <input id="tanggal-lahir" type="date">
+          <input name="tanggal-lahir" type="date">
           <input type="text" name="notelp" placeholder="Nomor Telepon" required>
         </div>
         <div class="container2 flex flex-col gap-3">
@@ -42,8 +42,8 @@
           </select>
           <input name="detail" type="text" placeholder="Jalan, No Rumah, Dll">
           <input type="password" class="" name="password" placeholder="*********" required>
-          <input type="hidden" value="3" name="roles_id">
-          <input type="hidden" value="enable" name="status">
+          <input type="hidden" value="random" name="roles_id">
+          <input type="hidden" value="random" name="status">
         </div>
       </div>
       <button type="submit" class="p-2 bg-black text-white">Register</button>

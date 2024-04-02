@@ -34,7 +34,7 @@ class SuratIzin extends Model
     /**
      * @var array
      */
-    protected $fillable = ['id_mantri', 'nomor_surat', 'bukti', 'is_accepted'];
+    protected $fillable = ['individuals_id', 'nomor_surat', 'bukti', 'is_accepted'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

@@ -12,5 +12,7 @@
     @csrf
     <button type="submit">Logout</button>
   </form>
+  <a href="/peternak/profile"><button>Lihat Profil</button></a>
+  <a href="/peternak/profile/edit"><button>Edit Profil</button></a>
 </body>
 </html>

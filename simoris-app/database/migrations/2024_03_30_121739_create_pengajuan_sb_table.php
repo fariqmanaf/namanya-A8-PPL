@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('jenis_semen_id')->index('id_jenis');
             $table->integer('jumlah')->nullable();
             $table->boolean('is_taken')->nullable();
-            $table->dateTime('tanggal')->nullable();
+            $table->date('tanggal')->nullable();
         });
     }
 

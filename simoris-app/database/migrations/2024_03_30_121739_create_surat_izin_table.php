@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('surat_izin', function (Blueprint $table) {
             $table->id();
-            $table->integer('nomor_surat')->nullable();
-            $table->binary('bukti')->nullable();
+            $table->bigInteger('nomor_surat')->nullable();
+            $table->string('bukti');
             $table->boolean('is_accepted')->nullable();
-            $table->foreignId('individuals_id')->index('id_mantri');
+            $table->foreignId('individuals_id')->nullable();
         });
     }
 

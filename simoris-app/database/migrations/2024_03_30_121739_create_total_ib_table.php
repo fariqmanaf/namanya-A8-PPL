@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('laporan_ib_id')->index('id_laporan');
             $table->integer('jenis_semen')->index('id_semen');
-            $table->dateTime('tgl_ib')->nullable();
+            $table->date('tgl_ib')->nullable();
         });
     }
 

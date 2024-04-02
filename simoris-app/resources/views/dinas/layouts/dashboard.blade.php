@@ -15,5 +15,6 @@
     @csrf
     <button type="submit">Logout</button>
   </form>
+  <a href="/dashboard/changepass"><button>Ubah Password</button></a>
 </body>
 </html>

@@ -13,5 +13,7 @@
     @csrf
     <button type="submit">Logout</button>
   </form>
+  <a href="/mantri/profile"><button>Lihat Profil</button></a>
+  <a href="/mantri/profile/edit"><button>Edit Profil</button></a>
 </body>
 </html>

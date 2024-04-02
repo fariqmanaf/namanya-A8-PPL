@@ -11,7 +11,7 @@
         </ul>
       </div>
     @endif
-    <form action="" method="POST" class="flex flex-col gap-2 justify-center items-center">
+    <form action="" method="POST" enctype="multipart/form-data" class="flex flex-col gap-2 justify-center items-center">
       @csrf
       <div class="form-container flex flex-row gap-5 mb-5">
         <div class="container flex flex-col gap-3">
@@ -21,7 +21,7 @@
           <div class="invalid-feedback">{{ $message }}</div>
           @enderror
           <input type="text" name="nama" placeholder="Nama Lengkap">
-          <input id="tanggal-lahir" type="date">
+          <input name="tanggal-lahir" type="date">
           <input type="text" name="notelp" placeholder="Nomor Telepon">
         </div>
         <div class="container2 flex flex-col gap-3">
@@ -40,16 +40,25 @@
               <option value="{{ $item->id }}">{{ $item->kelurahan }}</option>
             @endforeach
           </select>
-          <input type="text" placeholder="Jalan, No Rumah, Dll">
+          <input type="text" name="detail" placeholder="Jalan, No Rumah, Dll">
           <input type="password" class="" name="password" placeholder="*********" required>
         </div>
-        <div class="container3 flex flex-col gap-4">
-          <input type="text" placeholder="No Sertifikasi">
-          <input type="file">
-          <input type="text" placeholder="No Surat Izin Praktik">
-          <input type="file">
-          <input type="text" placeholder="wilayah kerja">
+        <div class="container3 flex flex-col gap-2">
+          <input name="no_sertifikasi" type="text" placeholder="No Sertifikasi">
+          <input name="bukti_sertifikasi" type="file">
+          <input type="hidden" name="is_accepted_sertifikasi" value="random">
+          <input name="no_suratizin" type="text" placeholder="No Surat Izin">
+          <input name="bukti_suratizin" type="file">
+          <input type="hidden" name="is_accepted_suratizin" value="random">
+          <label for="wilayah_kerja">Wilayah Kerja</label>
+          <select name="wilayah_kerja" id="wilayah_kerja">
+            @foreach ($kecamatan as $item)
+              <option value="{{ $item->kecamatan }}">{{ $item->kecamatan }}</option>
+            @endforeach
+          </select>
         </div>
+        <input type="hidden" value="random" name="roles_id">
+        <input type="hidden" value="random" name="status">
       </div>
       <button type="submit" class="p-2 bg-black text-white">Register</button>
     </form>

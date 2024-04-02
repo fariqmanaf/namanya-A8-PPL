@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('sertifikasi', function (Blueprint $table) {
             $table->id();
-            $table->integer('nomor_sertifikasi')->nullable();
-            $table->binary('bukti')->nullable();
+            $table->bigInteger('nomor_sertifikasi');
+            $table->string('bukti');
             $table->boolean('is_accepted')->nullable();
-            $table->foreignId('individuals_id')->index('id_mantri');
+            $table->foreignId('individuals_id')->nullable();
         });
     }
 
