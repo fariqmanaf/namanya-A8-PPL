@@ -34,17 +34,17 @@
       <input class="w-72" type="text" name="no_telp" value="{{ $profil->no_telp }}">
       <select class="w-72" name="kabupaten_id" id="kabupaten">
         @foreach ($kabupaten as $item)
-          <option value="{{ $item->id }}">{{ $item->kabupaten }}</option>
+          <option value="{{ $item->id }}" {{ $kabupatenuser->id == $item->id ? 'selected' : '' }}>{{ $item->kabupaten }}</option>
         @endforeach
       </select>
       <select class="w-72" name="kecamatan_id" id="kecamatan">
         @foreach ($kecamatan as $item)
-          <option value="{{ $item->id }}">{{ $item->kecamatan }}</option>
+          <option value="{{ $item->id }}" {{ $kecamatanuser->id == $item->id ? 'selected' : '' }}>{{ $item->kecamatan }}</option>
         @endforeach
       </select>
       <select class="w-72" name="kelurahan_id" id="kelurahan">
         @foreach ($kelurahan as $item)
-          <option value="{{ $item->id }}">{{ $item->kelurahan }}</option>
+          <option value="{{ $item->id }}" {{ $kelurahanuser->id == $item->id ? 'selected' : '' }}>{{ $item->kelurahan }}</option>
         @endforeach
       </select>
       <input class="w-72" type="text" name="detail" id="" value="{{ $alamat->detail }}">

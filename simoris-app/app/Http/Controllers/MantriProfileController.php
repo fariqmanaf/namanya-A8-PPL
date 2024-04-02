@@ -71,8 +71,11 @@ class MantriProfileController extends Controller
         $kabupaten = Kabupaten::all();
         $kecamatan = Kecamatan::all();
         $kelurahan = Kelurahan::all();
+        $kabupatenuser = Kabupaten::where('id', $alamat->kabupaten_id)->first();
+        $kecamatanuser = Kecamatan::where('id', $alamat->kecamatan_id)->first();
+        $kelurahanuser = Kelurahan::where('id', $alamat->kelurahan_id)->first();
 
-        return view('mantri.layouts.editprofile', compact('akun', 'profil', 'alamat', 'kabupaten', 'kecamatan', 'kelurahan'));
+        return view('mantri.layouts.editprofile', compact('akun', 'profil', 'alamat', 'kabupaten', 'kecamatan', 'kelurahan', 'kabupatenuser', 'kecamatanuser', 'kelurahanuser'));
     }
 
     /**
