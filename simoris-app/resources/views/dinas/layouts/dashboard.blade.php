@@ -16,5 +16,6 @@
     <button type="submit">Logout</button>
   </form>
   <a href="/dashboard/changepass"><button>Ubah Password</button></a>
+  <a href="/dashboard/"><button>Monitoring Distribusi</button></a>
 </body>
 </html>

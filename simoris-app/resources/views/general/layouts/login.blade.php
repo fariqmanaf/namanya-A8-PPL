@@ -16,6 +16,11 @@
         {{ session('success') }}
       </div>
     @endif
+    @if(session()->has('update'))
+      <div class="p-1 bg-slate-400">
+        {{ session('update') }}
+      </div>
+    @endif
     <form action="" method="POST" class="flex flex-col gap-5">
       @csrf
       <input type="email" class="@error('email') is-invalid @enderror" name="email" placeholder="example@mail.com" value="{{ old('email') }}" autofocus required>

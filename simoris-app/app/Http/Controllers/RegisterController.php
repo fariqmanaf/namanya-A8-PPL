@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Alamat;
-use App\Models\Individuals;
 use App\Models\Kabupaten;
 use App\Models\Kecamatan;
 use App\Models\Kelurahan;
-use App\Models\Sertifikasi;
 use App\Models\SuratIzin;
+use App\Models\Sertifikasi;
 use App\Models\UserAccounts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -36,7 +34,6 @@ class RegisterController extends Controller
     }
 
     public function storePeternak(Request $request){
-        // @dd($request->all());
         $validatedData = $request->validate([
             'nik' => 'required|unique:individuals',
             'email' => 'required|email:dns|unique:user_accounts',
@@ -88,7 +85,6 @@ class RegisterController extends Controller
     }
 
     public function storeMantri(Request $request){
-        // @dd($request->all());
         $validatedData = $request->validate([
             'nik' => 'required|unique:individuals',
             'email' => 'required|email:dns|unique:user_accounts',
@@ -121,6 +117,16 @@ class RegisterController extends Controller
         $is_accepted_sertifikasi = $request->input('is_accepted_sertifikasi') === 'random' ? $defaultSertifikasi : $defaultSertifikasi;
         $is_accepted_suratizin = $request->input('is_accepted_suratizin') === 'random' ? $defaultSuratIzin : $defaultSuratIzin;
 
+        if ($request->hasFile('bukti_sertifikasi')) {
+            $buktiSertifikasi = $request->file('bukti_sertifikasi')->storeAs(
+                'bukti_sertifikasi',$request->file('bukti_sertifikasi')->getClientOriginalName(),'public');
+        } else {$buktiSertifikasi = null;}
+        
+        if ($request->hasFile('bukti_suratizin')) {
+            $buktiSuratizin = $request->file('bukti_suratizin')->storeAs(
+                'bukti_suratizin',$request->file('bukti_suratizin')->getClientOriginalName(),'public');
+        } else {$buktiSuratizin = null;}
+
         $alamat = DB::table('alamats')->insertGetId([
             'kabupaten_id' => $validatedData['kabupaten'],
             'kecamatan_id' => $validatedData['kecamatan'],
@@ -146,25 +152,17 @@ class RegisterController extends Controller
 
         Sertifikasi::create([
             'nomor_sertifikasi' => $validatedData['no_sertifikasi'],
-            'bukti' => $validatedData['bukti_sertifikasi'],
+            'bukti' => $buktiSertifikasi,
             'is_accepted' => $is_accepted_sertifikasi,
             'individuals_id' => $individual
         ]);
 
         SuratIzin::create([
             'nomor_surat' => $validatedData['no_suratizin'],
-            'bukti' => $validatedData['bukti_suratizin'],
+            'bukti' => $buktiSuratizin,
             'is_accepted' => $is_accepted_suratizin,
             'individuals_id' => $individual
         ]);
-
-        if($request->file('bukti_sertifikasi')){
-            $validatedData['bukti_sertifikasi'] = $request->file('bukti_sertifikasi')->store('bukti_serifikasi');
-        }
-
-        if($request->file('bukti_suratizin')){
-            $validatedData['bukti_suratizin'] = $request->file('bukti_suratizin')->store('bukti_suratizin');
-        }
 
         $request = session();
         $request->flash('success', 'Anda Berhasil Registrasi, Akun Anda Sedang Di Proses Oleh Dinas. Silahkan Mengeceknya Secara Berkala');

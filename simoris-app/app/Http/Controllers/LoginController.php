@@ -36,14 +36,15 @@ class LoginController extends Controller
             return redirect('/home');
         } 
         else if($user->status === "disable"){
-            $request->session()->invalidate();
-            $request->session()->regenerateToken();
-            return redirect('/')->withErrors('Surat Izin anda sudah kadaluarsa')->onlyInput('email');
+          return redirect('/register/mantri/edit')->withErrors('Perizinan Anda Sudah Kadaluarsa, Silahkan Perbarui');
         } 
         else if($user->status === "pending"){
             $request->session()->invalidate();
             $request->session()->regenerateToken();
             return redirect('/')->withErrors('Akun anda masih dalam pengecekan dinas')->onlyInput('email');
+        } 
+        else if($user->status === "rejected"){
+          return redirect('/register/mantri/edit')->withErrors('Pengajuan anda ditolak, silahkan edit pengajuan anda');
         } 
         else if($user->roles_id === 3){
             return redirect('/main');

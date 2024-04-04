@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class MantriMiddleware
+class RejectedMiddleware
 {
     /**
      * Handle an incoming request.
@@ -18,13 +18,7 @@ class MantriMiddleware
         if(auth()->guest()){
             return redirect('/');
         }
-        else if(auth()->user()->roles_id != 2){
-            abort(403);
-        }
-        else if(auth()->user()->status == "rejected"){
-            abort(403);
-        }
-        else if(auth()->user()->status == "disable"){
+        else if(!(auth()->user()->status == "rejected" || auth()->user()->status == "disable")){
             abort(403);
         }
         return $next($request);

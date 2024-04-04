@@ -4,6 +4,7 @@ use Doctrine\DBAL\Driver\Middleware;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\RejectedController;
 use App\Http\Controllers\DinasProfileController;
 use App\Http\Controllers\MantriProfileController;
 use App\Http\Controllers\DashboardDinasController;
@@ -36,6 +37,12 @@ Route::middleware('auth')->group(function(){
     Route::post('/logout', [LoginController::class, 'logout']);
 });
 
+Route::middleware('rejected')->group(function(){
+    Route::get('/register/mantri/edit', [RejectedController::class, 'index']);
+    Route::put('/register/mantri/edit', [RejectedController::class, 'update']);
+    Route::post('/back', [RejectedController::class, 'back']);
+});
+
 Route::middleware('dinas')->group(function(){
     Route::get('/dashboard', [DashboardDinasController::class, 'index']);
     Route::get('/dashboard/changepass', [DinasProfileController::class, 'edit']);
@@ -57,5 +64,9 @@ Route::middleware('peternak')->group(function(){
 });
 
 Route::get('/logout', function(){
+    return redirect('/');
+});
+
+Route::get('/back', function(){
     return redirect('/');
 });

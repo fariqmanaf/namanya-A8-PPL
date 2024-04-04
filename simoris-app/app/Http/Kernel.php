@@ -67,5 +67,6 @@ class Kernel extends HttpKernel
         'dinas' => \App\Http\Middleware\DinasMiddleware::class,
         'mantri' => \App\Http\Middleware\MantriMiddleware::class,
         'peternak' => \App\Http\Middleware\PeternakMiddleware::class,
+        'rejected' => \App\Http\Middleware\RejectedMiddleware::class,
     ];
 }
