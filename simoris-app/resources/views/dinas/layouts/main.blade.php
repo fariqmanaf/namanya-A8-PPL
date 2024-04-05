@@ -26,15 +26,17 @@
               </tr>
               @foreach ($subdata as $subIndex => $subItem)
                 @foreach ($kecamatan as $kecamatanIndex => $kecamatanItem)
-                    @if($kecamatanItem->id === $subItem->kecamatan_id && $kecamatanIndex === $kecIndex)
+                  @foreach ($jenis_semen as $jenisIndex => $jenisItem)
+                    @if($kecamatanItem->id === $subItem->kecamatan_id && $kecamatanIndex === $kecIndex && $jenisItem->id === $subItem->jenis_semen_id)
                         <tr id="sub-table-{{ $index }}-{{ $subIndex }}" class="hidden text-center sub-table bg-slate-400">
                           <td class="px-2 py-2"></td>
-                          <td class="px-2 py-2">{{ $jenisdata }}</td>
+                          <td class="px-2 py-2">{{ $jenisItem->jenis_semen }}</td>
                           <td class="px-2 py-2">{{ $subItem->jumlah }}</td>
                           <td class="px-2 py-2">{{ $subItem->sisa_stok }}</td>
                           <td class="px-2 py-2"></td>
                         </tr>
                     @endif
+                  @endforeach
                 @endforeach
               @endforeach
             @endif
@@ -42,7 +44,6 @@
         @endforeach
       </tbody>
     </table>
-    {{ $jenisdata }}
   </div>
   <script>
     document.querySelectorAll('.clickable-row').forEach(row => {
