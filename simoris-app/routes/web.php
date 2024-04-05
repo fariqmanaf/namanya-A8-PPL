@@ -1,6 +1,5 @@
 <?php
 
-use Doctrine\DBAL\Driver\Middleware;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
@@ -25,12 +24,19 @@ Route::middleware('guest')->group(function(){
     // Landing Page
     Route::get('/', [LoginController::class, 'index'])->name('awal');
     Route::post('/', [LoginController::class, 'login']);
-    // Register
     Route::get('/register', [RegisterController::class, 'index']);
-    Route::get('/register/mantri', [RegisterController::class, 'mregist']);
-    Route::post('/register/mantri', [RegisterController::class, 'storeMantri']);
-    Route::get('/register/peternak', [RegisterController::class, 'pregist']);
-    Route::post('/register/peternak', [RegisterController::class, 'storePeternak']);
+    // Register Mantri
+    Route::get('/register/mantri/step-1', [RegisterController::class, 'mregist1']);
+    Route::post('/register/mantri/step-1', [RegisterController::class, 'storeMantri1']);
+    Route::get('/register/mantri/step-2', [RegisterController::class, 'mregist2']);
+    Route::post('/register/mantri/step-2', [RegisterController::class, 'storeMantri2']);
+    Route::get('/register/mantri/step-3', [RegisterController::class, 'mregist3']);
+    Route::post('/register/mantri/step-3', [RegisterController::class, 'storeMantri3']);
+    // Register Peternak
+    Route::get('/register/peternak/step-1', [RegisterController::class, 'pregist1']);
+    Route::post('/register/peternak/step-1', [RegisterController::class, 'storePeternak1']);
+    Route::get('/register/peternak/step-2', [RegisterController::class, 'pregist2']);
+    Route::post('/register/peternak/step-2', [RegisterController::class, 'storePeternak2']);
 });
 
 Route::middleware('auth')->group(function(){
@@ -47,6 +53,7 @@ Route::middleware('dinas')->group(function(){
     Route::get('/dashboard', [DashboardDinasController::class, 'index']);
     Route::get('/dashboard/changepass', [DinasProfileController::class, 'edit']);
     Route::put('/dashboard/changepass', [DinasProfileController::class, 'update']);
+    Route::get('/dashboard/riwayat', [DashboardDinasController::class, 'riwayat']);
 });
 
 Route::middleware('mantri')->group(function(){

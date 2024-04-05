@@ -36,7 +36,7 @@ class Individuals extends Model
     /**
      * @var array
      */
-    protected $fillable = ['id', 'nik', 'name', 'tgl_lahir', 'no_telp', 'alamats_id'];
+    protected $fillable = ['id', 'nik', 'name', 'tgl_lahir', 'no_telp', 'alamats_id', 'wilayah_kerja'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

@@ -46,7 +46,9 @@ class DinasProfileController extends Controller
      */
     public function edit()
     {
-        return view('dinas.layouts.changepass');
+        return view('dinas.layouts.changepass',[
+            'title' => 'Ubah Password'
+        ]);
     }
 
     /**

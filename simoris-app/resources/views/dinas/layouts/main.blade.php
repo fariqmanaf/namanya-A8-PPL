@@ -2,7 +2,7 @@
 
 @section('content')
   <div class="content-container w-[85vw] flex flex-col items-center h-full ml-[15vw]">
-    <input type="text" class="p-2 mt-10 relative right-96 rounded-full text-center" placeholder="Search Kecamatan">
+    <input id="search-kecamatan" type="text" class="p-2 mt-10 relative right-96 rounded-full text-center" placeholder="Search Kecamatan">
     <table class="w-[80%] mt-10 cursor-pointer">
       <thead>
         <tr class="bg-black text-white">
@@ -46,6 +46,7 @@
     </table>
   </div>
   <script>
+    // Add event listener to each clickable row
     document.querySelectorAll('.clickable-row').forEach(row => {
         row.addEventListener('click', function() {
             const index = parseInt(this.dataset.index);
@@ -53,6 +54,21 @@
             subTables.forEach(subTable => {
                 subTable.classList.toggle('hidden');
             });
+            document.getElementById(`drop-${index}`).innerText = document.getElementById(`drop-${index}`).innerText === '>' ? 'v' : '>';
+        });
+    });
+
+    // Add event listener to search input
+    const searchInput = document.getElementById('search-kecamatan');
+
+    searchInput.addEventListener('input', function() {
+        const searchValue = this.value.toLowerCase();
+        const tableRows = document.querySelectorAll('tbody tr.clickable-row');
+        tableRows.forEach(row => {
+            const kecamatanName = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+            if (kecamatanName.includes(searchValue)) {
+                row.style.display = 'table-row';}
+            else {row.style.display = 'none';}
         });
     });
   </script>
