@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\StokSb;
+use App\Models\Kecamatan;
 use App\Models\Individuals;
+use App\Models\JenisSemen;
 use App\Models\UserAccounts;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DashboardDinasController extends Controller
 {
@@ -13,10 +17,25 @@ class DashboardDinasController extends Controller
      */
     public function index()
     {
-        return view('dinas.layouts.dashboard', [
-            $role =  UserAccounts::where('roles_id', 2)->pluck('individuals_id'),
-            $mantri = Individuals::whereIn('id', $role)->get(),
-            'mantri' => $mantri
+        $title = 'Dashboard';
+        
+        $latestPeriod = StokSb::select('periode')->orderByDesc('periode')->value('periode');
+    
+        $latestData = StokSb::selectRaw('kecamatan_id, periode, SUM(jumlah) AS total_stok, SUM(jumlah - used) AS sisa_stok')
+            ->where('periode', $latestPeriod)
+            ->groupBy('kecamatan_id', 'periode')->get();
+
+        $subdata = StokSb::selectRaw('jenis_semen_id, kecamatan_id, jumlah, SUM(jumlah - used) AS sisa_stok')
+            ->where('periode', $latestPeriod)
+            ->groupBy('kecamatan_id', 'jenis_semen_id', 'jumlah')->get();
+        
+        return view('dinas.layouts.main', [
+            $title = 'Dashboard',
+            'title' => $title,
+            'kecamatan' => Kecamatan::all(),
+            'jenis_semen' => JenisSemen::all(),
+            'data' => $latestData,
+            'subdata' => $subdata,
         ]);
     }
 

@@ -15,10 +15,11 @@ return new class extends Migration
     {
         Schema::create('stok_sb', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('kecamatan_id')->index('id_kecamatan');
-            $table->integer('jenis_semen_id')->index('id_jenis');
+            $table->foreignId('kecamatan_id')->nullable();
+            $table->foreignId('jenis_semen_id')->nullable();
             $table->integer('jumlah')->nullable();
             $table->integer('used')->nullable();
+            $table->date('periode');
         });
     }
 

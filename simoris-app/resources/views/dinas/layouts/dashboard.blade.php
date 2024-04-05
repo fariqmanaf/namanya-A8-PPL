@@ -4,18 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Dashboard</title>
+  <title>{{ $title }}</title>
+  @vite('resources/css/app.css')
 </head>
-<body>
-  <p>Daftar Mantri: </p>
-  @foreach ($mantri as $user)
-    <p>{{ $user->name }}</p>
-  @endforeach 
-  <form action="/logout" method="POST">
-    @csrf
-    <button type="submit">Logout</button>
-  </form>
-  <a href="/dashboard/changepass"><button>Ubah Password</button></a>
-  <a href="/dashboard/"><button>Monitoring Distribusi</button></a>
+<body class="flex flex-row h-screen">
+  @include('dinas.partials.sidebar', ['title' => $title])
+  @yield('content')
 </body>
 </html>
