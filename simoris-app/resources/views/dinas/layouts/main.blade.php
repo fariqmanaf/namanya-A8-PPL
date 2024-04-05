@@ -18,26 +18,31 @@
           @foreach ($kecamatan as $kecIndex => $kecItem)
             @if ($index === $kecIndex)
               <tr class="text-center clickable-row" data-index="{{ $index }}">
-                  <td class="px-4 py-4">{{ $loop->iteration }}</td>
-                  <td class="px-4 py-4">{{ $kecItem->kecamatan }}</td>
-                  <td class="px-4 py-4">{{ $item->total_stok }}</td>
-                  <td class="px-4 py-4">{{ $item->sisa_stok }}</td>
-                  <td class="px-4 py-4"><button id="drop-{{ $index }}" class="bg-black text-white px-1">^</button></td>
+                <td class="px-4 py-4">{{ $loop->iteration }}</td>
+                <td class="px-4 py-4">{{ $kecItem->kecamatan }}</td>
+                <td class="px-4 py-4">{{ $item->total_stok }}</td>
+                <td class="px-4 py-4">{{ $item->sisa_stok }}</td>
+                <td class="px-4 py-4"><button id="drop-{{ $index }}" class="bg-black text-white px-1">></button></td>
               </tr>
               @foreach ($subdata as $subIndex => $subItem)
-                      <tr id="sub-table-{{ $index }}-{{ $subIndex }}" class="hidden text-center sub-table bg-slate-400">
-                        <td class="px-2 py-2">{{ $subItem->kecamatan_id }}</td>
-                        <td class="px-2 py-2">{{ $subItem->jenis_semen_id }}</td>
-                        <td class="px-2 py-2">{{ $subItem->jumlah }}</td>
-                        <td class="px-2 py-2">{{ $subItem->sisa_stok }}</td>
-                        <td class="px-2 py-2"></td>
-                      </tr>
+                @foreach ($kecamatan as $kecamatanIndex => $kecamatanItem)
+                    @if($kecamatanItem->id === $subItem->kecamatan_id && $kecamatanIndex === $kecIndex)
+                        <tr id="sub-table-{{ $index }}-{{ $subIndex }}" class="hidden text-center sub-table bg-slate-400">
+                          <td class="px-2 py-2"></td>
+                          <td class="px-2 py-2">{{ $jenisdata }}</td>
+                          <td class="px-2 py-2">{{ $subItem->jumlah }}</td>
+                          <td class="px-2 py-2">{{ $subItem->sisa_stok }}</td>
+                          <td class="px-2 py-2"></td>
+                        </tr>
+                    @endif
+                @endforeach
               @endforeach
             @endif
           @endforeach
         @endforeach
       </tbody>
     </table>
+    {{ $jenisdata }}
   </div>
   <script>
     document.querySelectorAll('.clickable-row').forEach(row => {

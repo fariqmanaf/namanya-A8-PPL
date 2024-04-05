@@ -28,7 +28,7 @@ class DashboardDinasController extends Controller
         $subdata = StokSb::selectRaw('jenis_semen_id, kecamatan_id, jumlah, SUM(jumlah - used) AS sisa_stok')
             ->where('periode', $latestPeriod)
             ->groupBy('kecamatan_id', 'jenis_semen_id', 'jumlah')->get();
-        
+
         return view('dinas.layouts.main', [
             $title = 'Dashboard',
             'title' => $title,
