@@ -8,6 +8,8 @@ use App\Http\Controllers\DinasProfileController;
 use App\Http\Controllers\MantriProfileController;
 use App\Http\Controllers\DashboardDinasController;
 use App\Http\Controllers\PeternakProfileController;
+use App\Http\Controllers\RegisterMantriController;
+use App\Http\Controllers\RegisterPeternakController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,17 +28,17 @@ Route::middleware('guest')->group(function(){
     Route::post('/', [LoginController::class, 'login']);
     Route::get('/register', [RegisterController::class, 'index']);
     // Register Mantri
-    Route::get('/register/mantri/step-1', [RegisterController::class, 'mregist1']);
-    Route::post('/register/mantri/step-1', [RegisterController::class, 'storeMantri1']);
-    Route::get('/register/mantri/step-2', [RegisterController::class, 'mregist2']);
-    Route::post('/register/mantri/step-2', [RegisterController::class, 'storeMantri2']);
-    Route::get('/register/mantri/step-3', [RegisterController::class, 'mregist3']);
-    Route::post('/register/mantri/step-3', [RegisterController::class, 'storeMantri3']);
+    Route::get('/register/mantri/step-1', [RegisterMantriController::class, 'mregist1']);
+    Route::post('/register/mantri/step-1', [RegisterMantriController::class, 'storeMantri1']);
+    Route::get('/register/mantri/step-2', [RegisterMantriController::class, 'mregist2']);
+    Route::post('/register/mantri/step-2', [RegisterMantriController::class, 'storeMantri2']);
+    Route::get('/register/mantri/step-3', [RegisterMantriController::class, 'mregist3']);
+    Route::post('/register/mantri/step-3', [RegisterMantriController::class, 'storeMantri3']);
     // Register Peternak
-    Route::get('/register/peternak/step-1', [RegisterController::class, 'pregist1']);
-    Route::post('/register/peternak/step-1', [RegisterController::class, 'storePeternak1']);
-    Route::get('/register/peternak/step-2', [RegisterController::class, 'pregist2']);
-    Route::post('/register/peternak/step-2', [RegisterController::class, 'storePeternak2']);
+    Route::get('/register/peternak/step-1', [RegisterPeternakController::class, 'pregist1']);
+    Route::post('/register/peternak/step-1', [RegisterPeternakController::class, 'storePeternak1']);
+    Route::get('/register/peternak/step-2', [RegisterPeternakController::class, 'pregist2']);
+    Route::post('/register/peternak/step-2', [RegisterPeternakController::class, 'storePeternak2']);
 });
 
 Route::middleware('auth')->group(function(){
@@ -51,6 +53,7 @@ Route::middleware('rejected')->group(function(){
 
 Route::middleware('dinas')->group(function(){
     Route::get('/dashboard', [DashboardDinasController::class, 'index']);
+    Route::post('/dashboard', [DashboardDinasController::class, 'createStok']);
     Route::get('/dashboard/changepass', [DinasProfileController::class, 'edit']);
     Route::put('/dashboard/changepass', [DinasProfileController::class, 'update']);
     Route::get('/dashboard/riwayat', [DashboardDinasController::class, 'riwayat']);

@@ -17,7 +17,7 @@
         @foreach ($superdata as $superindex => $superitem)
           <tr class="text-center clickable-row" data-index="{{ $superindex }}">
             <td class="px-4 py-4"></td>
-            <td class="px-4 py-4">{{ $superitem->periode }}</td>
+            <td class="px-4 py-4">{{  Carbon\Carbon::parse($superitem->periode)->formatLocalized('%d %B %Y') }}</td>
             <td class="px-4 py-4">{{ $superitem->total_stok }}</td>
             <td class="px-4 py-4">{{ $superitem->sisa_stok }}</td>
             <td class="px-4 py-4"><button id="drop-{{ $superindex }}" class="bg-black text-white px-1">></button></td>
@@ -86,7 +86,7 @@
             const kecamatanName = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
             if (kecamatanName.includes(searchValue)) {
                 row.style.display = 'table-row';}
-            else {row.style.display = 'none';}
+            else {row.style.display = 'none'}
         });
     });
   </script>

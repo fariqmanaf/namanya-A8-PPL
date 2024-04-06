@@ -60,9 +60,44 @@ class DashboardDinasController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        //
+    public function createStok(Request $request) {
+        $validatedData = $request->validate([
+            'total_stok' => 'required',
+            'Simental' => 'required',
+            'PO' => 'required',
+            'Brahma' => 'required',
+            'Limosin' => 'required',
+        ]);
+    
+        $total_stok = $validatedData['total_stok'];
+        $Simental = $validatedData['Simental'];
+        $PO = $validatedData['PO'];
+        $Brahma = $validatedData['Brahma'];
+        $Limosin = $validatedData['Limosin'];
+    
+        $totalJenis = $Simental + $PO + $Brahma + $Limosin;
+        if ($total_stok != $totalJenis) {
+            return redirect('/dashboard')->withErrors('Total stok tidak sesuai dengan jumlah jenis semen');
+        } else {
+            $jenisSemen = JenisSemen::all()->pluck('id')->toArray();
+            $kecamatan = Kecamatan::all()->pluck('id');
+            $jenis = [$Simental, $PO, $Brahma, $Limosin];
+    
+            foreach ($kecamatan as $i => $kec) {
+                foreach ($jenis as $x => $jenisStok) {
+                    $persentase = [0.2, 0.2, 0.3, 0.2, 0.1][$x];
+                    StokSb::create([
+                        'periode' => date('Y-m-d'),
+                        'kecamatan_id' => $kec,
+                        'jenis_semen_id' => $jenisSemen[$x],
+                        'jumlah' => $jenisStok * $persentase,
+                        'used' => 0,
+                    ]);
+                }
+            }
+    
+            return redirect('/dashboard')->with('success', 'Stok berhasil ditambahkan');
+        }
     }
 
     /**
