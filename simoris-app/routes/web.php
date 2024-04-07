@@ -57,6 +57,8 @@ Route::middleware('dinas')->group(function(){
     Route::get('/dashboard/changepass', [DinasProfileController::class, 'edit']);
     Route::put('/dashboard/changepass', [DinasProfileController::class, 'update']);
     Route::get('/dashboard/riwayat', [DashboardDinasController::class, 'riwayat']);
+    Route::get('/dashboard/preview', [DashboardDinasController::class, 'preview']);
+    Route::post('/dashboard/preview', [DashboardDinasController::class, 'previewpost']);
 });
 
 Route::middleware('mantri')->group(function(){
