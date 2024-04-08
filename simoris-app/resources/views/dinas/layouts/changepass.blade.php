@@ -1,27 +1,65 @@
-@extends('dinas.layouts.dashboard')
-
-@section('content')
-  <div class="form-container flex flex-col gap-5 mb-5 w-52 justify-center ml-[45vw]">
-    @if($errors->any())
-      <div class="alert">
-        <ul>
-          @foreach($errors->all() as $error)
-            <li>{{ $error }}</li>
-          @endforeach
-        </ul>
-      </div>
-    @endif
-    @if(session()->has('success'))
-      <div class="bg-slate-400">
-        {{ session('success') }}
-      </div>
-    @endif
-    <form action="" method="post" class="justify-center flex flex-col items-center">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>{{ $title }}</title>
+  @vite('resources/css/app.css')
+  <style>*{margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif}html{height: 100%};@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');</style>
+</head>
+<body class="flex flex-col h-screen bg-[#DDF2FD] items-center justify-center">
+  @if($errors->any())
+  <div class="alert absolute top-10 left-10 w-60 text-sm bg-red-500 text-white">
+    <ul>
+      @foreach($errors->all() as $error)
+      <li class="mb-2 ml-2">{{ "- ".$error }}</li>
+      @endforeach
+    </ul>
+  </div>
+  @endif
+  @if(session()->has('success'))
+  <div class="bg-slate-400">
+    {{ session('success') }}
+  </div>
+  @endif
+  <a href="/dashboard" class="-ml-[400px] mb-3 font-semibold text-slate-600">< Kembali</a>
+  <div class="form-container flex flex-col bg-white h-[550px] w-[500px] justify-start items-center rounded-2xl shadow-xl">
+    <p class="text-center font-bold text-xl my-8">PROFIL</p>
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT51WzyjFs7ajVLdsDpsea3951e-iN4zWqyOWskJ7Woyw&s" alt="Logo Dinas" class="h-36 w-36 rounded-full mb-5">
+    <p class="font-semibold mb-5 text-sm">Dinas Peternakan Dan Ketahanan Pangan Jember</p>
+    <p class="-ml-[300px] text-sm mb-2">Password</p>
+    <p id="button" class="w-96 shadow-[2px_2px_2px_2px_rgba(0,0,0,0.2)] p-2 rounded-full text-sm flex justify-between cursor-pointer">Ubah Password <span>></span></p>
+    <form action="" method="post" class="flex justify-center flex-col items-center">
       @method('PUT')
       @csrf
-      <input name="password" class="w-72" type="password" placeholder="Inser New Password Here">
-      <input type="password" class="w-72" name="validation-password" placeholder="Confirmation Your Password">
-      <button type="submit" class="p-2 mt-8 bg-black text-white">Submit</button>
+      <input id="input1" name="password" class="invisible w-96 -mt-[38px] rounded-full text-sm my-3" type="password" placeholder="Inser New Password Here">
+      <input id="input2" type="password" class="invisible w-96 -mt-[50px] rounded-full text-sm" name="validation-password" placeholder="Confirmation Your Password">
+      <button id="input3" type="submit" class="invisible p-1 w-40 mt-8 bg-[#DDF2FD] rounded-full text-slate-600 text-sm">Submit</button>
     </form>
   </div>
-@endsection
+</body>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script>
+  const trigger = document.getElementById('button');
+  const input1 = document.getElementById('input1');
+  const input2 = document.getElementById('input2');
+  const input3 = document.getElementById('input3');
+
+  let isVisible = false;
+
+  trigger.onclick = () => {
+    if (isVisible === false) {
+      gsap.to(input1, { duration: 0.5, y: 50, ease: 'power2.inOut', visibility: 'visible' });
+      gsap.to(input2, { duration: 0.5, y: 100, ease: 'power2.inOut', visibility: 'visible'});
+      gsap.to(input3, { duration: 0.5, y: 85, ease: 'power2.inOut', visibility: 'visible'});
+      isVisible = true;
+    } else {
+      gsap.to(input1, { duration: 0.5, y: 0, ease: 'power2.inOut', visibility: 'hidden' });
+      gsap.to(input2, { duration: 0.5, y: 0, ease: 'power2.inOut', visibility: 'hidden'});
+      gsap.to(input3, { duration: 0.5, y: 0, ease: 'power2.inOut', visibility: 'hidden'});
+      isVisible = false;
+    }
+  }
+</script>
+</html>
