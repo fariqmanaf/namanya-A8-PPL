@@ -58,7 +58,12 @@ class DinasProfileController extends Controller
     {
         $request->validate([
             'password' => 'nullable|min:8|max:255',
-            'validation-password' => 'required_with:password|same:password',
+            'validation-password' => 'required_with:password|same:password'],
+        [
+            'password.min' => 'Kata sandi minimal harus :min karakter.',
+            'password.max' => 'Kata sandi maksimal :max karakter.',
+            'validation-password.required_with' => 'Konfirmasi kata sandi wajib diisi.',
+            'validation-password.same' => 'Konfirmasi kata sandi tidak sama dengan kata sandi.',
         ]);
     
         if ($request->filled('password')) {
