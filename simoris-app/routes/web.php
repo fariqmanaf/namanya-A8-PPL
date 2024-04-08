@@ -7,6 +7,7 @@ use App\Http\Controllers\RejectedController;
 use App\Http\Controllers\DinasProfileController;
 use App\Http\Controllers\MantriProfileController;
 use App\Http\Controllers\DashboardDinasController;
+use App\Http\Controllers\MantriFeatureController;
 use App\Http\Controllers\PeternakProfileController;
 use App\Http\Controllers\RegisterMantriController;
 use App\Http\Controllers\RegisterPeternakController;
@@ -66,6 +67,7 @@ Route::middleware('mantri')->group(function(){
     Route::get('/mantri/profile', [MantriProfileController::class, 'show']);
     Route::get('/mantri/profile/edit', [MantriProfileController::class, 'edit']);
     Route::put('/mantri/profile/edit', [MantriProfileController::class, 'update']);
+    Route::get('/mantri/distribusi', [MantriFeatureController::class, 'index']);
 });
 
 Route::middleware('peternak')->group(function(){
