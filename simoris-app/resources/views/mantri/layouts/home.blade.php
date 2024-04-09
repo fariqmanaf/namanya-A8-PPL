@@ -15,5 +15,6 @@
   </form>
   <a href="/mantri/profile"><button>Lihat Profil</button></a>
   <a href="/mantri/profile/edit"><button>Edit Profil</button></a>
+  <a href="/mantri/distribusi"><button>Distribusi Stok</button></a>
 </body>
 </html>

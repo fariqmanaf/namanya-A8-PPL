@@ -1,7 +1,16 @@
-@extends('dinas.layouts.dashboard')
-
-@section('content')
-  <div class="content-container w-[85vw] bg-[#DDF2FD] flex flex-col items-center h-full ml-[15vw]">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="icon" href="{{ asset('assets/logo-simoris.png') }}">
+  <title>{{ $title }}</title>
+  @vite('resources/css/app.css')
+  <style>*{margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif}html{height: 100%};@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');</style>
+</head>
+<body class="bg-[#DDF2FD]">
+  <div class="content-container w-screen bg-[#DDF2FD] flex flex-col items-center h-screen">
     @if($errors->any())
       <div class="alert absolute top-20">
         <ul>
@@ -16,13 +25,13 @@
         <p>{{ session('success') }}</p>
       </div>
     @endif
-    <button id="trigger" class="p-1 mt-5 bg-[#427D9D] text-white w-[150px] font-semibold absolute right-20 top-44 rounded-xl text-center input-stok">+ Tambah Stok</button>
-    <div class="w-[70vw] justify-center items-center flex flex-col ml-20 mt-60 bg-white rounded-2xl">
+    <a href="/home"><p class="relative top-20 mb-5"><  Kembali</p></a>
+    <div class="justify-center items-center flex flex-col mt-20 bg-white rounded-2xl">
       <div class="text flex flex-row mt-5 w-full justify-start ml-10">
-        <p class="font-bold text-slate-700 mt-1 lg:text-xl">Data Stok Semen Beku</p>
-        <input id="search-kecamatan" type="text" class="search-kecamatan p-1 rounded-full ml-14 w-96 bg-gray-200 border border-transparent" placeholder=" Cari Kecamatan....">
+        <p class="font-bold text-slate-700 mt-1">Data Stok Semen Beku</p>
+        <input id="search-kecamatan" type="text" class="p-1 rounded-full ml-14 w-96 bg-gray-200 border border-transparent" placeholder=" Cari Kecamatan....">
       </div>
-      <table class="mt-5 cursor-pointer rounded-xl w-full table-size">
+      <table class="mt-5 cursor-pointer rounded-xl w-full">
         <thead class="rounded-xl">
           <tr class=" text-gray-700 rounded-xl bg-gray-200">
             <th scope="col" class="px-2 py-2 font-medium">No</th>
@@ -144,4 +153,4 @@
         });
     });
   </script>
-@endsection
+</body>
