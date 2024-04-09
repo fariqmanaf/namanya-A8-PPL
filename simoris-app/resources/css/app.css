@@ -44,7 +44,7 @@
 }
 
 .profile {
-    @apply 2xl:mt-[300px];
+    @apply 2xl:mt-[350px];
     @apply 2xl:ml-[20px];
 }
 
