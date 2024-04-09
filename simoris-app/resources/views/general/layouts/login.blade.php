@@ -28,7 +28,7 @@
       <p class="text-base 2xl:text-2xl font-light mt-2 2xl:mt-4 text-[#427D9D]">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer elementum purus quis ultricies luctus. Quisque a risus urna. Cras eget ullamcorper massa, a laoreet enim.</p>
     </div>
 
-    <div class="flex flex-col justify-center items-center size-[27rem] 2xl:size-[38rem] bg-white rounded-3xl shadow-lg">
+    <div class="flex flex-col justify-center items-center size-[27rem] 2xl:size-[38rem] bg-white rounded-2xl 2xl:rounded-3xl shadow-lg">
       <h1 class="text-2xl 2xl:text-4xl font-semibold text-[#427D9D] mb-11">Selamat Datang<span class="text-[#164863]">.</span></h1>
       <form action="" method="POST" class="flex flex-col gap-y-9">
         @csrf
@@ -38,7 +38,7 @@
         @enderror
         <input type="password" class="w-80 h-11 rounded-lg 2xl:w-96 2xl:h-14 2xl:rounded-xl" name="password" placeholder="*********" required>
         <a href="" class="text-xs 2xl:text-base font-medium text-black/50 hover:text-black/65 right-0 text-right -mt-7">Lupa Password?</a>
-        <button type="submit" class="p-2 bg-[#427D9D] hover:bg-[#33617a] ease-in-out duration-100 text-white text-lg 2xl:text-2xl font-semibold w-80 h-11 rounded-lg 2xl:w-96 2xl:h-14 2xl:rounded-xl">Masuk</button>
+        <button type="submit" class="login-btn">Masuk</button>
       </form>
       <div class="flex flex-col justify-center items-center mt-8">
         <p class="text-black/60 text-xs 2xl:text-lg font-medium">Belum punya akun?</p>

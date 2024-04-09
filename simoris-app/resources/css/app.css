@@ -59,3 +59,7 @@
     @apply 2xl:left-[240px];
     @apply 2xl:bottom-20;
 }
+
+.login-btn {
+    @apply p-2 bg-[#427D9D] hover:bg-[#33617a] ease-in-out duration-100 text-white text-lg 2xl:text-2xl font-semibold w-80 h-11 rounded-lg 2xl:w-96 2xl:h-14 2xl:rounded-xl;
+}
