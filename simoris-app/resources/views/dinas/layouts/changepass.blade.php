@@ -23,19 +23,19 @@
     {{ session('success') }}
   </div>
   @endif
-  <a href="/dashboard" class="-ml-[400px] mb-3 font-semibold text-slate-600">< Kembali</a>
+  <a href="/dashboard" class="-ml-[400px] mb-3 font-semibold text-slate-600 2xl:-ml-[500px]">< Kembali</a>
   <div class="form-container flex flex-col bg-white h-[550px] w-[500px] justify-start items-center rounded-2xl shadow-xl">
     <p class="text-center font-bold text-xl my-8">PROFIL</p>
     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT51WzyjFs7ajVLdsDpsea3951e-iN4zWqyOWskJ7Woyw&s" alt="Logo Dinas" class="h-36 w-36 rounded-full mb-5">
-    <p class="font-semibold mb-5 text-sm">Dinas Peternakan Dan Ketahanan Pangan Jember</p>
-    <p class="-ml-[300px] text-sm mb-2">Password</p>
-    <p id="button" class="w-96 shadow-[2px_2px_2px_2px_rgba(0,0,0,0.2)] p-2 rounded-full text-sm flex justify-between cursor-pointer">Ubah Password <span>></span></p>
+    <p class="font-semibold mb-5 text-sm 2xl:text-lg">Dinas Peternakan Dan Ketahanan Pangan Jember</p>
+    <p class="-ml-[300px] text-sm mb-2 2xl:text-lg 2xl:-ml-[350px]">Password</p>
+    <p id="button" class="button-pw w-96 shadow-[2px_2px_2px_2px_rgba(0,0,0,0.2)] p-2 rounded-full text-sm flex justify-between cursor-pointer">Ubah Password <span>></span></p>
     <form action="" method="post" class="flex justify-center flex-col items-center">
       @method('PUT')
       @csrf
-      <input id="input1" name="password" class="invisible w-96 -mt-[38px] rounded-full text-sm my-3" type="password" placeholder="Inser New Password Here">
-      <input id="input2" type="password" class="invisible w-96 -mt-[50px] rounded-full text-sm" name="validation-password" placeholder="Confirmation Your Password">
-      <button id="input3" type="submit" class="invisible p-1 w-40 mt-8 bg-[#DDF2FD] rounded-full text-slate-600 text-sm">Submit</button>
+      <input id="input1" name="password" class="invisible w-96 -mt-[38px] rounded-full text-sm my-3 2xl:w-[450px] 2xl:text-lg" type="password" placeholder="Inser New Password Here">
+      <input id="input2" type="password" class="invisible w-96 -mt-[50px] rounded-full text-sm 2xl:w-[450px] 2xl:text-lg" name="validation-password" placeholder="Confirmation Your Password">
+      <button id="input3" type="submit" class="invisible p-1 w-40 mt-8 bg-[#DDF2FD] rounded-full text-slate-600 text-sm 2xl:p-2">Submit</button>
     </form>
   </div>
 </body>
