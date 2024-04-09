@@ -60,8 +60,12 @@
     @apply 2xl:bottom-20;
 }
 
-
 .button-pw{
     @apply 2xl:w-[450px];
     @apply 2xl:text-base;
+}
+
+.form-container{
+    @apply 2xl:w-[600px];
+    @apply 2xl:h-[600px];
 }
