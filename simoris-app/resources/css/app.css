@@ -60,7 +60,7 @@
     @apply 2xl:bottom-20;
 }
 
-.button-pw{
+.button-pw {
     @apply 2xl:w-[450px];
     @apply 2xl:text-base;
 }
