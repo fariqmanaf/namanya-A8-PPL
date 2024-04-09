@@ -1,7 +1,7 @@
 @extends('general.layouts.main')
 
 @section('content')
-  <div class="formcontainer h-[100dvh] w-screen flex flex-row justify-center items-center bg-[#DDF2FD] gap-48">
+  <div class="formcontainer h-[100dvh] w-full flex flex-row justify-center items-center bg-[#DDF2FD] gap-48">
     @if($errors->any())
       <div class="alert">
         <ul>
@@ -23,9 +23,9 @@
     @endif
 
     <div class="flex flex-col w-[864px] inset-x-7">
-      <h1 class="text-7xl font-bold tracking-widest text-[#164863]">SIMORIS</h1>
-      <h2 class="text-4xl font-semibold text-[#164863]">Sistem Monitoring Distribusi Inseminasi Buatan</h2>
-      <p class="text-2xl font-light mt-3 text-[#427D9D]">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer elementum purus quis ultricies luctus. Quisque a risus urna. Cras eget ullamcorper massa, a laoreet enim.</p>
+      <h1 class="text-7xl font-bold tracking-widest text-[#164863] -mb-2">SIMORIS</h1>
+      <h2 class="text-4xl font-medium text-[#164863]">Sistem Monitoring Distribusi Inseminasi Buatan</h2>
+      <p class="text-2xl font-light mt-4 text-[#427D9D]">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer elementum purus quis ultricies luctus. Quisque a risus urna. Cras eget ullamcorper massa, a laoreet enim.</p>
     </div>
 
     <div class="flex flex-col justify-center items-center size-[63dvh] bg-white rounded-3xl shadow-lg">
