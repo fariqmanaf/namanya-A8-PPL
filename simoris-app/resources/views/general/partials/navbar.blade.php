@@ -1,4 +1,4 @@
-<nav class="flex flex-row justify-left items-center h-14 2xl:h-20 w-screen shadow-2xl">
+<nav class="flex flex-row justify-left items-center h-14 2xl:h-20 w-screen shadow-md relative">
   <img src="{{asset('assets/logo.svg')}}" alt="Simoris" class="ml-10 mr-40 h-8">
   <!-- <p class="font-extrabold text-xl absolute left-32">Simoris</p> -->
   <ul class="flex flex-row gap-x-16 text-sm 2xl:text-lg font-semibold">

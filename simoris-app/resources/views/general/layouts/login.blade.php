@@ -1,7 +1,7 @@
 @extends('general.layouts.main')
 
 @section('content')
-  <div class="formcontainer h-[100dvh] w-full flex flex-row justify-center items-center bg-[#DDF2FD] gap-x-24 2xl:gap-x-48 inset-x-0 px-10">
+  <div class="formcontainer h-[100dvh] w-screen flex flex-row justify-center items-center bg-[#DDF2FD] gap-x-24 2xl:gap-x-48 inset-x-0 px-10">
     @if($errors->any())
       <div class="alert">
         <ul>
