@@ -61,3 +61,12 @@
     @apply 2xl:bottom-20;
 }
 
+.form-container{
+    @apply 2xl:w-[600px];
+    @apply 2xl:h-[600px];
+}
+
+.button-pw{
+    @apply 2xl:w-[450px];
+    @apply 2xl:text-base;
+}

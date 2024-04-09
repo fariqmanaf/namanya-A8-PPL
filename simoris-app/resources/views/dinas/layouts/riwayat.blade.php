@@ -4,10 +4,10 @@
   <div class="content-container w-[85vw] flex flex-col items-center h-full ml-[15vw]">
     <div class="container-table w-[70vw] justify-center items-center flex flex-col ml-20 mt-16 bg-white rounded-2xl">
       <div class="text flex flex-row mt-5 w-full justify-start ml-10">
-        <p class="font-bold text-slate-700 mt-1">Riwayat</p>
-        <input id="search-tanggal" type="text" class="p-1 rounded-full ml-40 text-sm w-96 bg-gray-200 border border-transparent" placeholder="Cari Tanggal....">
+        <p class="font-bold text-slate-700 mt-1 2xl:text-xl">Riwayat</p>
+        <input id="search-tanggal" type="text" class="p-1 rounded-full ml-40 text-sm w-96 bg-gray-200 border border-transparent 2xl:p-2" placeholder=" Cari Tanggal....">
       </div>
-      <table class="mt-5 cursor-pointer rounded-xl w-full">
+      <table class="mt-5 cursor-pointer rounded-xl w-full 2xl:text-lg">
         <thead>
           <tr class="text-gray-700 rounded-xl bg-gray-200">
             <th scope="col" class="px-2 py-2 font-medium"></th>
@@ -29,8 +29,9 @@
             @foreach ($data as $index => $item)
               @foreach ($kecamatan as $kecIndex => $kecItem)
                 @if ($superitem->periode === $item->periode && $kecItem->id === $item->kecamatan_id)
-                  <tr id="sub-row-{{ $superindex }}-{{ $index }}" class="hidden text-center text-sm border-b border-gray-300 clickable-subrow bg-gray-200" data-index="{{ $index }}">
-                    <td class="px-4 py-4" colspan="2">{{ $kecItem->kecamatan }}</td>
+                  <tr id="sub-row-{{ $superindex }}-{{ $index }}" class="2xl:text-lg hidden text-center text-sm border-b border-gray-300 clickable-subrow bg-gray-200" data-index="{{ $index }}">
+                    <td class="px-4 py-4"></td>
+                    <td class="px-4 py-4">{{ $kecItem->kecamatan }}</td>
                     <td class="px-4 py-4">{{ $item->total_stok }}</td>
                     <td class="px-4 py-4">{{ $item->sisa_stok }}</td>
                     <td class="px-4 py-4"><button id="subdrop-{{ $index }}" class="bg-[#9BBEC8] rounded-xl text-white px-1">></button></td>
