@@ -65,7 +65,17 @@
     @apply 2xl:text-base;
 }
 
-.form-container{
+.form-container {
     @apply 2xl:w-[600px];
     @apply 2xl:h-[600px];
+}
+
+.btn-login {
+    @apply p-2 bg-[#427D9D] hover:bg-[#33617a] ease-in-out duration-100 text-white text-lg 2xl:text-2xl font-semibold w-80 h-11 rounded-lg 2xl:w-96 2xl:h-14 2xl:rounded-xl;
+}
+
+.btn-choose-role {
+    @apply flex flex-col justify-center items-center;
+    @apply bg-white gap-2 size-36 rounded-xl 2xl:size-52 2xl:rounded-2xl shadow-lg border-2 border-black/5 hover:bg-gray-50;
+    @apply text-[#427D9D] text-xl font-semibold 2xl:text-2xl text-center;
 }
