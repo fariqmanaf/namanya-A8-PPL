@@ -26,18 +26,24 @@ class RegisterMantriController extends Controller
     }
 
     public function mregist3(Kecamatan $kecamatan) {
-        return view('mantri.layouts.register-3', [
-            'kecamatan' => $kecamatan->all(),
-        ]);
+            $kecamatan = $kecamatan->all();
+
+            return view('mantri.layouts.register-3', compact('kecamatan'));
     }
 
     public function storeMantri1(Request $request){
+
         $validatedData = $request->validate([
             'email' => 'required|email:dns|unique:user_accounts',
             'password' => 'required|min:8|max:255',
+            'verifiedpw' => 'required',
             'roles_id' => 'required',
             'status' => 'required',
         ]);
+
+        if($validatedData['password'] !== $validatedData['verifiedpw']){
+            return redirect('/register/mantri/step-1')->withErrors('Password Tidak Sama')->withInput();
+        }
 
         $defaultStatus = 'pending';
         $defaultRolesId = 2;
@@ -64,6 +70,8 @@ class RegisterMantriController extends Controller
             'detail' => 'required',
         ]);
 
+        session()->put(session()->get('registration.email'));
+        session()->put(session()->get('registration.password'));
         session()->put('registration.nama', $validatedData['nama']);
         session()->put('registration.nik', $validatedData['nik']);
         session()->put('registration.tanggal-lahir', $validatedData['tanggal-lahir']);
@@ -77,6 +85,18 @@ class RegisterMantriController extends Controller
     }
 
     public function storeMantri3(Request $request){
+        
+        session()->put(session()->get('registration.email'));
+        session()->put(session()->get('registration.password'));
+        session()->put(session()->get('registration.nama'));
+        session()->put(session()->get('registration.nik'));
+        session()->put(session()->get('registration.tanggal-lahir'));
+        session()->put(session()->get('registration.notelp'));
+        session()->put(session()->get('registration.kabupaten'));
+        session()->put(session()->get('registration.kecamatan'));
+        session()->put(session()->get('registration.kelurahan'));
+        session()->put(session()->get('registration.detail'));
+
         $validatedData = $request->validate([
             'wilayah_kerja' => 'required',
             'no_sertifikasi' => 'required',

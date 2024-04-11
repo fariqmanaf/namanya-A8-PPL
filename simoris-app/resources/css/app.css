@@ -44,7 +44,7 @@
 }
 
 .profile {
-    @apply 2xl:mt-[350px];
+    @apply 2xl:mt-[250px];
     @apply 2xl:ml-[20px];
 }
 
@@ -78,4 +78,54 @@
     @apply flex flex-col justify-center items-center;
     @apply bg-white gap-2 size-36 rounded-xl 2xl:size-52 2xl:rounded-2xl shadow-lg border-2 border-black/5 hover:bg-gray-50;
     @apply text-[#427D9D] text-xl font-semibold 2xl:text-2xl text-center;
+}
+
+.form-regist1{
+    @apply 2xl:w-[610px];
+    @apply 2xl:h-[580px];
+}
+
+.form-regist2{
+    @apply 2xl:w-[610px];
+    @apply 2xl:h-[750px];
+}
+
+.form-regist3{
+    @apply 2xl:w-[610px];
+    @apply 2xl:h-[720px];
+}
+
+.input-regist1{
+    @apply 2xl:p-2;
+    @apply 2xl:w-[469px];
+    @apply 2xl:h-[62px];
+    @apply 2xl:text-xl;
+}
+
+.input-regist2{
+    @apply 2xl:p-2;
+    @apply 2xl:w-[469px];
+    @apply 2xl:h-[62px];
+    @apply 2xl:text-xl;
+}
+
+.cut-regist2{
+    @apply 2xl:p-2;
+    @apply 2xl:w-[225px];
+    @apply 2xl:h-[62px];
+    @apply 2xl:text-xl;
+}
+
+.input-regist3{
+    @apply 2xl:p-2;
+    @apply 2xl:w-[469px];
+    @apply 2xl:h-[62px];
+    @apply 2xl:text-xl;
+}
+
+.cut-regist3{
+    @apply 2xl:p-2;
+    @apply 2xl:w-[225px];
+    @apply 2xl:h-[62px];
+    @apply 2xl:text-xl;
 }

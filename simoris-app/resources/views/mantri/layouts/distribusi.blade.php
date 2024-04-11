@@ -25,8 +25,8 @@
         <p>{{ session('success') }}</p>
       </div>
     @endif
-    <a href="/home"><p class="relative top-20 mb-5"><  Kembali</p></a>
-    <div class="justify-center items-center flex flex-col mt-20 bg-white rounded-2xl">
+    <a href="/home"><p class="relative left-[550px] top-20 mb-5 2xl:text-xl"><  Kembali</p></a>
+    <div class="justify-center items-center flex flex-col mt-20 bg-white rounded-2xl w-[70%] 2xl:text-lg">
       <div class="text flex flex-row mt-5 w-full justify-start ml-10">
         <p class="font-bold text-slate-700 mt-1">Data Stok Semen Beku</p>
         <input id="search-kecamatan" type="text" class="p-1 rounded-full ml-14 w-96 bg-gray-200 border border-transparent" placeholder=" Cari Kecamatan....">

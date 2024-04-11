@@ -6,14 +6,29 @@
       <p class="-mt-3 text-[10px]">Sistem Monitoring Distribusi Semen Beku</p>
     </div>
   </div>
-  <div class="menu-container flex flex-col text-[15px] font-semibold mt-10 gap-5">
-    <a href="/dashboard/" class="menu rounded-xl px-12 py-3 text-[#164863] hover:bg-[#C6F2FF] {{ ($title === "Dashboard") ? 'bg-[#C6F2FF]' : '' }}"><button>Monitoring Distribusi</button></a>
-    <a href="/dashboard/riwayat" class="menu rounded-xl px-12 py-3 text-[#164863] hover:bg-[#C6F2FF] {{ ($title === "Riwayat Stok") ? 'bg-[#C6F2FF]' : '' }}"><button>Riwayat Distribusi</button></a>
-    <a class="menu rounded-xl px-12 py-3 text-[#164863] hover:bg-[#C6F2FF] {{ ($title === "Ubah Password") ? 'bg-[#C6F2FF]' : '' }}" href=""><button>Riwayat Pengajuan</button></a>
-    <a class="menu rounded-xl px-12 py-3 text-[#164863] hover:bg-[#C6F2FF] {{ ($title === "Ubah Password") ? 'bg-[#C6F2FF]' : '' }}" href=""><button>Verifikasi Pengajuan</button></a>
-    <a class="menu rounded-xl px-12 py-3 text-[#164863] hover:bg-[#C6F2FF] {{ ($title === "Ubah Password") ? 'bg-[#C6F2FF]' : '' }}" href=""><button>Data Mantri</button></a>
+  <div class="menu-container w-full flex flex-col items-center font-semibold mt-10 gap-5">
+    <div class="menu-1 w-[90%] flex menu rounded-xl px-12 py-3 2xl:py-5 text-[#164863] hover:bg-[#C6F2FF] {{ ($title === "Dashboard") ? 'bg-[#C6F2FF]' : '' }}">
+      <img class="-ml-8 mr-3 w-5 h-5 2xl:w-8 2xl:h-8" src="{{asset('/assets/icon/1.svg')}}">
+      <a href="/dashboard/" class="w-full text-[14px] 2xl:text-lg">Monitoring Distribusi</a>
+    </div>
+    <div class="menu-2 w-[90%] flex menu rounded-xl px-12 py-3 2xl:py-5 text-[#164863] hover:bg-[#C6F2FF] {{ ($title === "Riwayat Stok") ? 'bg-[#C6F2FF]' : '' }}">
+      <img class="-ml-8 mr-3 w-5 h-5 2xl:w-8 2xl:h-8" src="{{asset('/assets/icon/2.svg')}}">
+      <a href="/dashboard/riwayat" class="w-full text-[14px] 2xl:text-lg">Riwayat Distribusi</a>
+    </div>
+    <div class="menu-3 w-[90%] flex menu rounded-xl px-12 py-3 2xl:py-5 text-[#164863] hover:bg-[#C6F2FF] {{ ($title === "Riwayat Pengajuan") ? 'bg-[#C6F2FF]' : '' }}">
+      <img class="-ml-8 mr-3 w-5 h-5 2xl:w-8 2xl:h-8" src="{{asset('/assets/icon/3.svg')}}">
+      <a href="/dashboard/" class="w-full text-[14px] 2xl:text-lg">Riwayat Pengajuan</a>
+    </div>
+    <div class="menu-4 w-[90%] flex menu rounded-xl px-12 py-3 2xl:py-5 text-[#164863] hover:bg-[#C6F2FF] {{ ($title === "Verifikasi Pengajuan") ? 'bg-[#C6F2FF]' : '' }}">
+      <img class="-ml-8 mr-3 w-5 h-5 2xl:w-8 2xl:h-8" src="{{asset('/assets/icon/4.svg')}}">
+      <a href="/dashboard/" class="w-full text-[14px] 2xl:text-lg">Verifikasi Pengajuan</a>
+    </div>
+    <div class="menu-5 w-[90%] flex menu rounded-xl px-12 py-3 2xl:py-5 text-[#164863] hover:bg-[#C6F2FF] {{ ($title === "Data Mantri") ? 'bg-[#C6F2FF]' : '' }}">
+      <img class="-ml-8 mr-3 w-5 h-5 2xl:w-8 2xl:h-8" src="{{asset('/assets/icon/5.svg')}}">
+      <a href="/dashboard/" class="w-full text-[14px] 2xl:text-lg">Data Mantri</a>
+    </div>
   </div>
-  <div id="profile" class="profile flex mt-[150px] cursor-pointer h-24 w-full">
+  <div id="profile" class="profile flex mt-[170px] cursor-pointer h-24 w-full">
     <img class="dinas h-10 w-10 rounded-full ml-3" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT51WzyjFs7ajVLdsDpsea3951e-iN4zWqyOWskJ7Woyw&s" alt="profile" class="w-20 h-20 rounded-full">
     <div class="text ml-2">
       <p class="font-bold text-[13px] 2xl:text-base">Dinas Peternakan Jember</p>

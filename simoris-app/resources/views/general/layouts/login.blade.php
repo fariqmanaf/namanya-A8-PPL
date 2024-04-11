@@ -12,12 +12,12 @@
       </div>
     @endif
     @if(session()->has('success'))
-      <div class="p-1 bg-slate-400">
+      <div class="p-1 bg-slate-400 z-10 absolute top-20">
         {{ session('success') }}
       </div>
     @endif
     @if(session()->has('update'))
-      <div class="p-1 bg-slate-400">
+      <div class="p-1 bg-slate-400 z-10 absolute top-20">
         {{ session('update') }}
       </div>
     @endif
@@ -35,9 +35,6 @@
       <form action="" method="POST" class="flex flex-col gap-y-9">
         @csrf
         <input type="email" class="@error('email') is-invalid @enderror w-80 h-11 rounded-lg 2xl:w-96 2xl:h-14 2xl:rounded-xl" name="email" placeholder="example@mail.com" value="{{ old('email') }}" autofocus required>
-        @error('email')
-        <div class="invalid-feedback">{{ $message }}</div>
-        @enderror
         <input type="password" class="w-80 h-11 rounded-lg 2xl:w-96 2xl:h-14 2xl:rounded-xl" name="password" placeholder="*********" required>
         <a href="" class="text-xs 2xl:text-base font-medium text-black/50 hover:text-black/65 right-0 text-right -mt-7">Lupa Password?</a>
         <button type="submit" class="btn-login">Masuk</button>

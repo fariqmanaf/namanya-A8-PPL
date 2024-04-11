@@ -19,7 +19,7 @@
     <p class="font-bold mt-20 text-xl">PREVIEW</p>
     <div class="table-container container-table w-[70vw] justify-center items-center flex flex-col mt-6 ml-20 bg-white rounded-2xl">
       <div class="button flex mt-4 justify-center w-full">
-        <p class="mr-96 mt-2">Data Stok Semen Beku</p>
+        <p class="mr-96 mt-2 2xl:mr-[750px] 2xl:text-lg">Data Stok Semen Beku</p>
         <a href="/dashboard" class="p-1 mr-2 bg-red-500 text-white w-[150px] rounded-xl text-center">Batal</a>
         <form action="" method="POST">
           @csrf
@@ -31,7 +31,7 @@
           <button class="p-1 rounded-xl text-center bg-[#427D9D] text-white w-[150px]" type="submit">Submit</button>
         </form>
       </div>
-      <table class="mt-4 cursor-pointer rounded-xl w-full font-light">
+      <table class="mt-4 cursor-pointer rounded-xl w-full font-light 2xl:text-lg">
         <thead>
           <tr class="text-gray-700 rounded-xl bg-gray-200">
             <th scope="col" class="px-2 py-2 font-normal">No</th>
