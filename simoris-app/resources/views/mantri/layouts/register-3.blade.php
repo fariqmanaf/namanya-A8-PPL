@@ -44,7 +44,7 @@
               </label>
             </div> 
             <input type="hidden" name="is_accepted_suratizin" value="random">
-            <button type="submit" class="input-regist3 p-2 w-[334px] bg-[#427D9D] text-white border-transparent rounded-xl">Register</button>
+            <button type="submit" class="input-regist3 p-2 w-[334px] bg-[#427D9D] text-white border-transparent rounded-xl">Daftar</button>
         </div>
       </form>
     </div>

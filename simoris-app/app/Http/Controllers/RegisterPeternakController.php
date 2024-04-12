@@ -45,6 +45,10 @@ class RegisterPeternakController extends Controller
     }
 
     public function storePeternak2(Request $request){
+
+        session()->put(session()->get('registration.email'));
+        session()->put(session()->get('registration.password'));
+        
         $validatedData = $request->validate([
             'nama' => 'required|max:255|min:3',
             'nik' => 'required|unique:individuals',
