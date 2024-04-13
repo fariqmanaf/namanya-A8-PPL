@@ -29,6 +29,10 @@ class RegisterPeternakController extends Controller
             'password' => 'required|min:8|max:255',
             'roles_id' => 'required',
             'status' => 'required',
+        ], [
+            'email.required' => 'Email harus diisi.',
+            'email.email' => 'Format email tidak valid.',
+            'email.unique' => 'Akun Telah Terdaftar, Silahkan Login'
         ]);
 
         $defaultStatus = 'enable';
@@ -51,7 +55,7 @@ class RegisterPeternakController extends Controller
         
         $validatedData = $request->validate([
             'nama' => 'required|max:255|min:3',
-            'nik' => 'required|unique:individuals',
+            'nik' => 'required|max:16|min:16|unique:individuals',
             'tanggal-lahir' => 'required|date',
             'notelp' => 'required|numeric',
             'kabupaten' => 'required',
@@ -72,8 +76,7 @@ class RegisterPeternakController extends Controller
             'name' => $validatedData['nama'],
             'tgl_lahir' => $validatedData['tanggal-lahir'],
             'no_telp' => $validatedData['notelp'],
-            'alamats_id' => $alamat,
-            'wilayah_kerja' => ''
+            'alamats_id' => $alamat
         ]);
 
         UserAccounts::create([

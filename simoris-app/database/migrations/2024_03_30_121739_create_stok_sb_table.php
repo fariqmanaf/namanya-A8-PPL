@@ -17,9 +17,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('kecamatan_id')->nullable();
             $table->foreignId('jenis_semen_id')->nullable();
-            $table->integer('jumlah')->nullable();
-            $table->integer('used')->nullable();
+            $table->integer('jumlah');
+            $table->integer('used');
             $table->date('periode');
+            $table->string('status');
         });
     }
 

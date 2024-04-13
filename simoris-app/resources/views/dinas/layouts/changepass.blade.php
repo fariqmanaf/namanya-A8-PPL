@@ -10,18 +10,18 @@
 </head>
 <body class="flex flex-col h-screen bg-[#DDF2FD] items-center justify-center">
   @if($errors->any())
-  <div class="alert absolute top-10 left-10 w-60 text-sm bg-red-500 text-white">
-    <ul>
-      @foreach($errors->all() as $error)
-      <li class="mb-2 ml-2">{{ "- ".$error }}</li>
-      @endforeach
-    </ul>
-  </div>
+    <div class="alert absolute top-10 left-10 w-60 text-sm bg-red-500 text-white rounded-xl">
+      <ul>
+        @foreach($errors->all() as $error)
+        <li class="mb-2 ml-2">{{ "- ".$error }}</li>
+        @endforeach
+      </ul>
+    </div>
   @endif
   @if(session()->has('success'))
-  <div class="bg-slate-400">
-    {{ session('success') }}
-  </div>
+    <div class="p-1 alert absolute top-10 left-10 w-60 text-sm bg-green-500 text-white rounded-xl">
+      {{ session('success') }}
+    </div>
   @endif
   <a href="/dashboard" class="-ml-[400px] mb-3 font-semibold text-slate-600 2xl:-ml-[500px]">< Kembali</a>
   <div class="form-container flex flex-col bg-white h-[550px] w-[500px] justify-start items-center rounded-2xl shadow-xl">
@@ -33,8 +33,8 @@
     <form action="" method="post" class="flex justify-center flex-col items-center">
       @method('PUT')
       @csrf
-      <input id="input1" name="password" class="invisible w-96 -mt-[38px] rounded-full text-sm my-3 2xl:w-[450px] 2xl:text-lg" type="password" placeholder="Inser New Password Here">
-      <input id="input2" type="password" class="invisible w-96 -mt-[50px] rounded-full text-sm 2xl:w-[450px] 2xl:text-lg" name="validation-password" placeholder="Confirmation Your Password">
+      <input id="input1" name="old_password" class="invisible w-96 -mt-[38px] rounded-full text-sm my-3 2xl:w-[450px] 2xl:text-lg" type="password" placeholder="Masukkan Password lama">
+      <input id="input2" type="password" class="invisible w-96 -mt-[50px] rounded-full text-sm 2xl:w-[450px] 2xl:text-lg" name="new_password" placeholder="Masukkan Password Baru">
       <button id="input3" type="submit" class="invisible p-1 w-40 mt-8 bg-[#DDF2FD] rounded-full text-slate-600 text-sm 2xl:p-2">Submit</button>
     </form>
   </div>

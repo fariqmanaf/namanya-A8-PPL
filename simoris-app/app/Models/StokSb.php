@@ -35,7 +35,7 @@ class StokSb extends Model
     /**
      * @var array
      */
-    protected $fillable = ['kecamatan_id', 'jenis_semen_id', 'jumlah', 'used', 'periode'];
+    protected $fillable = ['kecamatan_id', 'jenis_semen_id', 'jumlah', 'used', 'periode', 'status'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

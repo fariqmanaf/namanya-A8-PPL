@@ -8,6 +8,7 @@ use App\Models\Kelurahan;
 use App\Models\SuratIzin;
 use App\Models\Sertifikasi;
 use App\Models\UserAccounts;
+use App\Models\WilayahKerja;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -61,7 +62,7 @@ class RegisterMantriController extends Controller
     public function storeMantri2(Request $request){
         $validatedData = $request->validate([
             'nama' => 'required|max:255|min:3',
-            'nik' => 'required|unique:individuals',
+            'nik' => 'required|max:16|min:16|unique:individuals',
             'tanggal-lahir' => 'required|date',
             'notelp' => 'required|numeric',
             'kabupaten' => 'required',
@@ -134,8 +135,12 @@ class RegisterMantriController extends Controller
             'name' => session()->get('registration.nama'),
             'tgl_lahir' => session()->get('registration.tanggal-lahir'),
             'no_telp' => session()->get('registration.notelp'),
-            'alamats_id' => $alamat,
-            'wilayah_kerja' => $validatedData['wilayah_kerja']
+            'alamats_id' => $alamat
+        ]);
+
+        WilayahKerja::create([
+            'individuals_id' => $individual,
+            'kecamatan_id' => $validatedData['wilayah_kerja']
         ]);
 
         UserAccounts::create([

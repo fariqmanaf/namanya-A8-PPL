@@ -26,7 +26,7 @@
     @apply 2xl:top-80;
     @apply 2xl:w-[600px];
     @apply 2xl:text-lg;
-    @apply 2xl:h-[360px];
+    @apply 2xl:h-[400px];
 }
 
 .logo {

@@ -3,7 +3,7 @@
 @section('content')
   <div class="content-container w-[85vw] bg-[#DDF2FD] flex flex-col items-center h-full ml-[15vw]">
     @if($errors->any())
-      <div class="alert absolute top-20">
+      <div class="alert absolute top-20 z-10">
         <ul>
           @foreach($errors->all() as $error)
             <li>{{ $error }}</li>
@@ -12,15 +12,16 @@
       </div>
     @endif
     @if(session('success'))
-      <div class="alert absolute top-20">
+      <div class="alert absolute top-20 z-10">
         <p>{{ session('success') }}</p>
       </div>
     @endif
     <button id="trigger" class="p-1 mt-5 bg-[#427D9D] text-white w-[150px] font-semibold absolute right-20 top-44 rounded-xl text-center input-stok">+ Tambah Stok</button>
     <div class="w-[70vw] justify-center items-center flex flex-col ml-20 mt-60 bg-white rounded-2xl">
       <div class="text flex flex-row mt-5 w-full justify-start ml-10">
-        <p class="font-bold text-slate-700 mt-1 lg:text-xl">Data Stok Semen Beku</p>
+        <p class="font-bold text-slate-700 mt-1 2xl:text-xl">Data Stok Semen Beku</p>
         <input id="search-kecamatan" type="text" class="search-kecamatan p-1 rounded-full ml-14 w-96 bg-gray-200 border border-transparent" placeholder=" Cari Kecamatan....">
+        <p class="text-slate-700 mt-2 ml-40 2xl:text-xl 2xl:ml-96">{{ Carbon\Carbon::parse($data[0]->periode)->formatLocalized('%d %B %Y') }}</p>
       </div>
       <table class="mt-5 cursor-pointer rounded-xl w-full table-size">
         <thead class="rounded-xl">
@@ -48,11 +49,11 @@
                     @foreach ($jenis_semen as $jenisIndex => $jenisItem)
                       @if($kecamatanItem->id === $subItem->kecamatan_id && $kecamatanIndex === $kecIndex && $jenisItem->id === $subItem->jenis_semen_id)
                           <tr id="sub-table-{{ $index }}-{{ $subIndex }}" class="hidden text-center sub-table bg-gray-200 border-b border-gray-300">
-                            <td class="px-2 py-2"></td>
-                            <td class="px-2 py-2">{{ $jenisItem->jenis_semen }}</td>
-                            <td class="px-2 py-2">{{ $subItem->jumlah }}</td>
-                            <td class="px-2 py-2">{{ $subItem->sisa_stok }}</td>
-                            <td class="px-2 py-2"></td>
+                            <td id="child-{{ $index }}" class="px-2 py-2"></td>
+                            <td id="child-{{ $index }}" class="px-2 py-2">{{ $jenisItem->jenis_semen }}</td>
+                            <td id="child-{{ $index }}" class="px-2 py-2">{{ $subItem->jumlah }}</td>
+                            <td id="child-{{ $index }}" class="px-2 py-2">{{ $subItem->sisa_stok }}</td>
+                            <td id="child-{{ $index }}" class="px-2 py-2"></td>
                           </tr>
                       @endif
                     @endforeach
@@ -65,7 +66,7 @@
       </table>
     </div>
   </div>
-  <div class="modal hidden z-1 w-[500px] h-80 fixed left-[35%] top-48 bg-white rounded-3xl shadow-xl">
+  <div class="modal hidden z-1 w-[500px] h-96 fixed left-[35%] top-40 bg-white rounded-3xl shadow-xl">
       <span class="close-button cursor-pointer font-bold text-2xl rounded-full ml-3">&times;</span>
       <div class="container-modal flex flex-col justify-center items-center">
         <form action="" method="POST">
@@ -93,7 +94,16 @@
               <input type="text" name="Limosin" id="Limosin" class="w-[100px] h-10 rounded-xl bg-gray-200 border-transparent text-center">
             </div>
           </div>
-          <div class="button-container mt-5 flex justify-center">
+
+          <div class="sisa-stok mt-5 flex flex-row gap-3">
+            @foreach($riwayatStok as $riwayat)
+              <div class="text-center flex flex-row">
+                <input value="{{ $riwayat->sisa_stok }}" readonly type="text" name="sisa-{{ $riwayat->jenis_semen_id }}" class="w-[100px] h-10 rounded-xl bg-gray-200 border-transparent text-center">
+              </div>
+            @endforeach
+          </div>
+
+          <div class="button-container mt-3 flex justify-center">
             <button type="submit" class="bg-[#427D9D] text-white px-5 py-2 rounded-xl w-[300px] mt-3">Submit</button>
           </div>
         </form>
@@ -117,11 +127,14 @@
     searchInput.addEventListener('input', function() {
         const searchValue = this.value.toLowerCase();
         const tableRows = document.querySelectorAll('tbody tr.clickable-row');
+
         tableRows.forEach(row => {
             const kecamatanName = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
             if (kecamatanName.includes(searchValue)) {
-                row.style.display = 'table-row';}
-            else {row.style.display = 'none';}
+              row.style.display = 'table-row';}
+            else {
+              row.style.display = 'none';
+            }
         });
     });
 

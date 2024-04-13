@@ -55,7 +55,7 @@ class LoginController extends Controller
       }
 
       else{
-        return redirect('')->withErrors('Invalid credentials')->withInput();
+        return redirect('')->withErrors('Data Yang Di Inputkan Salah')->withInput();
       }
     }
 

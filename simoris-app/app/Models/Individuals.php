@@ -36,7 +36,7 @@ class Individuals extends Model
     /**
      * @var array
      */
-    protected $fillable = ['id', 'nik', 'name', 'tgl_lahir', 'no_telp', 'alamats_id', 'wilayah_kerja'];
+    protected $fillable = ['id', 'nik', 'name', 'tgl_lahir', 'no_telp', 'alamats_id'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -68,6 +68,14 @@ class Individuals extends Model
     public function stokMantris()
     {
         return $this->hasMany(StokMantri::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function wilayah_kerja()
+    {
+        return $this->hasMany(WilayahKerja::class);
     }
 
     /**

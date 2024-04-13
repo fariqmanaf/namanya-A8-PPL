@@ -7,6 +7,7 @@ use App\Http\Controllers\RejectedController;
 use App\Http\Controllers\DinasProfileController;
 use App\Http\Controllers\MantriProfileController;
 use App\Http\Controllers\DashboardDinasController;
+use App\Http\Controllers\DataMantriController;
 use App\Http\Controllers\MantriFeatureController;
 use App\Http\Controllers\PeternakProfileController;
 use App\Http\Controllers\RegisterMantriController;
@@ -60,6 +61,7 @@ Route::middleware('dinas')->group(function(){
     Route::get('/dashboard/riwayat', [DashboardDinasController::class, 'riwayat']);
     Route::get('/dashboard/preview', [DashboardDinasController::class, 'preview']);
     Route::post('/dashboard/preview', [DashboardDinasController::class, 'previewpost']);
+    Route::get('dashboard/data-mantri', [DataMantriController::class, 'index']);
 });
 
 Route::middleware('mantri')->group(function(){

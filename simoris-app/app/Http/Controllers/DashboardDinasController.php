@@ -18,7 +18,8 @@ class DashboardDinasController extends Controller
     public function index()
     {
         $latestPeriod = StokSb::select('periode')->orderByDesc('periode')->value('periode');
-    
+        $previousPeriod = StokSb::select('periode')->groupBy('periode')->orderBydesc('periode')->take(1)->value('periode');
+
         $latestData = StokSb::selectRaw('kecamatan_id, periode, SUM(jumlah) AS total_stok, SUM(jumlah - used) AS sisa_stok')
             ->where('periode', $latestPeriod)
             ->groupBy('kecamatan_id', 'periode')->get();
@@ -27,24 +28,30 @@ class DashboardDinasController extends Controller
             ->where('periode', $latestPeriod)
             ->groupBy('kecamatan_id', 'jenis_semen_id', 'jumlah')->get();
 
+        $riwayatStok = StokSb::selectRaw('jenis_semen_id, SUM(jumlah - used) AS sisa_stok')
+            ->where('periode', $previousPeriod)
+            ->groupBy('jenis_semen_id')->get();
+
         return view('dinas.layouts.main', [
             'title' => 'Dashboard',
             'kecamatan' => Kecamatan::all(),
             'jenis_semen' => JenisSemen::all(),
             'data' => $latestData,
             'subdata' => $subdata,
+            'riwayatStok' => $riwayatStok,
+            'periode' => $previousPeriod
         ]);
     }
 
     public function riwayat(){
 
-        $latestData = StokSb::selectRaw('kecamatan_id, periode, SUM(jumlah) AS total_stok, SUM(jumlah - used) AS sisa_stok')
+        $latestData = StokSb::where('status', 'nonaktif')->selectRaw('kecamatan_id, periode, SUM(jumlah) AS total_stok, SUM(jumlah - used) AS sisa_stok')
         ->groupBy('kecamatan_id', 'periode')->get();
 
-        $subdata = StokSb::selectRaw('periode, jenis_semen_id, kecamatan_id, jumlah, SUM(jumlah - used) AS sisa_stok')
+        $subdata = StokSb::where('status', 'nonaktif')->selectRaw('periode, jenis_semen_id, kecamatan_id, jumlah, SUM(jumlah - used) AS sisa_stok')
         ->groupBy('periode', 'kecamatan_id', 'jenis_semen_id', 'jumlah')->get();
         
-        $superdata = StokSb::selectRaw('periode, SUM(jumlah) AS total_stok, SUM(jumlah - used) AS sisa_stok')
+        $superdata = StokSb::where('status', 'nonaktif')->selectRaw('periode, SUM(jumlah) AS total_stok, SUM(jumlah - used) AS sisa_stok')
             ->groupBy('periode')->get();
 
         return view('dinas.layouts.riwayat', [
@@ -69,11 +76,12 @@ class DashboardDinasController extends Controller
             'Limosin' => 'required',
         ]);
     
-        $total_stok = $validatedData['total_stok'];
-        $Simental = $validatedData['Simental'];
-        $PO = $validatedData['PO'];
-        $Brahma = $validatedData['Brahma'];
-        $Limosin = $validatedData['Limosin'];
+        $total_sisa = request('sisa-1') + request('sisa-2') + request('sisa-3') + request('sisa-4');
+        $total_stok = $validatedData['total_stok'] += $total_sisa;
+        $Simental = $validatedData['Simental'] += request('sisa-1');
+        $PO = $validatedData['PO'] += request('sisa-2');
+        $Brahma = $validatedData['Brahma'] += request('sisa-3');
+        $Limosin = $validatedData['Limosin'] += request('sisa-4');
     
         $totalJenis = $Simental + $PO + $Brahma + $Limosin;
         if ($total_stok != $totalJenis) {
@@ -150,20 +158,27 @@ class DashboardDinasController extends Controller
         $percentage = [0.2, 0.2, 0.3, 0.2, 0.1];
         $kecamatan = Kecamatan::all()->pluck('id');
         $jenisSemen = JenisSemen::all()->pluck('id');
+        $status = 'aktif';
 
         foreach ($jenis as $x => $jenisStok) {
             foreach ($kecamatan as $i => $kec) {
                 $persentase = $percentage[$i];
                 $jumlah = $jenisStok * $persentase;
                 StokSb::create([
-                    'periode' => date('Y-m-d'),
+                    'periode' => '2024-04-23',
                     'kecamatan_id' => $kec,
                     'jenis_semen_id' => $jenisSemen[$x],
                     'jumlah' => $jumlah,
                     'used' => 0,
+                    'status' => $status,
                 ]);
             }
         }
+
+        $latestPeriod = StokSb::select('periode')->orderByDesc('periode')->value('periode');
+        $previousPeriod = StokSb::select('periode')->groupBy('periode')->orderBydesc('periode')->skip(1)->take(1)->value('periode');
+        
+        StokSb::where('periode', $previousPeriod)->update(['status' => 'nonaktif']);
 
         session()->forget('stok');
         return redirect('/dashboard')->with('success', 'Stok berhasil ditambahkan');

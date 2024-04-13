@@ -21,7 +21,7 @@
             <select name="wilayah_kerja" id="wilayah_kerja" class="input-regist3 text-sm w-[334px] bg-[#F1F1F1] border-transparent rounded-xl text-[#888888]">
               <option value="" disabled selected>Wilayah Kerja</option>
               @foreach ($kecamatan as $item)
-                <option value="{{ $item->kecamatan }}">{{ $item->kecamatan }}</option>
+                <option value="{{ $item->id }}">{{ $item->kecamatan }}</option>
               @endforeach
             </select>
             <input name="no_sertifikasi" type="text" placeholder="No Sertifikasi" class="input-regist3 text-sm w-[334px] bg-[#F1F1F1] border-transparent rounded-xl text-[#888888]">

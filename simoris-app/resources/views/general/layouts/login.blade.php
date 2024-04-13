@@ -3,7 +3,7 @@
 @section('content')
   <div class="formcontainer h-[100dvh] w-screen flex flex-row justify-center items-center bg-[#DDF2FD] gap-x-24 2xl:gap-x-48 inset-x-0 px-10">
     @if($errors->any())
-      <div class="alert">
+      <div class="absolute top-20 z-10 alert bg-slate-400">
         <ul>
           @foreach($errors->all() as $error)
             <li>{{ $error }}</li>

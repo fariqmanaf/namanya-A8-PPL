@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\UserAccounts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 
 class DinasProfileController extends Controller
@@ -57,22 +58,23 @@ class DinasProfileController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            'password' => 'nullable|min:8|max:255',
-            'validation-password' => 'required_with:password|same:password'],
+            'old_password' => 'required',
+            'new_password' => 'required|min:8|max:255'],
         [
             'password.min' => 'Kata sandi minimal harus :min karakter.',
             'password.max' => 'Kata sandi maksimal :max karakter.',
-            'validation-password.required_with' => 'Konfirmasi kata sandi wajib diisi.',
-            'validation-password.same' => 'Konfirmasi kata sandi tidak sama dengan kata sandi.',
         ]);
     
-        if ($request->filled('password')) {
-            $password = Hash::make($request->password);
+        if (Hash::check($request->old_password, Auth::user()->password)) {
+            $password = Hash::make($request->new_password);
             UserAccounts::where('id', Auth::user()->id)
                 ->update(['password' => $password]);
         }
+        else{
+            return redirect('/dashboard/changepass')->withErrors('Password Lama Anda Salah');
+        }
     
-        return redirect('/dashboard/changepass')->with('success', 'Password Has Been Updated!');
+        return redirect('/dashboard/changepass')->with('success', 'Password Berhasil Di Update');
     }
 
     /**

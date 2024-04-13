@@ -48,4 +48,12 @@ class Kecamatan extends Model
     {
         return $this->hasMany(StokSb::class);
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function wilayah_kerja()
+    {
+        return $this->hasMany(WilayahKerja::class);
+    }
 }
