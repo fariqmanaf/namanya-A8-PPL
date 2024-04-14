@@ -127,14 +127,31 @@
     searchInput.addEventListener('input', function() {
         const searchValue = this.value.toLowerCase();
         const tableRows = document.querySelectorAll('tbody tr.clickable-row');
+        const subTable = document.querySelectorAll('tbody tr.sub-table');
 
         tableRows.forEach(row => {
-            const kecamatanName = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
-            if (kecamatanName.includes(searchValue)) {
-              row.style.display = 'table-row';}
-            else {
-              row.style.display = 'none';
-            }
+              const kecamatanName = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+              if (kecamatanName.includes(searchValue)) {
+                row.style.display = 'table-row';
+              }
+              else {
+                row.style.display = 'none';
+              }
+
+              if(row.style.display === 'none') {
+                const index = parseInt(row.dataset.index);
+                const subTables = document.querySelectorAll(`tr[id^="sub-table-${index}-"]`);
+                subTables.forEach(subTable => {
+                    subTable.classList.add('hidden');
+                });
+              }
+              else if(row.style.display === 'table-row'){
+                const index = parseInt(row.dataset.index);
+                const subTables = document.querySelectorAll(`tr[id^="sub-table-${index}-"]`);
+                subTables.forEach(subTable => {
+                    subTable.classList.add('hidden');
+                });
+              }
         });
     });
 
