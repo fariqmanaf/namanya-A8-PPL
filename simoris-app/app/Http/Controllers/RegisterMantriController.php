@@ -106,6 +106,10 @@ class RegisterMantriController extends Controller
             'bukti_suratizin' => 'required|image|file|max:2048',
             'is_accepted_sertifikasi' => 'required',
             'is_accepted_suratizin' => 'required',
+            'tanggal-pembuatan-sertif' => 'required|date',
+            'tanggal-pembuatan-suratizin' => 'required|date',
+            'tanggal-expired-sertif' => 'required|date',
+            'tanggal-expired-suratizin' => 'required|date',
         ]);
 
         $defaultSertifikasi = 0;
@@ -155,14 +159,18 @@ class RegisterMantriController extends Controller
             'nomor_sertifikasi' => $validatedData['no_sertifikasi'],
             'bukti' => $buktiSertifikasi,
             'is_accepted' => $is_accepted_sertifikasi,
-            'individuals_id' => $individual
+            'individuals_id' => $individual,
+            'tanggal_pembuatan' => $validatedData['tanggal-pembuatan-sertif'],
+            'tanggal_expired' => $validatedData['tanggal-expired-sertif']
         ]);
 
         SuratIzin::create([
             'nomor_surat' => $validatedData['no_suratizin'],
             'bukti' => $buktiSuratizin,
             'is_accepted' => $is_accepted_suratizin,
-            'individuals_id' => $individual
+            'individuals_id' => $individual,
+            'tanggal_pembuatan' => $validatedData['tanggal-pembuatan-suratizin'],
+            'tanggal_expired' => $validatedData['tanggal-expired-suratizin']
         ]);
 
         session()->forget('registration');

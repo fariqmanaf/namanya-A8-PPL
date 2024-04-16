@@ -92,7 +92,7 @@
 
 .form-regist3{
     @apply 2xl:w-[610px];
-    @apply 2xl:h-[720px];
+    @apply 2xl:h-[800px];
 }
 
 .input-regist1{

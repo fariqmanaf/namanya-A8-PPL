@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('nomor_surat')->nullable();
             $table->string('bukti');
+            $table->date('tanggal_pembuatan');
+            $table->date('tanggal_expired');
             $table->boolean('is_accepted')->nullable();
             $table->foreignId('individuals_id')->nullable();
         });

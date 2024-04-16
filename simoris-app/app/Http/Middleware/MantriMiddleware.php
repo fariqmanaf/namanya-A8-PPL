@@ -27,6 +27,9 @@ class MantriMiddleware
         else if(auth()->user()->status == "disable"){
             abort(403);
         }
+        else if(auth()->user()->status == "pending"){
+            abort(403);
+        }
         return $next($request);
     }
 }
