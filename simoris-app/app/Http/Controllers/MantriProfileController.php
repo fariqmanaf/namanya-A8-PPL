@@ -45,26 +45,37 @@ class MantriProfileController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Store a newly created resource in storage.
      */
-    public function show()
+    public function changepass(Request $request)
     {
-        $user_id = Auth::user()->id;
-        $akun = UserAccounts::where('id', $user_id)->first();
-        $profil = Individuals::where('id', $user_id)->first();
-        $alamat = Alamat::where('id', $user_id)->first();
-        $kabupaten = Kabupaten::where('id', $alamat->kabupaten_id)->first();
-        $kecamatan = Kecamatan::where('id', $alamat->kecamatan_id)->first();
-        $kelurahan = Kelurahan::where('id', $alamat->kelurahan_id)->first();
-        $sertifikasi = Sertifikasi::where('individuals_id', $profil->id)->first();
-        $suratizin = SuratIzin::where('individuals_id', $profil->id)->first();
+        $name = Individuals::where('id', Auth::user()->individuals_id)->first();
 
-        return view('mantri.layouts.profile', compact('akun', 'profil', 'alamat', 'kabupaten', 'kecamatan', 'kelurahan', 'sertifikasi', 'suratizin'));
+        return view('mantri.layouts.changepass', compact('name'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+    public function updatepass(Request $request)
+    {
+        $request->validate([
+            'old_password' => 'required',
+            'new_password' => 'required|min:8|max:255'],
+        [
+            'password.min' => 'Kata sandi minimal harus :min karakter.',
+            'password.max' => 'Kata sandi maksimal :max karakter.',
+        ]);
+    
+        if (Hash::check($request->old_password, Auth::user()->password)) {
+            $password = Hash::make($request->new_password);
+            UserAccounts::where('id', Auth::user()->id)
+                ->update(['password' => $password]);
+        }
+        else{
+            return redirect('/home/profile/changepass')->withErrors('Password Lama Anda Salah');
+        }
+
+        return redirect('/home/profile/changepass')->with('success', 'Password Anda Sudah Diperbarui');
+    }
+
     public function edit()
     {
         $user_id = Auth::user()->id;
@@ -103,14 +114,13 @@ class MantriProfileController extends Controller
 
         $akunrules = [
             'email' => ['required','email:dns', Rule::unique('user_accounts')->ignore(Auth::user()->email, 'email')],
-            'password' => 'min:8|max:255'
         ];
         
         $validatedData = $request->validate($akunrules);
 
-        if (isset($validatedData['password'])) {
-            $validatedData['password'] = Hash::make($validatedData['password']);
-        }
+        // if (isset($validatedData['password'])) {
+        //     $validatedData['password'] = Hash::make($validatedData['password']);
+        // }
 
         UserAccounts::where('id', Auth::user()->id)
             ->update($validatedData);
@@ -119,7 +129,7 @@ class MantriProfileController extends Controller
         Alamat::where('id', $individuals_user->alamats_id)
             ->update($alamatData);
 
-        return redirect('/mantri/profile/edit')->with('success', 'Account Has Been Updated!');
+        return redirect('/home/profile')->with('success', 'Account Has Been Updated!');
     }
 
     /**

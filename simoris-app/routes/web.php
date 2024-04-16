@@ -68,17 +68,19 @@ Route::middleware('dinas')->group(function(){
 
 Route::middleware('mantri')->group(function(){
     Route::get('/home', [MantriProfileController::class, 'index']);
-    Route::get('/mantri/profile', [MantriProfileController::class, 'show']);
-    Route::get('/mantri/profile/edit', [MantriProfileController::class, 'edit']);
-    Route::put('/mantri/profile/edit', [MantriProfileController::class, 'update']);
-    Route::get('/mantri/distribusi', [MantriFeatureController::class, 'index']);
+    Route::get('/home/profile', [MantriProfileController::class, 'edit']);
+    Route::put('/home/profile', [MantriProfileController::class, 'update']);
+    Route::get('/home/profile/changepass', [MantriProfileController::class, 'changepass']);
+    Route::put('/home/profile/changepass', [MantriProfileController::class, 'updatepass']);
+    Route::get('/home/distribusi', [MantriFeatureController::class, 'index']);
 });
 
 Route::middleware('peternak')->group(function(){
     Route::get('/main', [PeternakProfileController::class, 'index']);
-    Route::get('/peternak/profile', [PeternakProfileController::class, 'show']);
-    Route::get('/peternak/profile/edit', [PeternakProfileController::class, 'edit']);
-    Route::put('/peternak/profile/edit', [PeternakProfileController::class, 'update']);
+    Route::get('/main/profile', [PeternakProfileController::class, 'edit']);
+    Route::put('/main/profile', [PeternakProfileController::class, 'update']);
+    Route::get('/main/profile/edit', [PeternakProfileController::class, 'changepass']);
+    Route::put('/main/profile/edit', [PeternakProfileController::class, 'updatepass']);
 });
 
 Route::get('/logout', function(){

@@ -20,7 +20,39 @@ class PeternakProfileController extends Controller
      */
     public function index()
     {
-        return view('peternak.layouts.peternak');
+        $title = 'Beranda';
+        $name = Individuals::where('id', Auth::user()->individuals_id)->first();
+
+        return view('peternak.layouts.beranda', compact('title', 'name'));
+    }
+
+    public function changepass(Request $request)
+    {
+        $name = Individuals::where('id', Auth::user()->individuals_id)->first();
+
+        return view('peternak.layouts.changepass', compact('name'));
+    }
+
+    public function updatepass(Request $request)
+    {
+        $request->validate([
+            'old_password' => 'required',
+            'new_password' => 'required|min:8|max:255'],
+        [
+            'password.min' => 'Kata sandi minimal harus :min karakter.',
+            'password.max' => 'Kata sandi maksimal :max karakter.',
+        ]);
+    
+        if (Hash::check($request->old_password, Auth::user()->password)) {
+            $password = Hash::make($request->new_password);
+            UserAccounts::where('id', Auth::user()->id)
+                ->update(['password' => $password]);
+        }
+        else{
+            return redirect('/main/profile/edit')->withErrors('Password Lama Anda Salah');
+        }
+
+        return redirect('/main/profile/edit')->with('success', 'Password Anda Sudah Diperbarui');
     }
 
     /**
@@ -42,18 +74,18 @@ class PeternakProfileController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show()
-    {
-        $user_id = Auth::user()->id;
-        $akun = UserAccounts::where('id', $user_id)->first();
-        $profil = Individuals::where('id', $user_id)->first();
-        $alamat = Alamat::where('id', $user_id)->first();
-        $kabupaten = Kabupaten::where('id', $alamat->kabupaten_id)->first();
-        $kecamatan = Kecamatan::where('id', $alamat->kecamatan_id)->first();
-        $kelurahan = Kelurahan::where('id', $alamat->kelurahan_id)->first();
+    // public function show()
+    // {
+    //     $user_id = Auth::user()->id;
+    //     $akun = UserAccounts::where('id', $user_id)->first();
+    //     $profil = Individuals::where('id', $user_id)->first();
+    //     $alamat = Alamat::where('id', $user_id)->first();
+    //     $kabupaten = Kabupaten::where('id', $alamat->kabupaten_id)->first();
+    //     $kecamatan = Kecamatan::where('id', $alamat->kecamatan_id)->first();
+    //     $kelurahan = Kelurahan::where('id', $alamat->kelurahan_id)->first();
 
-        return view('peternak.layouts.profile', compact('akun', 'profil', 'alamat', 'kabupaten', 'kecamatan', 'kelurahan'));
-    }
+    //     return view('peternak.layouts.profile', compact('akun', 'profil', 'alamat', 'kabupaten', 'kecamatan', 'kelurahan'));
+    // }
 
     /**
      * Show the form for editing the specified resource.
@@ -98,14 +130,9 @@ class PeternakProfileController extends Controller
 
         $akunrules = [
             'email' => ['required','email:dns', Rule::unique('user_accounts')->ignore(Auth::user()->email, 'email')],
-            'password' => 'min:8|max:255'
         ];
         
         $validatedData = $request->validate($akunrules);
-
-        if (isset($validatedData['password'])) {
-            $validatedData['password'] = Hash::make($validatedData['password']);
-        }
 
         UserAccounts::where('id', Auth::user()->id)
             ->update($validatedData);
@@ -114,7 +141,7 @@ class PeternakProfileController extends Controller
         Alamat::where('id', $individuals_user->alamats_id)
             ->update($alamatData);
 
-        return redirect('/peternak/profile/edit')->with('success', 'Account Has Been Updated!');
+        return redirect('/main/profile')->with('success', 'Account Has Been Updated!');
     }
 
     /**
