@@ -12,6 +12,7 @@ use App\Http\Controllers\MantriFeatureController;
 use App\Http\Controllers\PeternakProfileController;
 use App\Http\Controllers\RegisterMantriController;
 use App\Http\Controllers\RegisterPeternakController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,6 +63,7 @@ Route::middleware('dinas')->group(function(){
     Route::get('/dashboard/preview', [DashboardDinasController::class, 'preview']);
     Route::post('/dashboard/preview', [DashboardDinasController::class, 'previewpost']);
     Route::get('dashboard/data-mantri', [DataMantriController::class, 'index']);
+    Route::get('dashboard/data-mantri/confirm', [DataMantriController::class, 'confirm']);
 });
 
 Route::middleware('mantri')->group(function(){
@@ -85,4 +87,14 @@ Route::get('/logout', function(){
 
 Route::get('/back', function(){
     return redirect('/');
+});
+
+Route::get('/previous', function(){
+    if (Auth::user()->roles_id === 1){
+        return redirect('/dashboard');
+    } else if (Auth::user()->roles_id === 2){
+        return redirect('/home');
+    } else if (Auth::user()->roles_id === 3){
+        return redirect('/main');
+    }
 });

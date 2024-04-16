@@ -21,14 +21,14 @@
     </div>
     <div class="menu-4 w-[90%] flex menu rounded-xl px-12 py-3 2xl:py-5 text-[#164863] hover:bg-[#C6F2FF] {{ ($title === "Verifikasi Pengajuan") ? 'bg-[#C6F2FF]' : '' }}">
       <img class="-ml-8 mr-3 w-5 h-5 2xl:w-8 2xl:h-8" src="{{asset('/assets/icon/4.svg')}}">
-      <a href="/dashboard/" class="w-full text-[14px] 2xl:text-lg">Verifikasi Pengajuan</a>
+      <a href="/dashboard/data-mantri/confirm" class="w-full text-[14px] 2xl:text-lg">Verifikasi Pengajuan</a>
     </div>
     <div class="menu-5 w-[90%] flex menu rounded-xl px-12 py-3 2xl:py-5 text-[#164863] hover:bg-[#C6F2FF] {{ ($title === "Data Mantri") ? 'bg-[#C6F2FF]' : '' }}">
       <img class="-ml-8 mr-3 w-5 h-5 2xl:w-8 2xl:h-8" src="{{asset('/assets/icon/5.svg')}}">
       <a href="/dashboard/data-mantri" class="w-full text-[14px] 2xl:text-lg">Data Mantri</a>
     </div>
   </div>
-  <div id="profile" class="profile flex mt-[170px] cursor-pointer h-24 w-full">
+  <div id="profile" class="profile flex absolute bottom-0 cursor-pointer mb-5 w-full">
     <img class="dinas h-10 w-10 rounded-full ml-3" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT51WzyjFs7ajVLdsDpsea3951e-iN4zWqyOWskJ7Woyw&s" alt="profile" class="w-20 h-20 rounded-full">
     <div class="text ml-2">
       <p class="font-bold text-[13px] 2xl:text-base">Dinas Peternakan Jember</p>

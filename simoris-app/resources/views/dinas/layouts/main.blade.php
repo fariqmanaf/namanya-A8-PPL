@@ -21,7 +21,6 @@
       <div class="text flex flex-row mt-5 w-full justify-start ml-10">
         <p class="font-bold text-slate-700 mt-1 2xl:text-xl">Data Stok Semen Beku</p>
         <input id="search-kecamatan" type="text" class="search-kecamatan p-1 rounded-full ml-14 w-96 bg-gray-200 border border-transparent" placeholder=" Cari Kecamatan....">
-        <p class="text-slate-700 mt-2 ml-40 2xl:text-xl 2xl:ml-96">{{ Carbon\Carbon::parse($data[0]->periode)->formatLocalized('%d %B %Y') }}</p>
       </div>
       <table class="mt-5 cursor-pointer rounded-xl w-full table-size">
         <thead class="rounded-xl">

@@ -22,7 +22,10 @@ class MantriProfileController extends Controller
      */
     public function index()
     {
-        return view('mantri.layouts.home');
+        $title = 'Beranda';
+        $name = Individuals::where('id', Auth::user()->individuals_id)->first();
+
+        return view('mantri.layouts.beranda', compact('title', 'name'));
     }
 
     /**
