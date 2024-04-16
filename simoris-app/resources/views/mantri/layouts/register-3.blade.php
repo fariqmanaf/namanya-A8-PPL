@@ -32,14 +32,13 @@
               type="text"
               placeholder="Tanggal Pembuatan"
               onfocus="(this.type='date')"
-              onblur="(this.type='text')">
+              onblur="(this.type='text')"
+              onchange="setExpiredDate(this.value)">
               <input
               class="w-[165px] bg-[#F1F1F1] border-transparent rounded-xl text-xs 2xl:h-[50px] 2xl:text-lg 2xl:w-[230px] 2xl:p-2" 
               name="tanggal-expired-sertif" 
-              type="text"
-              placeholder="Tanggal Expired"
-              onfocus="(this.type='date')"
-              onblur="(this.type='text')">
+              type="date"
+              readonly>
             </div>
             <div class="flex items-center justify-center w-full 2xl:w-[470px]">
               <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-14 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-[#F1F1F1] hover:bg-gray-100 dark:border-gray-400 dark:hover:border-gray-500 dark:hover:bg-slate-200 2xl:h-20">
@@ -58,14 +57,13 @@
               type="text"
               placeholder="Tanggal Pembuatan"
               onfocus="(this.type='date')"
-              onblur="(this.type='text')">
+              onblur="(this.type='text')"
+              onchange="setExpiredDate2(this.value)">
               <input
               class="w-[165px] bg-[#F1F1F1] border-transparent rounded-xl text-xs 2xl:h-[50px] 2xl:text-lg 2xl:w-[230px] 2xl:p-2" 
               name="tanggal-expired-suratizin" 
-              type="text"
-              placeholder="Tanggal Expired"
-              onfocus="(this.type='date')"
-              onblur="(this.type='text')">
+              type="date"
+              readonly>
             </div>
             <div class="flex items-center justify-center w-full 2xl:w-[470px]">
               <label for="dropzone-file2" class="flex flex-col items-center justify-center w-full h-14 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-[#F1F1F1] hover:bg-gray-100 dark:border-gray-400 dark:hover:border-gray-500 dark:hover:bg-slate-200 2xl:h-20">
@@ -101,6 +99,20 @@
       } else {
         fileNameParagraph.textContent = "Klik Untuk Unggah Surat Izin";
       }
+    }
+    function setExpiredDate(createDate) {
+      const expiredDateInput = document.querySelector('input[name="tanggal-expired-sertif"]');
+      const createDateObj = new Date(createDate);
+      const expiredDateObj = new Date(createDateObj.setFullYear(createDateObj.getFullYear() + 5));
+      const formattedExpiredDate = expiredDateObj.getFullYear() + '-' + String(expiredDateObj.getMonth() + 1).padStart(2, '0') + '-' + String(expiredDateObj.getDate()).padStart(2, '0');
+      expiredDateInput.value = formattedExpiredDate;
+    }
+    function setExpiredDate2(createDate) {
+      const expiredDateInput = document.querySelector('input[name="tanggal-expired-suratizin"]');
+      const createDateObj = new Date(createDate);
+      const expiredDateObj = new Date(createDateObj.setFullYear(createDateObj.getFullYear() + 5));
+      const formattedExpiredDate = expiredDateObj.getFullYear() + '-' + String(expiredDateObj.getMonth() + 1).padStart(2, '0') + '-' + String(expiredDateObj.getDate()).padStart(2, '0');
+      expiredDateInput.value = formattedExpiredDate;
     }
   </script>
 @endsection
