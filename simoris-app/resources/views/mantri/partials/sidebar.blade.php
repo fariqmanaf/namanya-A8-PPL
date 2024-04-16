@@ -13,7 +13,7 @@
     </div>
     <div class="menu-2 w-[90%] flex menu rounded-xl px-12 py-3 2xl:py-5 text-[#164863] hover:bg-[#C6F2FF] {{ ($title === ">Monitoring Distribusi") ? 'bg-[#C6F2FF]' : '' }}">
       <img class="-ml-8 mr-3 w-5 h-5 2xl:w-8 2xl:h-8" src="{{asset('/assets/outline/monitoring-o.svg')}}">
-      <a href="" class="w-full text-[14px] 2xl:text-lg">Monitoring Distribusi</a>
+      <a href="/home/distribusi" class="w-full text-[14px] 2xl:text-lg">Monitoring Distribusi</a>
     </div>
     <div class="menu-3 w-[90%] flex menu rounded-xl px-12 py-3 2xl:py-5 text-[#164863] hover:bg-[#C6F2FF] {{ ($title === "Riwayat Pengajuan") ? 'bg-[#C6F2FF]' : '' }}">
       <img class="-ml-8 mr-3 w-5 h-5 2xl:w-8 2xl:h-8" src="{{asset('/assets/outline/document-o.svg')}}">
