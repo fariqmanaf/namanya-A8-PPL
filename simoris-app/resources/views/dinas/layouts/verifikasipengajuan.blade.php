@@ -6,28 +6,36 @@
     {{ session('success') }}
   </div>
   @endif
-  <div class="content-container w-[85vw] bg-[#DDF2FD] flex flex-col items-center h-full ml-[15vw] mt-20">
-    <div class="c w-8/12">
-      <table class="mt-5 cursor-pointer rounded-xl w-full table-size">
+  <div class="content-container w-[70vw] bg-[#DDF2FD] flex flex-col items-center h-full ml-[22vw] mt-10">
+    <div class="table-container w-[65vw] justify-center items-center flex flex-col ml-20 bg-white rounded-2xl">
+      <div class="text flex flex-row mt-5 w-full justify-start ml-10">
+        <p class="font-bold text-slate-700 mt-1 2xl:text-xl">Verifikasi Pengajuan</p>
+        <input id="search-nama" type="text" class="search-nama p-1 rounded-full ml-14 w-96 bg-gray-200 border border-transparent" placeholder=" Cari Nama....">
+      </div>
+      <table class="mt-5 cursor-pointer rounded-xl w-full table-size text-sm">
         <thead class="rounded-xl">
-          <tr class="text-gray-700 rounded-xl bg-gray-200">
+          <tr class=" text-gray-700 rounded-2xl bg-gray-200">
+            <th scope="col" class="px-2 py-2 font-medium">No.</th>
             <th scope="col" class="px-2 py-2 font-medium">Nama</th>
             <th scope="col" class="px-2 py-2 font-medium">Alamat</th>
             <th scope="col" class="px-2 py-2 font-medium">Wilayah Kerja</th>
-            <th scope="col" class="px-2 py-2 font-medium">Detail</th>
+            <th scope="col" class="px-2 py-2 font-medium"></th>
           </tr>
         </thead>
         <tbody>
             @foreach($dataMantri as $mantri)
               <tr class="text-center clickable-row border-b"">
                 <td class="px-4 py-4">
+                  {{ $loop->iteration }}.
+                </td>
+                <td class="px-4 py-4">
                   {{ $mantri->name }}
                 </td>
                 <td class="px-4 py-4">
-                    {{ $mantri->alamat->kabupaten['kabupaten'] }},
-                    {{ $mantri->alamat->kecamatan['kecamatan'] }},
-                    {{ $mantri->alamat->kelurahan['kelurahan'] }},
-                    {{ $mantri->alamat['detail'] }}
+                  {{ $mantri->alamat['detail'] }},
+                  {{ $mantri->alamat->kelurahan['kelurahan'] }},
+                  {{ $mantri->alamat->kecamatan['kecamatan'] }},
+                  {{ $mantri->alamat->kabupaten['kabupaten'] }}
                 </td>
                 <td class="px-4 py-4">
                   @foreach($mantri->wilayah_kerja as $wilayah)
@@ -36,64 +44,125 @@
                 </td>
                 <td class="px-4 py-4">
                   <a href="#" data-target="#modal-{{ $mantri->id }}" class="open-modal">
-                      detail
+                      <img src="{{ asset('assets/icon/view.svg') }}" alt="View" class="h-5 w-5">
                   </a>
                 </td>
-                <div id="modal-{{ $mantri->id }}" class="hidden modal  absolute top-6 left-[40%] inset-0 z-1 overflow-auto">
-                  <div class="modal-content bg-white rounded-lg shadow-lg p-6 max-w-md justify-center items-center flex flex-col">
-                    <span class="close-modal relative top-0 right-0 m-2 text-gray-500 hover:text-gray-800 cursor-pointer">&times;</span>
-                    <p class="mb-4">Nama : {{ $mantri->name }}</p>
-                    <p class="mb-4">NIK : {{ $mantri->nik }}</p>
-                    <p class="mb-2">Wilayah Kerja: {{ $wilayah->kecamatan['kecamatan'] }}</p>
-                    @foreach($mantri->userAccounts as $akun)
-                      <p class="mb-2">Email: {{ $akun->email }}</p>
-                    @endforeach
-                    <p class="mb-2">Tanggal Lahir: {{ $mantri->tgl_lahir }}</p>
-                    <p class="mb-2">Nomor Telepon: {{ $mantri->no_telp }}</p>
-                    <p class="mb-2">Alamat:
-                      {{ $mantri->alamat->kabupaten['kabupaten'] }},
-                      {{ $mantri->alamat->kecamatan['kecamatan'] }},
-                      {{ $mantri->alamat->kelurahan['kelurahan'] }},
-                      {{ $mantri->alamat['detail'] }}                         
-                    </p>
-                    <form action="" method="post">
-                      @csrf
-                      @method('PUT')
-                      @foreach($mantri->sertifikasi as $sertif)
-                          <p class="mb-2">No. Sertifikasi Keahlian: {{ $sertif->nomor_sertifikasi }}</p>
-                          <div id="bukti-sertifikasi-{{ $mantri->id }}" class="preview-gambar">{{ ($sertif->bukti) }}</div>
-                          <p class="mb-2">Tanggal Pembuatan: {{ $sertif->tanggal_pembuatan }}</p>
-                          <p class="mb-2">Tanggal Expired: {{ $sertif->tanggal_expired }}</p>
-                            <button type="button" class="p-1 bg-green-700" id="setujuSertif-{{ $mantri->id }}">Setujui</button>
-                            <button type="button" class="p-1 bg-red-700" id="tolakSertif-{{ $mantri->id }}">Tolak</button>
-                            <p id="informationSertif-{{ $mantri->id }}"></p>
-                            <input type="hidden" name="is_accepted_sertif" class="bg-transparent" id="is_accepted-sertif-{{ $mantri->id }}">
-                            <input type="hidden" name="id" value="{{ $mantri->id }}">
-                        @endforeach
-                        @foreach($mantri->surat_izin as $izin)
-                          <p class="mb-2">No. Surat Izin Praktik: {{ $izin->nomor_surat }}</p>
-                          <div id="bukti-izin-{{ $mantri->id }}" class="preview-gambar">{{ ($izin->bukti) }}</div>
-                          <p class="mb-2">Tanggal Pembuatan: {{ $izin->tanggal_pembuatan }}</p>
-                          <p class="mb-2">Tanggal Expired: {{ $izin->tanggal_expired }}</p>
-                          <button type="button" class="p-1 bg-green-700" id="setujuIzin-{{ $mantri->id }}">Setujui</button>
-                          <button type="button" class="p-1 bg-red-700" id="tolakIzin-{{ $mantri->id }}">Tolak</button>
-                          <p id="informationIzin-{{ $mantri->id }}"></p>
-                          <input type="hidden" name="is_accepted_izin" class="bg-transparent" id="is_accepted-izin-{{ $mantri->id }}">
-                          <input type="hidden" name="id" value="{{ $mantri->id }}">
-                        @endforeach
-                        <button type="submit" class="bg-indigo-700 p-2">Kirim</button>
-                    </form>
-                </div>
-              </div>
             </tr>
           @endforeach
         </tbody>
       </table>
     </div>
-  </div>
+    
+    @foreach($dataMantri as $mantri)
+        <div id="modal-{{ $mantri->id }}" class="hidden modal absolute top-10 left-[28%] pb-10 2xl:top-10">
+          <span class="close-modal relative top-0 right-0 m-2 text-gray-500 hover:text-gray-800 cursor-pointer 2xl:text-2xl">< Kembali</span>
+          <div class="modal-content bg-white rounded-2xl w-[55rem] h-[50rem] shadow-lg p-6 items-center flex flex-col text-sm 2xl:w-[1228px] 2xl:h-[900px] 2xl:text-lg">
+            <img src="https://www.freeiconspng.com/thumbs/profile-icon-png/profile-icon-9.png" alt="Logo Dinas" class="h-24 w-24 mt-8 rounded-full border border-gray-800 bg-gray-800">
+            <div class="info-content flex flex-row justify-center items-center mt-12 gap-16 w-8/12">
+              <div class="nama-tanggal-notelp w-6/12 flex flex-col gap-8">
+                <div class="nama">
+                  <p class="text-gray-400">Nama</p>
+                  <p class="">{{ $mantri->name }}</p>
+                </div>
+                <div class="nama">
+                  <p class="text-gray-400">Tanggal Lahir</p>
+                  <p class="">{{ $mantri->tgl_lahir }}</p>
+                </div>
+                <div class="notelp">
+                  <p class="text-gray-400">Nomor Telepon</p>
+                  <p class="">{{ $mantri->no_telp }}</p>
+                </div>
+              </div>
+              <div class="nik-wilayah-alamat w-6/12 flex flex-col gap-8">
+                <div class="nik">
+                  <p class="text-gray-400">Nomor Induk Kependudukan</p>
+                  <p class="">{{ $mantri->nik }}</p>
+                </div>
+                <div class="nik">
+                  <p class="text-gray-400">Wilayah Kerja</p>
+                  <p class="">{{ $wilayah->kecamatan['kecamatan'] }}</p>
+                </div>
+                <div class="email">
+                  <p class="text-gray-400">Email</p>
+                  @foreach($mantri->userAccounts as $akun)
+                    <p class="">{{ $akun->email }}</p>
+                  @endforeach
+                </div>
+              </div>
+            </div>
+            <div class="alamat w-8/12 mt-12">
+              <p class="text-gray-400">Alamat</p>
+              <p class="">{{ $mantri->alamat['detail'] }}, {{ $mantri->alamat->kelurahan['kelurahan'] }}, {{ $mantri->alamat->kecamatan['kecamatan'] }}, {{ $mantri->alamat->kabupaten['kabupaten'] }}</p>
+            </div>
+
+            <hr class="bg-gray-300 w-9/12 mt-6 h-[2px]"> 
+
+            
+            <form class="persuratan flex flex-col gap-x-10 mt-8 gap-y-5 justify-center items-center" action="" method="post">
+              @csrf
+              @method('PUT')
+              <div class="flex flex-row gap-10">
+                @foreach($mantri->sertifikasi as $sertif)
+                <div class="sertif flex flex-col gap-x-3">
+                  <p class="text-gray-400">No. Sertifikasi Keahlian</p>
+                  <p class="mb-2">{{ $sertif->nomor_sertifikasi }}</p>
+                  <div class="tanggal-sertif flex flex-row gap-5">
+                    <div class="pembuatan">
+                      <p class="text-gray-400">Tanggal Pembuatan</p>
+                      <p class="mb-2">{{ $sertif->tanggal_pembuatan }}</p>
+                    </div>
+                    <div class="expired">
+                      <p class="text-gray-400">Tanggal Expired</p>
+                      <p class="mb-2">{{ $sertif->tanggal_expired }}</p>
+                    </div>
+                  </div>
+                  <div id="bukti-sertifikasi-{{ $mantri->id }}" class="preview-gambar w-72 h-14 flex items-center justify-center bg-gray-200 text-xs rounded-xl">{{ ($sertif->bukti) }}</div>
+                  <div class="flex flex-row w-full justify-center items-center gap-x-3 mt-2">
+                    <button type="button" class="px-12 py-1 rounded-lg text-white font-semibold text-sm bg-[#FE6666] hover:bg-[#d15353]" id="tolakSertif-{{ $mantri->id }}">Tolak</button>
+                    <button type="button" class="px-12 py-1 rounded-lg text-white font-semibold text-sm bg-[#66C57A] hover:bg-[#5db671]" id="setujuSertif-{{ $mantri->id }}">Setujui</button>
+                    <input type="hidden" name="is_accepted_sertif" class="bg-transparent" id="is_accepted-sertif-{{ $mantri->id }}">
+                    <input type="hidden" name="id" value="{{ $mantri->id }}">
+                  </div>
+                  <!-- <p class="text-xs mt-5 2xl:text-md">* klik teks untuk memunculkan & klik gambar menghilangkan</p> -->
+                </div>
+                @endforeach
+                @foreach($mantri->surat_izin as $izin)
+                <div class="suratizin flex flex-col gap-x-3">
+                  <p class="text-gray-400">No. Surat Izin Praktik</p>
+                  <p class="mb-2">{{ $izin->nomor_surat }}</p>
+                  <div class="tanggal-suratizin flex flex-row gap-5">
+                    <div class="pembuatan">
+                      <p class="text-gray-400">Tanggal Pembuatan</p>
+                      <p class="mb-2">{{ $izin->tanggal_pembuatan }}</p>
+                    </div>
+                    <div class="expired">
+                      <p class="text-gray-400">Tanggal Expired</p>
+                      <p class="mb-2">{{ $izin->tanggal_expired }}</p>
+                    </div>
+                  </div>
+                  <div id="bukti-izin-{{ $mantri->id }}" class="preview-gambar w-72 h-14 flex items-center justify-center bg-gray-200 text-xs rounded-xl">{{ ($izin->bukti) }}</div>
+                  <div class="flex flex-row w-full justify-center items-center gap-x-3 mt-2">
+                    <button type="button" class="px-12 py-1 rounded-lg text-white font-semibold text-sm bg-[#FE6666] hover:bg-[#d15353]" id="tolakIzin-{{ $mantri->id }}">Tolak</button>
+                    <button type="button" class="px-12 py-1 rounded-lg text-white font-semibold text-sm bg-[#66C57A] hover:bg-[#5db671]" id="setujuIzin-{{ $mantri->id }}">Setujui</button>
+                    <input type="hidden" name="is_accepted_izin" class="bg-transparent" id="is_accepted-izin-{{ $mantri->id }}">
+                    <input type="hidden" name="id" value="{{ $mantri->id }}">
+                  </div>
+                </div>
+                @endforeach
+              </div>
+              <button type="submit" class="w-44 rounded-lg text-white font-semibold text-sm bg-[#427D9D] hover:bg-[#4f96bd] p-2">Kirim</button>
+            </form>
+            
+      </div>
+    </div>
+    @endforeach
+</div>
+
+
   <script>
     const modals = document.querySelectorAll('.modal');
     const openModalButtons = document.querySelectorAll('.open-modal');
+    const table = document.querySelector('.table-container');
     const closeModalButtons = document.querySelectorAll('.close-modal');
 
     openModalButtons.forEach(button => {
@@ -107,6 +176,8 @@
             const modalId = event.currentTarget.getAttribute('data-target');
             const modal = document.querySelector(modalId);
             modal.classList.remove('hidden');
+
+            table.classList.add('hidden');
         });
     });
 
@@ -115,6 +186,8 @@
             event.preventDefault();
             const modal = event.currentTarget.closest('.modal');
             modal.classList.add('hidden');
+            table.classList.remove('hidden');
+            table.classList.add('table-container');
         });
     });
 
@@ -122,6 +195,8 @@
         modals.forEach(modal => {
             if (event.target == modal) {
                 modal.classList.add('hidden');
+                table.classList.remove('hidden');
+                table.classList.add('table-container');
             }
         });
     });
@@ -140,6 +215,10 @@
                 gambar.src = "/storage/" + this.innerHTML;
                 gambar.style.maxWidth = '100px';
                 gambar.classList.add('absolute');
+                gambar.classList.add('absolute');
+                gambar.classList.add('top-0');
+                gambar.classList.add('left-0');
+                gambar.classList.add('2xl:left-40');
                 this.appendChild(gambar);
             }
         });
