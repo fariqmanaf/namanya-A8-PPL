@@ -38,7 +38,7 @@
                   @endforeach
                 </td>
                 <td class="px-4 py-4">
-                  <a href="" data-target="#modal-{{ $mantri->id }}" class="open-modal">
+                  <a href="#" data-target="#modal-{{ $mantri->id }}" class="open-modal">
                       <img src="{{ asset('assets/icon/view.svg') }}" alt="View" class="h-5 w-5">
                   </a>
                 </td>

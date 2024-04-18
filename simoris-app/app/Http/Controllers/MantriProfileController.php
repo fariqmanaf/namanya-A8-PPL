@@ -78,14 +78,14 @@ class MantriProfileController extends Controller
 
     public function edit()
     {
-        $user_id = Auth::user()->id;
+        $user_id = Auth::user()->individuals_id;
         $akun = UserAccounts::where('id', $user_id)->first();
         $profil = Individuals::where('id', $user_id)->first();
-        $alamat = Alamat::where('id', $user_id)->first();
+        $alamat = $profil->alamat;
         $kabupaten = Kabupaten::all();
         $kecamatan = Kecamatan::all();
         $kelurahan = Kelurahan::all();
-        $kabupatenuser = Kabupaten::where('id', $alamat->kabupaten_id)->first();
+        $kabupatenuser = Kabupaten::where('id', $alamat['kabupaten_id'])->first();
         $kecamatanuser = Kecamatan::where('id', $alamat->kecamatan_id)->first();
         $kelurahanuser = Kelurahan::where('id', $alamat->kelurahan_id)->first();
 

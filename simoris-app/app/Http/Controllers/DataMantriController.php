@@ -22,7 +22,7 @@ class DataMantriController extends Controller
     {
         $akunMantri = UserAccounts::where('roles_id', 2)->where('status', 'enable')->get();
         $dataMantri = Individuals::whereIn('id', $akunMantri->pluck('individuals_id'))->get();
-
+        
         $title = 'Data Mantri';
         return view('dinas.layouts.datamantri', compact('title' ,'akunMantri', 'dataMantri'));
     }
