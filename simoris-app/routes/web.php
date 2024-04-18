@@ -64,6 +64,7 @@ Route::middleware('dinas')->group(function(){
     Route::post('/dashboard/preview', [DashboardDinasController::class, 'previewpost']);
     Route::get('dashboard/data-mantri', [DataMantriController::class, 'index']);
     Route::get('dashboard/data-mantri/confirm', [DataMantriController::class, 'confirm']);
+    Route::put('dashboard/data-mantri/confirm', [DataMantriController::class, 'postConfirm']); 
 });
 
 Route::middleware('mantri')->group(function(){

@@ -34,32 +34,26 @@
         </thead>
         <tbody>
           @foreach ($data as $index => $item)
-            @foreach ($kecamatan as $kecIndex => $kecItem)
-              @if ($index === $kecIndex)
+            @if($item->kecamatan_id == $item->kecamatan['id'])
                 <tr class="text-center clickable-row border-b" data-index="{{ $index }}">
                   <td class="px-4 py-4">{{ $loop->iteration }}.</td>
-                  <td class="px-4 py-4">{{ $kecItem->kecamatan }}</td>
+                  <td class="px-4 py-4">{{ $item->kecamatan['kecamatan'] }}</td>
                   <td class="px-4 py-4">{{ $item->total_stok }}</td>
                   <td class="px-4 py-4">{{ $item->sisa_stok }}</td>
                   <td class="px-4 py-4"><button id="drop-{{ $index }}" class="bg-[#9BBEC8] rounded-xl text-white px-1">></button></td>
                 </tr>
                 @foreach ($subdata as $subIndex => $subItem)
-                  @foreach ($kecamatan as $kecamatanIndex => $kecamatanItem)
-                    @foreach ($jenis_semen as $jenisIndex => $jenisItem)
-                      @if($kecamatanItem->id === $subItem->kecamatan_id && $kecamatanIndex === $kecIndex && $jenisItem->id === $subItem->jenis_semen_id)
+                  @if($subItem->kecamatan_id == $item->kecamatan_id)
                           <tr id="sub-table-{{ $index }}-{{ $subIndex }}" class="hidden text-center sub-table bg-gray-200 border-b border-gray-300">
                             <td id="child-{{ $index }}" class="px-2 py-2"></td>
-                            <td id="child-{{ $index }}" class="px-2 py-2">{{ $jenisItem->jenis_semen }}</td>
+                            <td id="child-{{ $index }}" class="px-2 py-2">{{ $subItem->jenis_sapi['jenis'] }}</td>
                             <td id="child-{{ $index }}" class="px-2 py-2">{{ $subItem->jumlah }}</td>
                             <td id="child-{{ $index }}" class="px-2 py-2">{{ $subItem->sisa_stok }}</td>
                             <td id="child-{{ $index }}" class="px-2 py-2"></td>
                           </tr>
-                      @endif
-                    @endforeach
-                  @endforeach
+                  @endif
                 @endforeach
-              @endif
-            @endforeach
+            @endif
           @endforeach
         </tbody>
       </table>

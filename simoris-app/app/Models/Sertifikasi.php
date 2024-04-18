@@ -39,6 +39,6 @@ class Sertifikasi extends Model
      */
     public function individual()
     {
-        return $this->belongsTo('App\Models\Individual', 'id_mantri');
+        return $this->belongsTo(Individuals::class, 'individuals_id');
     }
 }

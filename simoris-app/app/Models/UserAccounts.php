@@ -37,7 +37,7 @@ class UserAccounts extends Authenticatable
     /**
      * @var array
      */
-    protected $fillable = ['id','individuals_id', 'roles_id', 'email', 'password', 'status'];
+    protected $fillable = ['individuals_id', 'roles_id', 'email', 'password', 'status'];
     protected $casts = ['password' => 'hashed'];
 
     /**
@@ -45,7 +45,7 @@ class UserAccounts extends Authenticatable
      */
     public function individual()
     {
-        return $this->belongsTo(Individuals::class);
+        return $this->belongsTo(Individuals::class, 'individuals_id');
     }
 
     /**

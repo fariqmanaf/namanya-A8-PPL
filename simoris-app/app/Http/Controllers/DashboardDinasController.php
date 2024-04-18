@@ -20,11 +20,11 @@ class DashboardDinasController extends Controller
         $latestPeriod = StokSb::select('periode')->orderByDesc('periode')->value('periode');
         $previousPeriod = StokSb::select('periode')->groupBy('periode')->orderBydesc('periode')->take(1)->value('periode');
 
-        $latestData = StokSb::selectRaw('kecamatan_id, periode, SUM(jumlah) AS total_stok, SUM(jumlah - used) AS sisa_stok')
+        $latestData = StokSb::with('kecamatan')->selectRaw('kecamatan_id, periode, SUM(jumlah) AS total_stok, SUM(jumlah - used) AS sisa_stok')
             ->where('periode', $latestPeriod)
             ->groupBy('kecamatan_id', 'periode')->get();
 
-        $subdata = StokSb::selectRaw('jenis_semen_id, kecamatan_id, jumlah, SUM(jumlah - used) AS sisa_stok')
+        $subdata = StokSb::with('jenis_sapi')->selectRaw('jenis_semen_id, kecamatan_id, jumlah, SUM(jumlah - used) AS sisa_stok')
             ->where('periode', $latestPeriod)
             ->groupBy('kecamatan_id', 'jenis_semen_id', 'jumlah')->get();
 
@@ -34,8 +34,6 @@ class DashboardDinasController extends Controller
 
         return view('dinas.layouts.main', [
             'title' => 'Dashboard',
-            'kecamatan' => Kecamatan::all(),
-            'jenis_semen' => JenisSemen::all(),
             'data' => $latestData,
             'subdata' => $subdata,
             'riwayatStok' => $riwayatStok,
@@ -103,7 +101,14 @@ class DashboardDinasController extends Controller
         $kecamatan = Kecamatan::all();
 
         $jenis = [session()->get('stok.Simental'), session()->get('stok.PO'), session()->get('stok.Brahma'), session()->get('stok.Limosin')];
-        $percentage = [0.2, 0.2, 0.3, 0.2, 0.1];
+        $percentage = [
+        0.03, 0.03, 0.05, 0.03, 0.02,
+        0.03, 0.03, 0.03, 0.03, 0.03,
+        0.03, 0.03, 0.03, 0.03, 0.03,
+        0.03, 0.03, 0.03, 0.03, 0.03,
+        0.03, 0.03, 0.03, 0.03, 0.03,
+        0.03, 0.03, 0.03, 0.03, 0.03,
+        0.03];
 
         $data = [];
         $subdata = [];
@@ -118,15 +123,15 @@ class DashboardDinasController extends Controller
                 $subdata[] = (object) [
                     'kecamatan_id' => $kec,
                     'jenis_semen_id' => $jenisSemen[$x],
-                    'jumlah' => $jumlah,
-                    'sisa_stok' => $jumlah,
+                    'jumlah' => floor($jumlah),
+                    'sisa_stok' => floor($jumlah),
                 ];
             }
             $data[] = (object)[
                 'periode' => date('Y-m-d'),
                 'kecamatan_id' => $kec,
-                'total_stok' => $total_stok,
-                'sisa_stok' => $total_stok,
+                'total_stok' => floor($total_stok),
+                'sisa_stok' => floor($total_stok),
             ];
         }
 
@@ -155,7 +160,14 @@ class DashboardDinasController extends Controller
         $Limosin = $validatedData['Limosin'];
 
         $jenis = [$Simental, $PO, $Brahma, $Limosin];
-        $percentage = [0.2, 0.2, 0.3, 0.2, 0.1];
+        $percentage = [
+        0.03, 0.03, 0.05, 0.03, 0.02,
+        0.03, 0.03, 0.03, 0.03, 0.03,
+        0.03, 0.03, 0.03, 0.03, 0.03,
+        0.03, 0.03, 0.03, 0.03, 0.03,
+        0.03, 0.03, 0.03, 0.03, 0.03,
+        0.03, 0.03, 0.03, 0.03, 0.03,
+        0.03];
         $kecamatan = Kecamatan::all()->pluck('id');
         $jenisSemen = JenisSemen::all()->pluck('id');
         $status = 'aktif';
@@ -163,7 +175,7 @@ class DashboardDinasController extends Controller
         foreach ($jenis as $x => $jenisStok) {
             foreach ($kecamatan as $i => $kec) {
                 $persentase = $percentage[$i];
-                $jumlah = $jenisStok * $persentase;
+                $jumlah = floor($jenisStok * $persentase);
                 StokSb::create([
                     'periode' => date('Y-m-d'),
                     'kecamatan_id' => $kec,

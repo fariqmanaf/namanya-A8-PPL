@@ -27,7 +27,10 @@
     <div class="z-10 flex flex-col w-[40rem] 2xl:w-[864px] inset-x-7">
       <h1 class="text-6xl 2xl:text-7xl font-bold tracking-widest text-[#164863] -mb-2">SIMORIS</h1>
       <h2 class="text-2xl 2xl:text-4xl font-medium tracking-tighter text-[#164863]">Sistem Monitoring Distribusi Inseminasi Buatan</h2>
-      <p class="text-base 2xl:text-2xl font-light mt-2 2xl:mt-4 text-[#427D9D]">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer elementum purus quis ultricies luctus. Quisque a risus urna. Cras eget ullamcorper massa, a laoreet enim.</p>
+      <p class="text-base 2xl:text-2xl font-light mt-2 2xl:mt-4 text-[#427D9D] text-justify">
+        SIMORIS adalah sistem informasi berbasis website yang dirancang khusus untuk mempermudah pemantauan stok semen beku yang akan didistribusikan kepada mantri. Dengan SIMORIS, membantu proses bisnis pada sektor peternakan sapi menjadi lebih mudah dan efisien.
+      </p>
+      <span class="text-base 2xl:text-2xl font-medium mt-2 2xl:mt-4 text-[#427D9D]">#SIMORIS-Pantau Stok, Tingkatkan Produktivitas!</span>
     </div>
 
     <div class="z-10 flex flex-col justify-center items-center size-[27rem] 2xl:size-[38rem] bg-white rounded-2xl 2xl:rounded-3xl shadow-lg">

@@ -44,7 +44,7 @@ class Kecamatan extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function stokSbs()
+    public function stokSb()
     {
         return $this->hasMany(StokSb::class);
     }

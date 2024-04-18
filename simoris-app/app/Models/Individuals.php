@@ -36,7 +36,7 @@ class Individuals extends Model
     /**
      * @var array
      */
-    protected $fillable = ['id', 'nik', 'name', 'tgl_lahir', 'no_telp', 'alamats_id'];
+    protected $fillable = ['nik', 'name', 'tgl_lahir', 'no_telp', 'alamats_id'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -49,9 +49,17 @@ class Individuals extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function suratIzins()
+    public function surat_izin()
     {
         return $this->hasMany(SuratIzin::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function sertifikasi()
+    {
+        return $this->hasMany(Sertifikasi::class);
     }
 
     /**
@@ -83,7 +91,7 @@ class Individuals extends Model
      */
     public function alamat()
     {
-        return $this->belongsTo(Alamat::class);
+        return $this->belongsTo(Alamat::class, 'alamats_id');
     }
 
     /**

@@ -59,7 +59,7 @@ class Alamat extends Model
      */
     public function kelurahan()
     {
-        return $this->belongsTo(Kecamatan::class);
+        return $this->belongsTo(Kelurahan::class);
     }
 
     /**

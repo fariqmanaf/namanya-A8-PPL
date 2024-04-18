@@ -103,14 +103,14 @@
     function setExpiredDate(createDate) {
       const expiredDateInput = document.querySelector('input[name="tanggal-expired-sertif"]');
       const createDateObj = new Date(createDate);
-      const expiredDateObj = new Date(createDateObj.setFullYear(createDateObj.getFullYear() + 5));
+      const expiredDateObj = new Date(createDateObj.setFullYear(createDateObj.getFullYear() + 4));
       const formattedExpiredDate = expiredDateObj.getFullYear() + '-' + String(expiredDateObj.getMonth() + 1).padStart(2, '0') + '-' + String(expiredDateObj.getDate()).padStart(2, '0');
       expiredDateInput.value = formattedExpiredDate;
     }
     function setExpiredDate2(createDate) {
       const expiredDateInput = document.querySelector('input[name="tanggal-expired-suratizin"]');
       const createDateObj = new Date(createDate);
-      const expiredDateObj = new Date(createDateObj.setFullYear(createDateObj.getFullYear() + 5));
+      const expiredDateObj = new Date(createDateObj.setFullYear(createDateObj.getFullYear() + 4));
       const formattedExpiredDate = expiredDateObj.getFullYear() + '-' + String(expiredDateObj.getMonth() + 1).padStart(2, '0') + '-' + String(expiredDateObj.getDate()).padStart(2, '0');
       expiredDateInput.value = formattedExpiredDate;
     }

@@ -40,6 +40,11 @@ class JenisSapi extends Model
      */
     public function dataSapis()
     {
-        return $this->hasMany('App\Models\DataSapi', 'id_jenis');
+        return $this->hasMany(DataSapi::class);
+    }
+
+    public function stok_sb()
+    {
+        return $this->hasMany(StokSb::class);
     }
 }

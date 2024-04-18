@@ -24,13 +24,13 @@
       <a href="" class="w-full text-[14px] 2xl:text-lg">Riwayat Laporan IB</a>
     </div>
   </div>
-  <div id="profile" class="profile flex absolute bottom-0 cursor-pointer mb-5 w-full">
+  <div id="profile" class="profile flex absolute bottom-0 cursor-pointer mb-5 w-full gap-2 2xl:gap-3">
     <img class="dinas h-10 w-10 rounded-full ml-3" src="https://www.freeiconspng.com/thumbs/profile-icon-png/profile-icon-9.png" alt="profile" class="w-20 h-20 rounded-full">
     <div class="text ml-2">
       <p class="font-bold text-[13px] 2xl:text-base">{{ $name->name }}</p>
       <p class="text-xs 2xl:text-base">{{ Auth::user()->email }}</p>
     </div>
-    <img class="w-7 h-7 mt-1 ml-10 hover:scale-110 2xl:w-10 2xl:h-10 2xl:ml-14" src="https://img.icons8.com/windows/32/settings--v1.png" alt="settings--v1"/>
+    <img class="w-7 h-7 mt-1 hover:scale-110 2xl:w-10 2xl:h-10" src="https://img.icons8.com/windows/32/settings--v1.png" alt="settings--v1"/>
   </div>
   <div id="tooltip" class="tooltip invisible w-20 absolute bottom-16 left-[180px] p-2 bg rounded-xl shadow-[0_2px_2px_0_rgba(0,0,0,0.1)]">
     <div id="child" class="child">

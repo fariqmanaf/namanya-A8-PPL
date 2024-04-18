@@ -15,39 +15,25 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class RejectedController extends Controller
 {
     public function index(){
-        $user_id = Auth::user()->id;
-        $profil = Individuals::where('id', $user_id)->first();
-        $sertifikasi = Sertifikasi::where('individuals_id', $profil->id)->first();
-        $suratizin = SuratIzin::where('individuals_id', $profil->id)->first();
+        $user = Auth::user();
+        $sertifikasi = Sertifikasi::where('individuals_id', $user->individual['id'])->first();
+        $suratizin = SuratIzin::where('individuals_id', $user->individual['id'])->first();
+        $statusSertif = $sertifikasi->is_accepted;
+        $statusSuratIzin = $suratizin->is_accepted;
 
-        return view('general.layouts.edit', compact('sertifikasi', 'suratizin'));
+        return view('general.layouts.edit', compact('sertifikasi', 'suratizin', 'statusSertif', 'statusSuratIzin'));
     }
 
     public function update(Request $request){
-        // @dd($request->all());
         $user_id = Auth::user()->id;
         $profil = Individuals::where('id', $user_id)->first();
-
-        $perizinan = $request->validate([
-            'no_sertifikasi' => 'required',
-            'no_suratizin' => 'required',
-            'bukti_sertifikasi' => 'image|max:2048',
-            'bukti_suratizin' => 'image|max:2048'
-        ]);
-
-        $defaultSertifikasi = 0;
-        $defaultSuratIzin = 0;
-        $is_accepted_sertifikasi = $request->input('is_accepted_sertifikasi') === 'random' ? $defaultSertifikasi : $defaultSertifikasi;
-        $is_accepted_suratizin = $request->input('is_accepted_suratizin') === 'random' ? $defaultSuratIzin : $defaultSuratIzin;
 
         $oldSertifikasi = Sertifikasi::where('individuals_id', $profil->id)->value('bukti');
         $oldSuratIzin = SuratIzin::where('individuals_id', $profil->id)->value('bukti');
     
         if ($oldSertifikasi) {
             Storage::disk('public')->delete($oldSertifikasi);
-        }
-    
-        if ($oldSuratIzin) {
+        } else if ($oldSuratIzin) {
             Storage::disk('public')->delete($oldSuratIzin);
         }
 
@@ -57,9 +43,7 @@ class RejectedController extends Controller
             Sertifikasi::where('individuals_id', $profil->id)->update([
                 'bukti' => $buktiSertifikasi
             ]);
-        }
-        
-        if ($request->hasFile('bukti_suratizin')) {
+        } else if ($request->hasFile('bukti_suratizin')) {
             $buktiSuratizin = $request->file('bukti_suratizin')->storeAs(
                 'bukti_suratizin',$request->file('bukti_suratizin')->getClientOriginalName(),'public');
             SuratIzin::where('individuals_id', $profil->id)->update([
@@ -67,14 +51,18 @@ class RejectedController extends Controller
             ]);
         }
 
+        // dd($request->all());
+        // dd($request['tanggal-expired-suratizin']);
         Sertifikasi::where('individuals_id', $profil->id)->update([
-            'nomor_sertifikasi' => $perizinan['no_sertifikasi'],
-            'is_accepted' => $is_accepted_sertifikasi,
+            'nomor_sertifikasi' => $request->no_sertifikasi,
+            'tanggal_pembuatan' => $request['tanggal-pembuatan-sertif'],
+            'tanggal_expired' => $request['tanggal-expired-sertif']
         ]);
         SuratIzin::where('individuals_id', $profil->id)->update([
-            'nomor_surat' => $perizinan['no_suratizin'],
-            'is_accepted' => $is_accepted_suratizin,
-        ]);
+            'nomor_surat' => $request->no_suratizin,
+            'tanggal_pembuatan' => $request['tanggal-pembuatan-suratizin'],
+            'tanggal_expired' => $request['tanggal-expired-suratizin']
+        ]); 
 
         UserAccounts::where('id', Auth::user()->id)->update([
             'status' => 'pending'

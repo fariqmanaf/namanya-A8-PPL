@@ -42,14 +42,14 @@ class StokSb extends Model
      */
     public function kecamatan()
     {
-        return $this->belongsTo('App\Models\Kecamatan', 'id_kecamatan');
+        return $this->belongsTo(Kecamatan::class, 'kecamatan_id');
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function jenisSeman()
+    public function jenis_sapi()
     {
-        return $this->belongsTo('App\Models\JenisSeman', 'id_jenis');
+        return $this->belongsTo(JenisSapi::class, 'jenis_semen_id');
     }
 }

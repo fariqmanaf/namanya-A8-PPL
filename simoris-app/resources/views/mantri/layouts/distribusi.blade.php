@@ -11,20 +11,6 @@
 </head>
 <body class="bg-[#DDF2FD]">
   <div class="content-container w-screen bg-[#DDF2FD] flex flex-col items-center h-screen">
-    @if($errors->any())
-      <div class="alert absolute top-20">
-        <ul>
-          @foreach($errors->all() as $error)
-            <li>{{ $error }}</li>
-          @endforeach
-        </ul>
-      </div>
-    @endif
-    @if(session('success'))
-      <div class="alert absolute top-20">
-        <p>{{ session('success') }}</p>
-      </div>
-    @endif
     <a href="/home"><p class="relative left-[400px] top-20 mb-5 2xl:text-xl 2xl:left-[550px]"><  Kembali</p></a>
     <div class="justify-center items-center flex flex-col mt-20 bg-white rounded-2xl w-[70%] 2xl:text-lg">
       <div class="text flex flex-row mt-5 w-full justify-start ml-10">
@@ -43,69 +29,30 @@
         </thead>
         <tbody>
           @foreach ($data as $index => $item)
-            @foreach ($kecamatan as $kecIndex => $kecItem)
-              @if ($index === $kecIndex)
+            @if($item->kecamatan_id == $item->kecamatan['id'])
                 <tr class="text-center clickable-row border-b" data-index="{{ $index }}">
                   <td class="px-4 py-4">{{ $loop->iteration }}.</td>
-                  <td class="px-4 py-4">{{ $kecItem->kecamatan }}</td>
+                  <td class="px-4 py-4">{{ $item->kecamatan['kecamatan'] }}</td>
                   <td class="px-4 py-4">{{ $item->total_stok }}</td>
                   <td class="px-4 py-4">{{ $item->sisa_stok }}</td>
                   <td class="px-4 py-4"><button id="drop-{{ $index }}" class="bg-[#9BBEC8] rounded-xl text-white px-1">></button></td>
                 </tr>
                 @foreach ($subdata as $subIndex => $subItem)
-                  @foreach ($kecamatan as $kecamatanIndex => $kecamatanItem)
-                    @foreach ($jenis_semen as $jenisIndex => $jenisItem)
-                      @if($kecamatanItem->id === $subItem->kecamatan_id && $kecamatanIndex === $kecIndex && $jenisItem->id === $subItem->jenis_semen_id)
+                  @if($subItem->kecamatan_id == $item->kecamatan_id)
                           <tr id="sub-table-{{ $index }}-{{ $subIndex }}" class="hidden text-center sub-table bg-gray-200 border-b border-gray-300">
-                            <td class="px-2 py-2"></td>
-                            <td class="px-2 py-2">{{ $jenisItem->jenis_semen }}</td>
-                            <td class="px-2 py-2">{{ $subItem->jumlah }}</td>
-                            <td class="px-2 py-2">{{ $subItem->sisa_stok }}</td>
-                            <td class="px-2 py-2"></td>
+                            <td id="child-{{ $index }}" class="px-2 py-2"></td>
+                            <td id="child-{{ $index }}" class="px-2 py-2">{{ $subItem->jenis_sapi['jenis'] }}</td>
+                            <td id="child-{{ $index }}" class="px-2 py-2">{{ $subItem->jumlah }}</td>
+                            <td id="child-{{ $index }}" class="px-2 py-2">{{ $subItem->sisa_stok }}</td>
+                            <td id="child-{{ $index }}" class="px-2 py-2"></td>
                           </tr>
-                      @endif
-                    @endforeach
-                  @endforeach
+                  @endif
                 @endforeach
-              @endif
-            @endforeach
+            @endif
           @endforeach
         </tbody>
       </table>
     </div>
-  </div>
-  <div class="modal hidden z-1 w-[500px] h-80 fixed left-[35%] top-48 bg-white rounded-3xl shadow-xl">
-      <span class="close-button cursor-pointer font-bold text-2xl rounded-full ml-3">&times;</span>
-      <div class="container-modal flex flex-col justify-center items-center">
-        <form action="" method="POST">
-          @csrf
-          <p class="text-xl font-bold text-center text-[#427D9D]">Tambah Stok</p>
-          <div class="total-container flex flex-col text-center mt-5">
-            <label for="total_stok" class="">Total Stok</label>
-            <input type="text" name="total_stok" id="total_stok" class="w-[450px] h-10 rounded-xl bg-gray-200 border-transparent text-center">
-          </div>
-          <div class="jenis-container mt-5 flex flex-row gap-3">
-            <div class="Simental text-center flex flex-col">
-              <label for="Simental">Simental</label>
-              <input type="text" name="Simental" id="Simental" class="w-[100px] h-10 rounded-xl bg-gray-200 border-transparent text-center">
-            </div>
-            <div class="PO text-center flex flex-col">
-              <label for="PO">PO</label>
-              <input type="text" name="PO" id="PO" class="w-[100px] h-10 rounded-xl bg-gray-200 border-transparent text-center">
-            </div>
-            <div class="Brahma text-center flex flex-col">
-              <label for="Brahma">Brahma</label>
-              <input type="text" name="Brahma" id="Brahma" class="w-[100px] h-10 rounded-xl bg-gray-200 border-transparent text-center">
-            </div>
-            <div class="Limosin text-center flex flex-col">
-              <label for="Limosin">Limosin</label>
-              <input type="text" name="Limosin" id="Limosin" class="w-[100px] h-10 rounded-xl bg-gray-200 border-transparent text-center">
-            </div>
-          </div>
-          <div class="button-container mt-5 flex justify-center">
-            <button type="submit" class="bg-[#427D9D] text-white px-5 py-2 rounded-xl w-[300px] mt-3">Submit</button>
-          </div>
-        </form>
   </div>
   <script>
     // Add event listener to each clickable row
