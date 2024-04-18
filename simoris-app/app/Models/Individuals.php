@@ -91,7 +91,7 @@ class Individuals extends Model
      */
     public function alamat()
     {
-        return $this->belongsTo(Alamat::class, 'alamats_id');
+        return $this->belongsTo(Alamat::class);
     }
 
     /**
