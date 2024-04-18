@@ -80,53 +80,52 @@
     @apply text-[#427D9D] text-xl font-semibold 2xl:text-2xl text-center;
 }
 
-.form-regist1{
+.form-regist1 {
     @apply 2xl:w-[610px];
     @apply 2xl:h-[580px];
 }
 
-.form-regist2{
+.form-regist2 {
     @apply 2xl:w-[610px];
     @apply 2xl:h-[750px];
 }
 
-.form-regist3{
+.form-regist3 {
     @apply 2xl:w-[610px];
     @apply 2xl:h-[800px];
 }
 
-.input-regist1{
+.input-regist1 {
     @apply 2xl:p-2;
     @apply 2xl:w-[469px];
     @apply 2xl:h-[62px];
     @apply 2xl:text-xl;
 }
 
-.input-regist2{
+.input-regist2 {
     @apply 2xl:p-2;
     @apply 2xl:w-[469px];
     @apply 2xl:h-[62px];
     @apply 2xl:text-xl;
 }
 
-.cut-regist2{
+.cut-regist2 {
     @apply 2xl:p-2;
     @apply 2xl:w-[225px];
     @apply 2xl:h-[62px];
     @apply 2xl:text-xl;
 }
 
-.input-regist3{
+.input-regist3 {
     @apply 2xl:p-2;
     @apply 2xl:w-[469px];
     @apply 2xl:h-[62px];
     @apply 2xl:text-xl;
 }
 
-.cut-regist3{
+.cut-regist3 {
     @apply 2xl:p-2;
     @apply 2xl:w-[225px];
     @apply 2xl:h-[62px];
     @apply 2xl:text-xl;
 }
-
