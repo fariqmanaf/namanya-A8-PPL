@@ -60,7 +60,8 @@
           <label for="">Kabupaten</label>
           <select class="w-[150px] 2xl:w-[186px] text-gray-500 bg-[#F1F1F1] border-transparent rounded-xl text-sm" name="kabupaten_id" id="kabupaten">
             @foreach ($kabupaten as $item)
-              <option value="{{ $item->id }}" {{ $kabupatenuser->id == $item->id ? 'selected' : '' }}>{{ $item->kabupaten }}</option>
+              @dd($alamat->kabupaten['id'])
+              <option value="{{ $item->id }}" {{ $profil->alamat->kabupaten['id'] == $item->id ? 'selected' : '' }}>{{ $item->kabupaten }}</option>
             @endforeach
           </select>
         </div>
