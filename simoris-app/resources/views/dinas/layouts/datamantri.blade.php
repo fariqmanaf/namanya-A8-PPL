@@ -130,8 +130,9 @@
             @endforeach
         </div>
       </div>
+    </div>
     @endforeach
-  </div>
+</div>
 
   <script>
     const modals = document.querySelectorAll('.modal');
