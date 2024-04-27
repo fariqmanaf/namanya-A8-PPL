@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('kelurahan', function (Blueprint $table) {
             $table->id();
             $table->string('kelurahan')->nullable();
+            $table->foreignId('kecamatan_id')->nullable();
         });
     }
 

@@ -30,7 +30,7 @@ class Kelurahan extends Model
     /**
      * @var array
      */
-    protected $fillable = ['kelurahan'];
+    protected $fillable = ['kelurahan', 'kecamatan_id'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -38,5 +38,13 @@ class Kelurahan extends Model
     public function alamat()
     {
         return $this->hasMany(Alamat::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function kecamatan()
+    {
+        return $this->belongsTo(Kecamatan::class);
     }
 }

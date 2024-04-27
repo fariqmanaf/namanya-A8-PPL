@@ -40,13 +40,13 @@
               <select class="cut-regist2 text-sm w-[157px] bg-[#F1F1F1] border-transparent rounded-xl text-[#888888]" name="kecamatan" id="kecamatan">
                 <option value="" disabled selected>Kecamatan</option>
                 @foreach ($kecamatan as $item)
-                  <option value="{{ $item->id }}" value="{{ $item->id }}" {{ session('registration.kecamatan') == $item->id ? 'selected' : '' }}>{{ $item->kecamatan }}</option>
+                  <option data-kecamatan="{{ $item->id }}" value="{{ $item->id }}" value="{{ $item->id }}" {{ session('registration.kecamatan') == $item->id ? 'selected' : '' }}>{{ $item->kecamatan }}</option>
                 @endforeach
               </select>
               <select class="cut-regist2 text-sm w-[157px] bg-[#F1F1F1] border-transparent rounded-xl text-[#888888]" name="kelurahan" id="kelurahan">
                 <option value="" disabled selected>Kelurahan</option>
                 @foreach ($kelurahan as $item)
-                  <option value="{{ $item->id }}" value="{{ $item->id }}" {{ session('registration.kelurahan') == $item->id ? 'selected' : '' }}>{{ $item->kelurahan }}</option>
+                  <option data-kelurahan="{{ $item->kecamatan_id }}" value="{{ $item->id }}" value="{{ $item->id }}" {{ session('registration.kelurahan') == $item->id ? 'selected' : '' }}>{{ $item->kelurahan }}</option>
                 @endforeach
               </select>
             </div>
@@ -56,4 +56,19 @@
       </form>
     </div>
   </div>
+  <script>
+    const kecamatan = document.getElementById('kecamatan');
+    const kelurahan = document.getElementById('kelurahan');
+    kecamatan.addEventListener('change', function() {
+      const kecamatan_id = this.options[this.selectedIndex].getAttribute('data-kecamatan');
+      const kelurahan_options = kelurahan.querySelectorAll('option');
+      kelurahan_options.forEach(option => {
+        if(option.getAttribute('data-kelurahan') == kecamatan_id) {
+          option.style.display = 'block';
+        } else {
+          option.style.display = 'none';
+        }
+      });
+    });
+  </script>
 @endsection

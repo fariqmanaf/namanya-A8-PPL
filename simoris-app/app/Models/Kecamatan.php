@@ -56,4 +56,12 @@ class Kecamatan extends Model
     {
         return $this->hasMany(WilayahKerja::class);
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function kelurahan()
+    {
+        return $this->hasMany(Kelurahan::class);
+    }
 }

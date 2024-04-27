@@ -68,7 +68,7 @@
           <label for="">Kecamatan</label>
           <select class="w-[150px] 2xl:w-[186px] text-gray-500 bg-[#F1F1F1] border-transparent rounded-xl text-sm" name="kecamatan_id" id="kecamatan">
             @foreach ($kecamatan as $item)
-              <option value="{{ $item->id }}" {{ $kecamatanuser->id == $item->id ? 'selected' : '' }}>{{ $item->kecamatan }}</option>
+              <option data-kecamatan="{{ $item->id }}" value="{{ $item->id }}" {{ $kecamatanuser->id == $item->id ? 'selected' : '' }}>{{ $item->kecamatan }}</option>
             @endforeach
           </select>
         </div>
@@ -76,7 +76,7 @@
           <label for="">Kelurahan</label>
           <select class="w-[150px] 2xl:w-[186px] text-gray-500 bg-[#F1F1F1] border-transparent rounded-xl text-sm" name="kelurahan_id" id="kelurahan">
             @foreach ($kelurahan as $item)
-              <option value="{{ $item->id }}" {{ $kelurahanuser->id == $item->id ? 'selected' : '' }}>{{ $item->kelurahan }}</option>
+              <option data-kelurahan="{{ $item->kecamatan_id }}" value="{{ $item->id }}" {{ $kelurahanuser->id == $item->id ? 'selected' : '' }}>{{ $item->kelurahan }}</option>
             @endforeach
           </select>
         </div>
@@ -93,4 +93,19 @@
     </form>
   </div>
 </body>
+<script>
+        const kecamatan = document.getElementById('kecamatan');
+  const kelurahan = document.getElementById('kelurahan');
+  kecamatan.addEventListener('change', function() {
+    const kecamatan_id = this.options[this.selectedIndex].getAttribute('data-kecamatan');
+    const kelurahan_options = kelurahan.querySelectorAll('option');
+    kelurahan_options.forEach(option => {
+      if(option.getAttribute('data-kelurahan') == kecamatan_id) {
+        option.style.display = 'block';
+      } else {
+        option.style.display = 'none';
+      }
+    });
+  });
+</script>
 </html>
