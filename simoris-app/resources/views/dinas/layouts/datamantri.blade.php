@@ -19,7 +19,7 @@
         </thead>
         <tbody>
             @foreach($dataMantri as $mantri)
-              <tr class="text-center clickable-row border-b"">
+              <tr class="text-center clickable-row border-b" data-target="#modal-{{ $mantri->id }}">
                 <td class="px-4 py-4">
                   {{ $loop->iteration }}.
                 </td>
@@ -38,7 +38,7 @@
                   @endforeach
                 </td>
                 <td class="px-4 py-4">
-                  <a href="#" data-target="#modal-{{ $mantri->id }}" class="open-modal">
+                  <a href="#" class="open-modal">
                       <img src="{{ asset('assets/icon/view.svg') }}" alt="View" class="h-5 w-5">
                   </a>
                 </td>
@@ -136,7 +136,7 @@
 
   <script>
     const modals = document.querySelectorAll('.modal');
-    const openModalButtons = document.querySelectorAll('.open-modal');
+    const openModalButtons = document.querySelectorAll('.clickable-row');
     const table = document.querySelector('.table-container');
     const closeModalButtons = document.querySelectorAll('.close-modal');
 
@@ -177,24 +177,12 @@
     });
 
     const previewGambar = document.querySelectorAll('.preview-gambar');
-
     previewGambar.forEach(preview => {
         preview.addEventListener('click', function() {
-            const existingImage = this.querySelector('img');
-            
-            if(existingImage) {
-                existingImage.remove();
-
-            } else {
-                const gambar = document.createElement('img');
-                gambar.src = "/storage/" + this.innerHTML;
-                gambar.style.maxWidth = '900px';
-                gambar.classList.add('absolute');
-                gambar.classList.add('top-0');
-                gambar.classList.add('left-0');
-                gambar.classList.add('2xl:left-40');
-                this.appendChild(gambar);
-            }
+          const id = this.id.split('-')[1];
+          const bukti = this.getAttribute('data-name');
+          const gambarPath = "{{ asset('storage') . '/'}}" + bukti;
+          window.open(gambarPath, '_blank')
         });
     });
 

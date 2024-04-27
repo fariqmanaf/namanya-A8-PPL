@@ -4,8 +4,52 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "af4adbc0a4610332a7d2868ac73b56c8",
+    "content-hash": "aae2cfc304bce76bc62f8412ed40c8a5",
     "packages": [
+        {
+            "name": "bagusindrayana/laravel-maps",
+            "version": "v0.2.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bagusindrayana/laravel-maps.git",
+                "reference": "0c3bdfa330c2dc9b0fd1f9ce89ac277d9d7f765e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bagusindrayana/laravel-maps/zipball/0c3bdfa330c2dc9b0fd1f9ce89ac277d9d7f765e",
+                "reference": "0c3bdfa330c2dc9b0fd1f9ce89ac277d9d7f765e",
+                "shasum": ""
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Bagusindrayana\\LaravelMaps\\LaravelMapsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Bagusindrayana\\LaravelMaps\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Bagus Indrayana",
+                    "email": "bagusindrayanaindo@gmail.com"
+                }
+            ],
+            "description": "set mapbox and leaflet map initiation from within laravel",
+            "support": {
+                "issues": "https://github.com/bagusindrayana/laravel-maps/issues",
+                "source": "https://github.com/bagusindrayana/laravel-maps/tree/v0.2.2"
+            },
+            "time": "2022-01-02T00:22:57+00:00"
+        },
         {
             "name": "brick/math",
             "version": "0.11.0",

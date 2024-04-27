@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\StokSb;
 use App\Models\Kecamatan;
-use App\Models\Individuals;
 use App\Models\JenisSemen;
+use App\Models\Individuals;
 use App\Models\UserAccounts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Bagusindrayana\LaravelMaps\LaravelMaps;
+use Bagusindrayana\LaravelMaps\Mapbox\MapboxMarker;
 
 class DashboardDinasController extends Controller
 {
@@ -37,18 +39,19 @@ class DashboardDinasController extends Controller
             'data' => $latestData,
             'subdata' => $subdata,
             'riwayatStok' => $riwayatStok,
-            'periode' => $previousPeriod
+            'periode' => $previousPeriod,
         ]);
     }
 
-    public function riwayat(){
+    public function riwayat()
+    {
 
         $latestData = StokSb::where('status', 'nonaktif')->selectRaw('kecamatan_id, periode, SUM(jumlah) AS total_stok, SUM(jumlah - used) AS sisa_stok')
-        ->groupBy('kecamatan_id', 'periode')->get();
+            ->groupBy('kecamatan_id', 'periode')->get();
 
         $subdata = StokSb::where('status', 'nonaktif')->selectRaw('periode, jenis_semen_id, kecamatan_id, jumlah, SUM(jumlah - used) AS sisa_stok')
-        ->groupBy('periode', 'kecamatan_id', 'jenis_semen_id', 'jumlah')->get();
-        
+            ->groupBy('periode', 'kecamatan_id', 'jenis_semen_id', 'jumlah')->get();
+
         $superdata = StokSb::where('status', 'nonaktif')->selectRaw('periode, SUM(jumlah) AS total_stok, SUM(jumlah - used) AS sisa_stok')
             ->groupBy('periode')->get();
 
@@ -65,7 +68,8 @@ class DashboardDinasController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function createStok(Request $request) {
+    public function createStok(Request $request)
+    {
         $validatedData = $request->validate([
             'total_stok' => 'required',
             'Simental' => 'required',
@@ -73,42 +77,44 @@ class DashboardDinasController extends Controller
             'Brahma' => 'required',
             'Limosin' => 'required',
         ]);
-    
+
         $total_sisa = request('sisa-1') + request('sisa-2') + request('sisa-3') + request('sisa-4');
         $total_stok = $validatedData['total_stok'] += $total_sisa;
         $Simental = $validatedData['Simental'] += request('sisa-1');
         $PO = $validatedData['PO'] += request('sisa-2');
         $Brahma = $validatedData['Brahma'] += request('sisa-3');
         $Limosin = $validatedData['Limosin'] += request('sisa-4');
-    
+
         $totalJenis = $Simental + $PO + $Brahma + $Limosin;
         if ($total_stok != $totalJenis) {
             return redirect('/dashboard')->withErrors('Total stok tidak sesuai dengan jumlah jenis semen');
-        } else {    
+        } else {
             session()->put('stok.total_stok', $total_stok);
             session()->put('stok.Simental', $Simental);
             session()->put('stok.PO', $PO);
             session()->put('stok.Brahma', $Brahma);
             session()->put('stok.Limosin', $Limosin);
-            
+
             return redirect('/dashboard/preview');
         }
     }
 
-    public function preview(Request $request){
+    public function preview(Request $request)
+    {
 
         $jenisSemen = JenisSemen::all()->pluck('id')->toArray();
         $kecamatan = Kecamatan::all();
 
         $jenis = [session()->get('stok.Simental'), session()->get('stok.PO'), session()->get('stok.Brahma'), session()->get('stok.Limosin')];
         $percentage = [
-        0.03, 0.03, 0.05, 0.03, 0.02,
-        0.03, 0.03, 0.03, 0.03, 0.03,
-        0.03, 0.03, 0.03, 0.03, 0.03,
-        0.03, 0.03, 0.03, 0.03, 0.03,
-        0.03, 0.03, 0.03, 0.03, 0.03,
-        0.03, 0.03, 0.03, 0.03, 0.03,
-        0.03];
+            0.03, 0.03, 0.05, 0.03, 0.02,
+            0.03, 0.03, 0.03, 0.03, 0.03,
+            0.03, 0.03, 0.03, 0.03, 0.03,
+            0.03, 0.03, 0.03, 0.03, 0.03,
+            0.03, 0.03, 0.03, 0.03, 0.03,
+            0.03, 0.03, 0.03, 0.03, 0.03,
+            0.03
+        ];
 
         $data = [];
         $subdata = [];
@@ -144,7 +150,8 @@ class DashboardDinasController extends Controller
         ]);
     }
 
-    public function previewpost(Request $request){
+    public function previewpost(Request $request)
+    {
 
         $validatedData = $request->validate([
             'total_stok' => 'required',
@@ -161,13 +168,14 @@ class DashboardDinasController extends Controller
 
         $jenis = [$Simental, $PO, $Brahma, $Limosin];
         $percentage = [
-        0.03, 0.03, 0.05, 0.03, 0.02,
-        0.03, 0.03, 0.03, 0.03, 0.03,
-        0.03, 0.03, 0.03, 0.03, 0.03,
-        0.03, 0.03, 0.03, 0.03, 0.03,
-        0.03, 0.03, 0.03, 0.03, 0.03,
-        0.03, 0.03, 0.03, 0.03, 0.03,
-        0.03];
+            0.03, 0.03, 0.05, 0.03, 0.02,
+            0.03, 0.03, 0.03, 0.03, 0.03,
+            0.03, 0.03, 0.03, 0.03, 0.03,
+            0.03, 0.03, 0.03, 0.03, 0.03,
+            0.03, 0.03, 0.03, 0.03, 0.03,
+            0.03, 0.03, 0.03, 0.03, 0.03,
+            0.03
+        ];
         $kecamatan = Kecamatan::all()->pluck('id');
         $jenisSemen = JenisSemen::all()->pluck('id');
         $status = 'aktif';
@@ -189,7 +197,7 @@ class DashboardDinasController extends Controller
 
         $latestPeriod = StokSb::select('periode')->orderByDesc('periode')->value('periode');
         $previousPeriod = StokSb::select('periode')->groupBy('periode')->orderBydesc('periode')->skip(1)->take(1)->value('periode');
-        
+
         StokSb::where('periode', $previousPeriod)->update(['status' => 'nonaktif']);
 
         session()->forget('stok');

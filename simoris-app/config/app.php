@@ -160,6 +160,7 @@ return [
          * Package Service Providers...
          */
         Krlove\EloquentModelGenerator\Provider\GeneratorServiceProvider::class,
+        Bagusindrayana\LaravelMaps\LaravelMapsServiceProvider::class,
         /*
          * Application Service Providers...
          */

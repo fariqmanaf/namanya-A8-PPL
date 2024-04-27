@@ -24,7 +24,7 @@
         </thead>
         <tbody>
             @foreach($dataMantri as $mantri)
-              <tr class="text-center clickable-row border-b"">
+              <tr class="text-center clickable-row border-b" data-target="#modal-{{ $mantri->id }}">
                 <td class="px-4 py-4">
                   {{ $loop->iteration }}.
                 </td>
@@ -43,7 +43,7 @@
                   @endforeach
                 </td>
                 <td class="px-4 py-4">
-                  <a href="#" data-target="#modal-{{ $mantri->id }}" class="open-modal">
+                  <a href="#" class="open-modal">
                       <img src="{{ asset('assets/icon/view.svg') }}" alt="View" class="h-5 w-5">
                   </a>
                 </td>
@@ -116,7 +116,7 @@
                       <p class="mb-2">{{ $sertif->tanggal_expired }}</p>
                     </div>
                   </div>
-                  <div id="bukti-sertifikasi-{{ $mantri->id }}" class="preview-gambar w-72 h-14 flex items-center justify-center bg-gray-200 text-xs rounded-xl">{{ ($sertif->bukti) }}</div>
+                  <div id="bukti-sertifikasi-{{ $mantri->id }}" data-name="{{ $sertif->bukti }}" class="preview-gambar w-72 h-14 flex items-center justify-center bg-gray-200 text-xs rounded-xl">{{ ($sertif->bukti) }}</div>
                   <div class="flex flex-row w-full justify-center items-center gap-x-3 mt-2">
                     <button type="button" class="px-12 py-1 rounded-lg text-white font-semibold text-sm bg-[#FE6666] hover:bg-[#d15353]" id="tolakSertif-{{ $mantri->id }}">Tolak</button>
                     <button type="button" class="px-12 py-1 rounded-lg text-white font-semibold text-sm bg-[#66C57A] hover:bg-[#5db671]" id="setujuSertif-{{ $mantri->id }}">Setujui</button>
@@ -140,7 +140,7 @@
                       <p class="mb-2">{{ $izin->tanggal_expired }}</p>
                     </div>
                   </div>
-                  <div id="bukti-izin-{{ $mantri->id }}" class="preview-gambar w-72 h-14 flex items-center justify-center bg-gray-200 text-xs rounded-xl">{{ ($izin->bukti) }}</div>
+                  <div id="bukti-izin-{{ $mantri->id }}" data-name="{{ $izin->bukti }}" class="preview-gambar w-72 h-14 flex items-center justify-center bg-gray-200 text-xs rounded-xl">{{ ($izin->bukti) }}</div>
                   <div class="flex flex-row w-full justify-center items-center gap-x-3 mt-2">
                     <button type="button" class="px-12 py-1 rounded-lg text-white font-semibold text-sm bg-[#FE6666] hover:bg-[#d15353]" id="tolakIzin-{{ $mantri->id }}">Tolak</button>
                     <button type="button" class="px-12 py-1 rounded-lg text-white font-semibold text-sm bg-[#66C57A] hover:bg-[#5db671]" id="setujuIzin-{{ $mantri->id }}">Setujui</button>
@@ -161,7 +161,7 @@
 
   <script>
     const modals = document.querySelectorAll('.modal');
-    const openModalButtons = document.querySelectorAll('.open-modal');
+    const openModalButtons = document.querySelectorAll('.clickable-row');
     const table = document.querySelector('.table-container');
     const closeModalButtons = document.querySelectorAll('.close-modal');
 
@@ -202,25 +202,12 @@
     });
 
     const previewGambar = document.querySelectorAll('.preview-gambar');
-
     previewGambar.forEach(preview => {
         preview.addEventListener('click', function() {
-            const existingImage = this.querySelector('img');
-            
-            if(existingImage) {
-                existingImage.remove();
-
-            } else {
-                const gambar = document.createElement('img');
-                gambar.src = "/storage/" + this.innerHTML;
-                gambar.style.maxWidth = '100px';
-                gambar.classList.add('absolute');
-                gambar.classList.add('absolute');
-                gambar.classList.add('top-0');
-                gambar.classList.add('left-0');
-                gambar.classList.add('2xl:left-40');
-                this.appendChild(gambar);
-            }
+          const id = this.id.split('-')[1];
+          const bukti = this.getAttribute('data-name');
+          const gambarPath = "{{ asset('storage') . '/'}}" + bukti;
+          window.open(gambarPath, '_blank')
         });
     });
 
