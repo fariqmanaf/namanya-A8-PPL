@@ -11,11 +11,11 @@
       <img class="-ml-8 mr-3 w-5 h-5 2xl:w-8 2xl:h-8" src="{{asset('/assets/outline/home-o.svg')}}">
       <a href="/main" class="w-full text-[14px] 2xl:text-lg">Beranda</a>
     </div>
-    <div class="menu-2 w-[90%] flex menu rounded-xl px-12 py-3 2xl:py-5 text-[#164863] hover:bg-[#C6F2FF] {{ ($title === ">Daftar Mantri") ? 'bg-[#C6F2FF]' : '' }}">
+    <div class="menu-2 w-[90%] flex menu rounded-xl px-12 py-3 2xl:py-5 text-[#164863] hover:bg-[#C6F2FF] {{ ($title === "Daftar Mantri") ? 'bg-[#C6F2FF]' : '' }}">
       <img class="-ml-8 mr-3 w-5 h-5 2xl:w-8 2xl:h-8" src="{{asset('/assets/outline/people-o.svg')}}">
-      <a href="" class="w-full text-[14px] 2xl:text-lg">Daftar Mantri</a>
+      <a href="/main/data-mantri" class="w-full text-[14px] 2xl:text-lg">Daftar Mantri</a>
     </div>
-    <div class="menu-3 w-[90%] flex menu rounded-xl px-12 py-3 2xl:py-5 text-[#164863] hover:bg-[#C6F2FF] {{ ($title === "Laporan IB") ? 'bg-[#C6F2FF]' : '' }}">
+    <div class="menu-3 w-[90%] flex menu rounded-xl px-12 py-3 2xl:py-5 text-[#0d1e27] hover:bg-[#C6F2FF] {{ ($title === "Laporan IB") ? 'bg-[#C6F2FF]' : '' }}">
       <img class="-ml-8 mr-3 w-5 h-5 2xl:w-8 2xl:h-8" src="{{asset('/assets/outline/document-o.svg')}}">
       <a href="" class="w-full text-[14px] 2xl:text-lg">Laporan IB</a>
     </div>
@@ -27,7 +27,7 @@
   <div id="profile" class="profile flex absolute bottom-0 cursor-pointer mb-5 w-full">
     <img class="dinas h-10 w-10 rounded-full ml-3" src="https://www.freeiconspng.com/thumbs/profile-icon-png/profile-icon-9.png" alt="profile" class="w-20 h-20 rounded-full">
     <div class="text ml-2">
-      <p class="font-bold text-[13px] 2xl:text-base">{{ $name->name }}</p>
+      <p class="font-bold text-[13px] 2xl:text-base">{{ Auth::user()->individual['name'] }}</p>
       <p class="text-xs 2xl:text-base">{{ Auth::user()->email }}</p>
     </div>
     <img class="w-7 h-7 mt-1 relative ml-6 right-0  hover:scale-110 2xl:w-10 2xl:h-10 2xl:ml-10" src="https://img.icons8.com/windows/32/settings--v1.png" alt="settings--v1"/>

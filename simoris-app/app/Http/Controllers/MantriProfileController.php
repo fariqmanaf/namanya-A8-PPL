@@ -23,9 +23,8 @@ class MantriProfileController extends Controller
     public function index()
     {
         $title = 'Beranda';
-        $name = Individuals::where('id', Auth::user()->individuals_id)->first();
 
-        return view('mantri.layouts.beranda', compact('title', 'name'));
+        return view('mantri.layouts.beranda', compact('title'));
     }
 
     /**

@@ -9,6 +9,7 @@ use App\Http\Controllers\MantriProfileController;
 use App\Http\Controllers\DashboardDinasController;
 use App\Http\Controllers\DataMantriController;
 use App\Http\Controllers\MantriFeatureController;
+use App\Http\Controllers\PeternakFeaturesController;
 use App\Http\Controllers\PeternakProfileController;
 use App\Http\Controllers\RegisterMantriController;
 use App\Http\Controllers\RegisterPeternakController;
@@ -82,6 +83,7 @@ Route::middleware('peternak')->group(function(){
     Route::put('/main/profile', [PeternakProfileController::class, 'update']);
     Route::get('/main/profile/edit', [PeternakProfileController::class, 'changepass']);
     Route::put('/main/profile/edit', [PeternakProfileController::class, 'updatepass']);
+    Route::get('/main/data-mantri', [PeternakFeaturesController::class, 'dataMantri']);
 });
 
 Route::get('/logout', function(){

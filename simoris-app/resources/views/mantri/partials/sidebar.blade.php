@@ -27,7 +27,7 @@
   <div id="profile" class="profile flex absolute bottom-0 cursor-pointer mb-5 w-full gap-2 2xl:gap-3">
     <img class="dinas h-10 w-10 rounded-full ml-3" src="https://www.freeiconspng.com/thumbs/profile-icon-png/profile-icon-9.png" alt="profile" class="w-20 h-20 rounded-full">
     <div class="text ml-2">
-      <p class="font-bold text-[13px] 2xl:text-base">{{ $name->name }}</p>
+      <p class="font-bold text-[13px] 2xl:text-base">{{ Auth::user()->individual['name'] }}</p>
       <p class="text-xs 2xl:text-base">{{ Auth::user()->email }}</p>
     </div>
     <img class="w-7 h-7 mt-1 hover:scale-110 2xl:w-10 2xl:h-10" src="https://img.icons8.com/windows/32/settings--v1.png" alt="settings--v1"/>
