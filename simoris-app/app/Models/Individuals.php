@@ -97,7 +97,7 @@ class Individuals extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function pengajuanSbs()
+    public function pengajuanSb()
     {
         return $this->hasMany(PengajuanSb::class);
     }
@@ -105,7 +105,7 @@ class Individuals extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function laporanIbs()
+    public function laporanIb()
     {
         return $this->hasMany(LaporanIb::class);
     }

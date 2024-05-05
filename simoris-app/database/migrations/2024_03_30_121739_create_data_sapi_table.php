@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('data_sapi', function (Blueprint $table) {
+        Schema::create('data_sapis', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('jenis_sapi_id')->index('id_jenis');
-            $table->foreignId('individuals_id')->index('id_peternak');
+            $table->foreignId('jenis_sapi_id')->nullable();
+            $table->foreignId('individuals_id')->nullable();
             $table->string('detail')->nullable();
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('data_sapi');
+        Schema::dropIfExists('data_sapis');
     }
 };

@@ -33,20 +33,20 @@
             <select selected="Kabupaten" name="kabupaten" id="kabupaten" class="input-regist2 text-sm w-[334px] bg-[#F1F1F1] border-transparent rounded-xl text-[#888888]">
               <option value="" disabled selected>Kabupaten</option>
               @foreach ($kabupaten as $item)
-                <option value="{{ $item->id }}" value="{{ $item->id }}" {{ session('registration.kabupaten') == $item->id ? 'selected' : '' }}>{{ $item->kabupaten }}</option>
+                <option value="{{ $item->id }}" {{ session('registration.kabupaten') == $item->id ? 'selected' : '' }}>{{ $item->kabupaten }}</option>
               @endforeach
             </select>
             <div class="keckel flex gap-5">
               <select class="cut-regist2 text-sm w-[157px] bg-[#F1F1F1] border-transparent rounded-xl text-[#888888]" name="kecamatan" id="kecamatan">
                 <option value="" disabled selected>Kecamatan</option>
                 @foreach ($kecamatan as $item)
-                  <option data-kecamatan="{{ $item->id }}" value="{{ $item->id }}" value="{{ $item->id }}" {{ session('registration.kecamatan') == $item->id ? 'selected' : '' }}>{{ $item->kecamatan }}</option>
+                  <option data-kecamatan="{{ $item->id }}" value="{{ $item->id }}" {{ session('registration.kecamatan') == $item->id ? 'selected' : '' }}>{{ $item->kecamatan }}</option>
                 @endforeach
               </select>
               <select class="cut-regist2 text-sm w-[157px] bg-[#F1F1F1] border-transparent rounded-xl text-[#888888]" name="kelurahan" id="kelurahan">
                 <option value="" disabled selected>Kelurahan</option>
                 @foreach ($kelurahan as $item)
-                  <option data-kelurahan="{{ $item->kecamatan_id }}" value="{{ $item->id }}" value="{{ $item->id }}" {{ session('registration.kelurahan') == $item->id ? 'selected' : '' }}>{{ $item->kelurahan }}</option>
+                  <option data-kelurahan="{{ $item->kecamatan_id }}" value="{{ $item->id }}" {{ session('registration.kelurahan') == $item->id ? 'selected' : '' }}>{{ $item->kelurahan }}</option>
                 @endforeach
               </select>
             </div>

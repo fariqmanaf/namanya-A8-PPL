@@ -48,20 +48,30 @@
                                 <td class="px-4 py-4" id="mapTotal-{{ $item->kecamatan['kecamatan'] }}" data-total="{{ $item->total_stok }}">{{ $item->total_stok }}</td>
                                 <td class="px-4 py-4" id="mapSisa-{{ $item->kecamatan['kecamatan'] }}" data-sisa="{{ $item->sisa_stok }}">{{ $item->sisa_stok }}</td>
                                 <td class="px-4 py-4"><button id="drop-{{ $index }}"
-                                        class="bg-[#9BBEC8] rounded-xl text-white px-1">></button></td>
+                                        class="bg-[#9BBEC8] rounded-xl text-white px-1">></button>
+                                </td>
                             </tr>
                             @foreach ($subdata as $subIndex => $subItem)
                                 @if ($subItem->kecamatan_id == $item->kecamatan_id)
                                     <tr id="sub-table-{{ $index }}-{{ $subIndex }}"
-                                        class="hidden text-center sub-table bg-gray-200 border-b border-gray-300">
+                                        class="hidden text-center sub-table bg-gray-200 border-b border-gray-300"
+                                        data-index={{ $subIndex }}>
                                         <td id="child-{{ $index }}" class="px-2 py-2"></td>
                                         <td id="child-{{ $index }}" class="px-2 py-2">
                                             {{ $subItem->jenis_sapi['jenis'] }}</td>
                                         <td id="child-{{ $index }}" class="px-2 py-2">{{ $subItem->jumlah }}</td>
                                         <td id="child-{{ $index }}" class="px-2 py-2">{{ $subItem->sisa_stok }}
                                         </td>
-                                        <td id="child-{{ $index }}" class="px-2 py-2"></td>
+                                        <td class="px-4 py-4"></td>
                                     </tr>
+                                    @foreach($batch as $batchIndex => $batchItem)
+                                        @if($batchIndex == $subIndex && $batchItem->kecamatan_id == $item->kecamatan_id)
+                                            <tr id="batch-{{ $subIndex }}" class="hidden text-center batch-row bg-gray-100 border-b">
+                                                <td class="px-2 py-2" colspan="2">IB-{{ \Carbon\Carbon::parse($previousPeriod)->format('dmY') }} : {{ $batchItem->sisa_stok }}</td>
+                                                <td class="px-2 py-2" colspan="3">IB-{{ \Carbon\Carbon::parse($latestPeriod)->format('dmY') }} : {{ $subItem->jumlah - $batchItem->sisa_stok }}</td>
+                                            </tr>
+                                        @endif
+                                    @endforeach
                                 @endif
                             @endforeach
                         @endif
@@ -105,10 +115,10 @@
                 </div>
 
                 <div class="sisa-stok mt-5 flex flex-row gap-3">
-                    @foreach ($riwayatStok as $riwayat)
+                    @foreach ($latestSisa as $sisa)
                         <div class="text-center flex flex-row">
-                            <input value="{{ $riwayat->sisa_stok }}" readonly type="text"
-                                name="sisa-{{ $riwayat->jenis_semen_id }}"
+                            <input value="{{ $sisa->sisa_stok }}" readonly type="text"
+                                name="sisa-{{ $sisa->jenis_semen_id }}"
                                 class="w-[100px] h-10 rounded-xl bg-gray-200 border-transparent text-center">
                         </div>
                     @endforeach
@@ -120,69 +130,78 @@
                 </div>
             </form>
         </div>
-        <script>
-            // Add event listener to each clickable row
-            document.querySelectorAll('.clickable-row').forEach(row => {
-                row.addEventListener('click', function() {
-                    const index = parseInt(this.dataset.index);
+    </div>
+    <script>
+        document.querySelectorAll('.clickable-row').forEach(row => {
+            row.addEventListener('click', function() {
+                const index = parseInt(this.dataset.index);
+                const subTables = document.querySelectorAll(`tr[id^="sub-table-${index}-"]`);
+                subTables.forEach(subTable => {
+                    subTable.classList.toggle('hidden');
+                });
+                
+                document.getElementById(`drop-${index}`).innerText = document.getElementById(
+                    `drop-${index}`).innerText === '>' ? 'v' : '>';
+            });
+        });
+
+        document.querySelectorAll('.sub-table').forEach(row => {
+            row.addEventListener('click', function() {
+                const index = parseInt(this.dataset.index);
+                const batchs = document.querySelectorAll(`#batch-${index}`);
+                batchs.forEach(batch => {
+                    batch.classList.toggle('hidden');
+                });
+            });
+        });
+
+        const searchInput = document.getElementById('search-kecamatan');
+
+        searchInput.addEventListener('input', function() {
+            const searchValue = this.value.toLowerCase();
+            const tableRows = document.querySelectorAll('tbody tr.clickable-row');
+            const subTable = document.querySelectorAll('tbody tr.sub-table');
+
+            tableRows.forEach(row => {
+                const kecamatanName = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+                if (kecamatanName.includes(searchValue)) {
+                    row.style.display = 'table-row';
+                } else {
+                    row.style.display = 'none';
+                }
+
+                if (row.style.display === 'none') {
+                    const index = parseInt(row.dataset.index);
                     const subTables = document.querySelectorAll(`tr[id^="sub-table-${index}-"]`);
                     subTables.forEach(subTable => {
-                        subTable.classList.toggle('hidden');
+                        subTable.classList.add('hidden');
                     });
-                    document.getElementById(`drop-${index}`).innerText = document.getElementById(
-                        `drop-${index}`).innerText === '>' ? 'v' : '>';
-                });
+                } else if (row.style.display === 'table-row') {
+                    const index = parseInt(row.dataset.index);
+                    const subTables = document.querySelectorAll(`tr[id^="sub-table-${index}-"]`);
+                    subTables.forEach(subTable => {
+                        subTable.classList.add('hidden');
+                    });
+                }
             });
+        });
 
-            // Add event listener to search input
-            const searchInput = document.getElementById('search-kecamatan');
+        const triggerButton = document.getElementById('trigger');
+        const modal = document.querySelector('.modal');
+        const closeButton = document.querySelector('.close-button');
 
-            searchInput.addEventListener('input', function() {
-                const searchValue = this.value.toLowerCase();
-                const tableRows = document.querySelectorAll('tbody tr.clickable-row');
-                const subTable = document.querySelectorAll('tbody tr.sub-table');
-
-                tableRows.forEach(row => {
-                    const kecamatanName = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
-                    if (kecamatanName.includes(searchValue)) {
-                        row.style.display = 'table-row';
-                    } else {
-                        row.style.display = 'none';
-                    }
-
-                    if (row.style.display === 'none') {
-                        const index = parseInt(row.dataset.index);
-                        const subTables = document.querySelectorAll(`tr[id^="sub-table-${index}-"]`);
-                        subTables.forEach(subTable => {
-                            subTable.classList.add('hidden');
-                        });
-                    } else if (row.style.display === 'table-row') {
-                        const index = parseInt(row.dataset.index);
-                        const subTables = document.querySelectorAll(`tr[id^="sub-table-${index}-"]`);
-                        subTables.forEach(subTable => {
-                            subTable.classList.add('hidden');
-                        });
-                    }
-                });
+        triggerButton.addEventListener('click', function() {
+            modal.style.display = 'block';
+            document.querySelectorAll('body > *:not(.modal)').forEach(element => {
+                element.style.filter = 'blur(5px)';
             });
+        });
 
-            // Add event listener to trigger button
-            const triggerButton = document.getElementById('trigger');
-            const modal = document.querySelector('.modal');
-            const closeButton = document.querySelector('.close-button');
-
-            triggerButton.addEventListener('click', function() {
-                modal.style.display = 'block';
-                document.querySelectorAll('body > *:not(.modal)').forEach(element => {
-                    element.style.filter = 'blur(5px)';
-                });
+        closeButton.addEventListener('click', function() {
+            modal.style.display = 'none';
+            document.querySelectorAll('body > *:not(.modal)').forEach(element => {
+                element.style.filter = 'none';
             });
-
-            closeButton.addEventListener('click', function() {
-                modal.style.display = 'none';
-                document.querySelectorAll('body > *:not(.modal)').forEach(element => {
-                    element.style.filter = 'none';
-                });
-            });
-        </script>
-    @endsection
+        });
+    </script>
+@endsection

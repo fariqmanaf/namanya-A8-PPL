@@ -39,22 +39,22 @@ class LaporanIb extends Model
     /**
      * @var array
      */
-    protected $fillable = ['id_sapi', 'id_peternak', 'id_mantri', 'kode_pejantan', 'kode_pembuatan', 'status_bunting'];
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function totalIbs()
-    {
-        return $this->hasMany('App\Models\TotalIb', 'id_laporan');
-    }
+    protected $guarded = ['id'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function dataSapi()
     {
-        return $this->belongsTo('App\Models\DataSapi', 'id_sapi');
+        return $this->belongsTo(DataSapi::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function jenisSemen()
+    {
+        return $this->belongsTo(JenisSemen::class);
     }
 
     /**
@@ -62,7 +62,6 @@ class LaporanIb extends Model
      */
     public function individual()
     {
-        return $this->belongsTo('App\Models\Individual', 'id_peternak');
-        return $this->belongsTo('App\Models\Individual', 'id_mantri');
+        return $this->belongsTo(Individuals::class);
     }
 }

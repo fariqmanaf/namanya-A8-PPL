@@ -6,6 +6,7 @@ use App\Models\StokSb;
 use App\Models\Kecamatan;
 use App\Models\JenisSemen;
 use App\Models\Individuals;
+use App\Models\LaporanIb;
 use App\Models\UserAccounts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -20,7 +21,7 @@ class DashboardDinasController extends Controller
     public function index()
     {
         $latestPeriod = StokSb::select('periode')->orderByDesc('periode')->value('periode');
-        $previousPeriod = StokSb::select('periode')->groupBy('periode')->orderBydesc('periode')->take(1)->value('periode');
+        $previousPeriod = StokSb::select('periode')->groupBy('periode')->orderBydesc('periode')->skip(1)->take(1)->value('periode');
 
         $latestData = StokSb::with('kecamatan')->selectRaw('kecamatan_id, periode, SUM(jumlah) AS total_stok, SUM(jumlah - used) AS sisa_stok')
             ->where('periode', $latestPeriod)
@@ -30,16 +31,34 @@ class DashboardDinasController extends Controller
             ->where('periode', $latestPeriod)
             ->groupBy('kecamatan_id', 'jenis_semen_id', 'jumlah')->get();
 
-        $riwayatStok = StokSb::selectRaw('jenis_semen_id, SUM(jumlah - used) AS sisa_stok')
-            ->where('periode', $previousPeriod)
+        $latestSisa = StokSb::selectRaw('jenis_semen_id, SUM(jumlah - used) AS sisa_stok')
+            ->where('periode', $latestPeriod)
             ->groupBy('jenis_semen_id')->get();
+
+        $batch = StokSb::selectRaw('jenis_semen_id, kecamatan_id,  SUM(jumlah - used) AS sisa_stok')
+            ->where('periode', $previousPeriod)
+            ->groupBy('jenis_semen_id', 'kecamatan_id')->get();
+        
+        // $array = [];
+        // foreach ($batch as $key => $value) {
+        //     $array[] = $value->jenis_semen_id;
+        // }
+        // foreach($subdata as $key => $value){
+        //     $array[] = $value->jumlah;
+        // }
+        // foreach($subdata as $key => $value){
+        //     $array[] = $value->jumlah - $batch[$key]->sisa_stok;
+        // }
+        // dd($array);
 
         return view('dinas.layouts.main', [
             'title' => 'Dashboard',
             'data' => $latestData,
             'subdata' => $subdata,
-            'riwayatStok' => $riwayatStok,
-            'periode' => $previousPeriod,
+            'latestSisa' => $latestSisa,
+            'batch' => $batch,
+            'latestPeriod' => $latestPeriod,
+            'previousPeriod' => $previousPeriod,
         ]);
     }
 
@@ -110,9 +129,9 @@ class DashboardDinasController extends Controller
             0.03, 0.03, 0.05, 0.03, 0.02,
             0.03, 0.03, 0.03, 0.03, 0.03,
             0.03, 0.03, 0.03, 0.03, 0.03,
+            0.03, 0.06, 0.03, 0.03, 0.03,
             0.03, 0.03, 0.03, 0.03, 0.03,
-            0.03, 0.03, 0.03, 0.03, 0.03,
-            0.03, 0.03, 0.03, 0.03, 0.03,
+            0.03, 0.03, 0.03, 0.03, 0.06,
             0.03
         ];
 
@@ -171,9 +190,9 @@ class DashboardDinasController extends Controller
             0.03, 0.03, 0.05, 0.03, 0.02,
             0.03, 0.03, 0.03, 0.03, 0.03,
             0.03, 0.03, 0.03, 0.03, 0.03,
+            0.03, 0.06, 0.03, 0.03, 0.03,
             0.03, 0.03, 0.03, 0.03, 0.03,
-            0.03, 0.03, 0.03, 0.03, 0.03,
-            0.03, 0.03, 0.03, 0.03, 0.03,
+            0.03, 0.03, 0.03, 0.03, 0.06,
             0.03
         ];
         $kecamatan = Kecamatan::all()->pluck('id');
@@ -185,7 +204,7 @@ class DashboardDinasController extends Controller
                 $persentase = $percentage[$i];
                 $jumlah = floor($jenisStok * $persentase);
                 StokSb::create([
-                    'periode' => date('Y-m-d'),
+                    'periode' => '2024-05-05',
                     'kecamatan_id' => $kec,
                     'jenis_semen_id' => $jenisSemen[$x],
                     'jumlah' => $jumlah,
@@ -202,5 +221,25 @@ class DashboardDinasController extends Controller
 
         session()->forget('stok');
         return redirect('/dashboard')->with('success', 'Stok berhasil ditambahkan');
+    }
+
+    public function laporanIB()
+    {
+        $title = "Laporan IB";
+        $mantri = UserAccounts::where('roles_id', 2)->get();
+        foreach($mantri as $key => $value){
+            $wilayahKerja[] = Kecamatan::where('id', $value->individual->wilayah_kerja->pluck('kecamatan_id'))->get();
+        }
+
+        return view('dinas.layouts.laporanIbDinas', compact('title', 'mantri', 'wilayahKerja'));
+    }
+
+    public function ibDetail(Individuals $individuals)
+    {
+        $title = "Detail Laporan IB";
+        $data = Individuals::where('id', $individuals->id)->first();
+        $laporanIB = LaporanIb::where('id_mantri', $individuals->id)->get();
+
+        return view('dinas.layouts.ibDetail', compact('title', 'data', 'laporanIB'));
     }
 }

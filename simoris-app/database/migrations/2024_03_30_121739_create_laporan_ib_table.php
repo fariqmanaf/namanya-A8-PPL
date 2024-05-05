@@ -15,11 +15,13 @@ return new class extends Migration
     {
         Schema::create('laporan_ib', function (Blueprint $table) {
             $table->id();
-            $table->integer('data_sapi_id')->index('id_sapi');
-            $table->integer('kode_pejantan')->nullable();
-            $table->integer('kode_pembuatan')->nullable();
-            $table->boolean('status_bunting')->nullable()->default(false);
-            $table->foreignId('individuals_id')->index('id_user');
+            $table->foreignId('data_sapi_id')->nullable();
+            $table->foreignId('jenis_semen_id')->nullable();
+            $table->date('tgl_ib')->nullable();
+            $table->date('tgl_cek')->nullable();
+            $table->boolean('status_bunting')->nullable()->default(0);
+            $table->foreignId('id_peternak')->nullable()->constrained('individuals');
+            $table->foreignId('id_mantri')->nullable()->constrained('individuals');
         });
     }
 

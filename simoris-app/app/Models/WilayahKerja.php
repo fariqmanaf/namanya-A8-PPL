@@ -34,11 +34,11 @@ class WilayahKerja extends Model
      */
     public function kecamatan()
     {
-        return $this->belongsTo(Kecamatan::class, 'kecamatan_id');
+        return $this->belongsTo(Kecamatan::class);
     }
 
     public function individuals()
     {
-        return $this->belongsTo(Individuals::class, 'individuals_id');
+        return $this->belongsTo(Individuals::class);
     }
 }

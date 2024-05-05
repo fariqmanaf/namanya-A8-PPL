@@ -65,7 +65,9 @@ Route::middleware('dinas')->group(function(){
     Route::post('/dashboard/preview', [DashboardDinasController::class, 'previewpost']);
     Route::get('dashboard/data-mantri', [DataMantriController::class, 'index']);
     Route::get('dashboard/data-mantri/confirm', [DataMantriController::class, 'confirm']);
-    Route::put('dashboard/data-mantri/confirm', [DataMantriController::class, 'postConfirm']); 
+    Route::put('dashboard/data-mantri/confirm', [DataMantriController::class, 'postConfirm']);
+    Route::get('dashboard/laporanIB', [DashboardDinasController::class, 'laporanIB']);
+    Route::get('dashboard/laporanIB/{individuals}', [DashboardDinasController::class, 'ibDetail']);
 });
 
 Route::middleware('mantri')->group(function(){
@@ -75,6 +77,13 @@ Route::middleware('mantri')->group(function(){
     Route::get('/home/profile/changepass', [MantriProfileController::class, 'changepass']);
     Route::put('/home/profile/changepass', [MantriProfileController::class, 'updatepass']);
     Route::get('/home/distribusi', [MantriFeatureController::class, 'index']);
+    Route::get('/home/laporanIB', [MantriFeatureController::class, 'laporanIB']);
+    Route::get('/home/laporanIB/{individuals}', [MantriFeatureController::class, 'dataSapi']);
+    Route::post('/home/laporanIB/{individuals}', [MantriFeatureController::class, 'dataSapiPost']);
+    Route::get('/home/laporanIB/{individuals}/sapi-{dataSapi}', [MantriFeatureController::class, 'ibSapi']);
+    Route::post('/home/laporanIB/{individuals}/sapi-{dataSapi}', [MantriFeatureController::class, 'ibSapiPost']);
+    Route::put('/home/laporanIB/{individuals}/sapi-{dataSapi}', [MantriFeatureController::class, 'editIb']);
+    Route::get('/home/riwayatIB', [MantriFeatureController::class, 'riwayatIB']);
 });
 
 Route::middleware('peternak')->group(function(){
@@ -84,6 +93,9 @@ Route::middleware('peternak')->group(function(){
     Route::get('/main/profile/edit', [PeternakProfileController::class, 'changepass']);
     Route::put('/main/profile/edit', [PeternakProfileController::class, 'updatepass']);
     Route::get('/main/data-mantri', [PeternakFeaturesController::class, 'dataMantri']);
+    Route::get('/main/data-mantri/near', [PeternakFeaturesController::class, 'dataMantriTerdekat']);
+    Route::get('/main/laporan-ib', [PeternakFeaturesController::class, 'laporanIB']);
+    Route::get('/main/laporan-ib/sapi-{dataSapi}', [PeternakFeaturesController::class, 'laporanIBDetail']);
 });
 
 Route::get('/logout', function(){

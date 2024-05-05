@@ -39,9 +39,9 @@ class JenisSemen extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function totalIbs()
+    public function dataSapi()
     {
-        return $this->hasMany('App\Models\TotalIb', 'id_semen');
+        return $this->hasMany(DataSapi::class);
     }
 
     /**
@@ -49,7 +49,7 @@ class JenisSemen extends Model
      */
     public function stokMantris()
     {
-        return $this->hasMany('App\Models\StokMantri', 'id_semen');
+        return $this->hasMany(StokMantri::class);
     }
 
     /**
@@ -57,7 +57,7 @@ class JenisSemen extends Model
      */
     public function stokSbs()
     {
-        return $this->hasMany('App\Models\StokSb', 'id_jenis');
+        return $this->hasMany(StokSb::class);
     }
 
     /**
@@ -65,6 +65,6 @@ class JenisSemen extends Model
      */
     public function pengajuanSbs()
     {
-        return $this->hasMany('App\Models\PengajuanSb', 'id_jenis');
+        return $this->hasMany(PengajuanSb::class);
     }
 }

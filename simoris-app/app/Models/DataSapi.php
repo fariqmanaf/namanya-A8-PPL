@@ -35,14 +35,14 @@ class DataSapi extends Model
     /**
      * @var array
      */
-    protected $fillable = ['id_jenis', 'id_peternak', 'detail'];
+    protected $fillable = ['jenis_sapi_id', 'individuals_id', 'detail'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function jenisSapi()
     {
-        return $this->belongsTo('App\Models\JenisSapi', 'id_jenis');
+        return $this->belongsTo(JenisSapi::class);
     }
 
     /**
@@ -50,14 +50,14 @@ class DataSapi extends Model
      */
     public function individual()
     {
-        return $this->belongsTo('App\Models\Individual', 'id_peternak');
+        return $this->belongsTo(Individuals::class);
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function laporanIbs()
+    public function laporanIb()
     {
-        return $this->hasMany('App\Models\LaporanIb', 'id_sapi');
+        return $this->hasMany(LaporanIb::class);
     }
 }

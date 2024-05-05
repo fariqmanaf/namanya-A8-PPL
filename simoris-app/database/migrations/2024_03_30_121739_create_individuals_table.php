@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->date('tgl_lahir')->nullable();
             $table->string('no_telp')->nullable();
-            $table->foreignId('alamats_id')->index('id_alamat');
+            $table->foreignId('alamats_id')->nullable();
         });
     }
 

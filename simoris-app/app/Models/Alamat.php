@@ -36,7 +36,7 @@ class Alamat extends Model
     /**
      * @var array
      */
-    protected $fillable = ['id_kabupaten', 'id_kecamatan', 'id_kelurahan', 'detail'];
+    protected $fillable = ['kabupaten_id', 'kecamatan_id', 'kelurahan_id', 'detail'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
