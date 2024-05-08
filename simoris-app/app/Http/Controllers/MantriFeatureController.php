@@ -62,6 +62,9 @@ class MantriFeatureController extends Controller
         $validatedData = $request->validate([
             'jenisSapi' => 'required',
             'ciri' => 'required',
+        ],[
+            'jenisSapi.required' => 'Data Tidak Lengkap',
+            'ciri.required' => 'Data Tidak Lengkap',
         ]);
 
         DataSapi::create([
@@ -70,7 +73,7 @@ class MantriFeatureController extends Controller
             'detail' => $validatedData['ciri'],
         ]);
 
-        return redirect()->back()->with('success', 'Data sapi berhasil ditambahkan');
+        return redirect()->back()->with('success', 'Data berhasil disimpan');
     }
 
     public function ibSapi(Individuals $individuals, DataSapi $dataSapi){
@@ -100,13 +103,16 @@ class MantriFeatureController extends Controller
             'status_bunting' => 0,
         ]);
 
-        return redirect()->back()->with('success', 'Data IB berhasil ditambahkan');
+        return redirect()->back()->with('success', 'Data IB berhasil disimpan');
     }
 
     public function editIb(Request $request){
         $validatedData = $request->validate([
             'statusBunting' => 'required',
             'tanggalCek' => 'required|date'
+        ], [
+            'statusBunting.required' => 'Data Tidak Lengkap',
+            'tanggalCek.required' => 'Data Tidak Lengkap'
         ]);
 
         $laporanIB = LaporanIb::find($request['laporanId']);
@@ -114,12 +120,12 @@ class MantriFeatureController extends Controller
         $laporanIB->tgl_cek = $validatedData['tanggalCek'];
         $laporanIB->save();
 
-        return redirect()->back()->with('success', 'Laporan Diperbarui');
+        return redirect()->back()->with('success', 'Data Berhasil Ditambah');
     }
 
     public function riwayatIB(){
         $title = 'Riwayat IB';
-        $laporanIB = LaporanIb::where('id_mantri', Auth::user()->id)->get();
+        $laporanIB = LaporanIb::where('id_mantri', Auth::user()->id)->orderByDesc('tgl_ib')->get();
         $peternak = Individuals::whereIn('id', $laporanIB->pluck('id_peternak'))->get();
 
         return view('mantri.layouts.riwayatIB', compact('title', 'laporanIB', 'peternak'));

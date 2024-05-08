@@ -22,7 +22,7 @@
               <tr class="clickable-row border-b text-sm text-center">
                 <td class="px-4 py-4">{{ $sapi->id }}</td>
                 <td class="px-4 py-4">{{ $sapi->jenisSapi['jenis'] }}</td>
-                <td class="px-4 py-4">{{ $sapi->detail }}</td>
+                <td id="nonex" data-index="{{ $loop->iteration }}" class="px-4 py-4">{{ Str::words($sapi->detail, 10, '...') }}</td>
                 <td class="px-4 py-4">{{ $sapi->laporanIb->count() }}</td>
                 <td class="px-4 py-4">
                   <a href="/main/laporan-ib/sapi-{{ $sapi->id }}" class="open-modal">
@@ -64,6 +64,34 @@
                   subTable.classList.add('hidden');
               });
           }
+      });
+  });
+
+  const seeMore = document.querySelectorAll('#nonex');
+
+  seeMore.forEach((item) => {
+    item.addEventListener('click', () => {
+      const index = item.dataset.index;
+      const ex = document.getElementById(`ex-${index}`);
+      ex.classList.toggle('hidden');
+    });
+  });
+
+  const triggerButton = document.getElementById('trigger');
+  const modal = document.querySelector('.modal');
+  const closeButton = document.querySelector('.close-button');
+
+  triggerButton.addEventListener('click', function() {
+      modal.style.display = 'block';
+      document.querySelectorAll('body > *:not(.modal)').forEach(element => {
+          element.style.filter = 'blur(5px)';
+      });
+  });
+
+  closeButton.addEventListener('click', function() {
+      modal.style.display = 'none';
+      document.querySelectorAll('body > *:not(.modal)').forEach(element => {
+          element.style.filter = 'none';
       });
   });
 </script>

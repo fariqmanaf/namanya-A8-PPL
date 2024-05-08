@@ -17,18 +17,10 @@ class PeternakFeaturesController extends Controller
         $title = 'Daftar Mantri';
         $mantriAkun = UserAccounts::where('roles_id', 2)->pluck('individuals_id');
         $mantri = Individuals::whereIn('id', $mantriAkun)->get();
-        $wilayahKerja = WilayahKerja::where('kecamatan_id', Auth::user()->individual->wilayah_kerja->pluck('kecamatan_id'))->pluck('individuals_id');
+        $wilayahKerja = WilayahKerja::where('kecamatan_id', Auth::user()->individual->alamat->kecamatan_id)->pluck('individuals_id');
         $mantriTerdekat = Individuals::whereIn('id', $wilayahKerja)->get();
 
         return view('peternak.layouts.datamantri', compact('title', 'mantriTerdekat', 'mantri'));
-    }
-
-    public function dataMantriTerdekat(){
-        $title = 'mantir Terdekat';
-        $wilayahKerja = WilayahKerja::where('kecamatan_id', Auth::user()->individual->wilayah_kerja->pluck('kecamatan_id'))->pluck('individuals_id');
-        $mantriTerdekat = Individuals::whereIn('id', $wilayahKerja)->get();
-
-        return view('peternak.layouts.mantriTerdekat', compact('title', 'mantriTerdekat'));
     }
 
     public function laporanIB(){

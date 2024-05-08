@@ -96,7 +96,7 @@
           </div>
           <div class="button-container mt-3 flex justify-center">
               <button type="submit"
-                  class="bg-[#427D9D] text-white px-5 py-2 rounded-xl w-[20rem] mt-3 2xl:py-3">Submit</button>
+                  class="bg-[#427D9D] text-white px-5 py-2 rounded-xl w-[20rem] mt-3 2xl:py-3">Simpan</button>
           </div>
       </form>
   </div>

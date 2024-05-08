@@ -204,7 +204,7 @@ class DashboardDinasController extends Controller
                 $persentase = $percentage[$i];
                 $jumlah = floor($jenisStok * $persentase);
                 StokSb::create([
-                    'periode' => '2024-05-05',
+                    'periode' => '2024-05-07',
                     'kecamatan_id' => $kec,
                     'jenis_semen_id' => $jenisSemen[$x],
                     'jumlah' => $jumlah,

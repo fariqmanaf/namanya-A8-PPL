@@ -27,32 +27,24 @@
               <td class="px-4 py-4"><button id="drop-{{ $superindex }}" class="bg-[#9BBEC8] rounded-xl text-white px-1">></button></td>
             </tr>
             @foreach ($data as $index => $item)
-              @foreach ($kecamatan as $kecIndex => $kecItem)
-                @if ($superitem->periode === $item->periode && $kecItem->id === $item->kecamatan_id)
                   <tr id="sub-row-{{ $superindex }}-{{ $index }}" class="2xl:text-lg hidden text-center text-sm border-b border-gray-300 clickable-subrow bg-gray-200" data-index="{{ $index }}">
                     <td class="px-4 py-4"></td>
-                    <td class="px-4 py-4">{{ $kecItem->kecamatan }}</td>
+                    <td class="px-4 py-4">{{ $item->kecamatan['kecamatan'] }}</td>
                     <td class="px-4 py-4">{{ $item->total_stok }}</td>
                     <td class="px-4 py-4">{{ $item->sisa_stok }}</td>
                     <td class="px-4 py-4"><button id="subdrop-{{ $index }}" class="bg-[#9BBEC8] rounded-xl text-white px-1">></button></td>
                   </tr>
                   @foreach ($subdata as $subIndex => $subItem)
-                    @foreach ($kecamatan as $kecamatanIndex => $kecamatanItem)
-                      @foreach ($jenis_semen as $jenisIndex => $jenisItem)
-                        @if($item->periode === $subItem->periode && $kecamatanItem->id === $subItem->kecamatan_id && $kecamatanIndex === $kecIndex && $jenisItem->id === $subItem->jenis_semen_id)
-                            <tr id="sub-table-{{ $index }}-{{ $subIndex }}" class="hidden text-center sub-table bg-gray-100 border-b">
-                              <td class="px-2 py-2"></td>
-                              <td class="px-2 py-2">{{ $jenisItem->jenis_semen }}</td>
-                              <td class="px-2 py-2">{{ $subItem->jumlah }}</td>
-                              <td class="px-2 py-2">{{ $subItem->sisa_stok }}</td>
-                              <td class="px-2 py-2"></td>
-                            </tr>
-                        @endif
-                      @endforeach
-                    @endforeach
+                    @if($subItem->kecamatan_id === $item->kecamatan_id)
+                        <tr id="sub-table-{{ $index }}-{{ $subIndex }}" class="hidden text-center sub-table bg-gray-100 border-b">
+                          <td class="px-2 py-2"></td>
+                          <td class="px-2 py-2">{{ $subItem->jenis_sapi['jenis'] }}</td>
+                          <td class="px-2 py-2">{{ $subItem->jumlah }}</td>
+                          <td class="px-2 py-2">{{ $subItem->sisa_stok }}</td>
+                          <td class="px-2 py-2"></td>
+                        </tr>
+                    @endif
                   @endforeach
-                @endif
-              @endforeach
             @endforeach
           @endforeach
         </tbody>
