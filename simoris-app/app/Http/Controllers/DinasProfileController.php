@@ -71,7 +71,7 @@ class DinasProfileController extends Controller
                 ->update(['password' => $password]);
         }
         else{
-            return redirect('/dashboard/changepass')->withErrors('Password Lama Anda Salah');
+            return redirect('/dashboard/changepass')->with('error','Password Lama Anda Salah');
         }
     
         return redirect('/dashboard/changepass')->with('success', 'Password Berhasil Di Update');

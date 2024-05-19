@@ -161,6 +161,8 @@ return [
          */
         Krlove\EloquentModelGenerator\Provider\GeneratorServiceProvider::class,
         Bagusindrayana\LaravelMaps\LaravelMapsServiceProvider::class,
+        Collective\Html\HtmlServiceProvider::class,
+        Yoeunes\Toastr\ToastrServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -184,6 +186,9 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
+        'Toastr' => Yoeunes\Toastr\Facades\Toastr::class,
     ])->toArray(),
 
 ];

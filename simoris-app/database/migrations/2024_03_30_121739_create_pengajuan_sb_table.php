@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('pengajuan_sb', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('individuals_id')->index('id_mantri');
-            $table->foreignId('jenis_semen_id')->index('id_jenis');
-            $table->integer('jumlah')->nullable();
+            $table->foreignId('individuals_id')->nullable();
+            $table->integer('total')->nullable();
             $table->boolean('is_taken')->nullable();
+            $table->boolean('is_confirmed')->nullable();
             $table->date('tanggal')->nullable();
         });
     }

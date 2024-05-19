@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\StokSb;
 use App\Models\Kecamatan;
+use App\Models\LaporanIb;
 use App\Models\JenisSemen;
 use App\Models\Individuals;
-use App\Models\LaporanIb;
+use App\Models\PengajuanSb;
+use App\Models\StokMantri;
 use App\Models\UserAccounts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Bagusindrayana\LaravelMaps\LaravelMaps;
 use Bagusindrayana\LaravelMaps\Mapbox\MapboxMarker;
 
@@ -38,18 +41,6 @@ class DashboardDinasController extends Controller
         $batch = StokSb::selectRaw('jenis_semen_id, kecamatan_id,  SUM(jumlah - used) AS sisa_stok')
             ->where('periode', $previousPeriod)
             ->groupBy('jenis_semen_id', 'kecamatan_id')->get();
-        
-        // $array = [];
-        // foreach ($batch as $key => $value) {
-        //     $array[] = $value->jenis_semen_id;
-        // }
-        // foreach($subdata as $key => $value){
-        //     $array[] = $value->jumlah;
-        // }
-        // foreach($subdata as $key => $value){
-        //     $array[] = $value->jumlah - $batch[$key]->sisa_stok;
-        // }
-        // dd($array);
 
         return view('dinas.layouts.main', [
             'title' => 'Dashboard',
@@ -106,7 +97,7 @@ class DashboardDinasController extends Controller
 
         $totalJenis = $Simental + $PO + $Brahma + $Limosin;
         if ($total_stok != $totalJenis) {
-            return redirect('/dashboard')->withErrors('Total stok tidak sesuai dengan jumlah jenis semen');
+            return redirect('/dashboard')->with('error','Total stok tidak sesuai dengan jumlah jenis semen');
         } else {
             session()->put('stok.total_stok', $total_stok);
             session()->put('stok.Simental', $Simental);
@@ -126,13 +117,13 @@ class DashboardDinasController extends Controller
 
         $jenis = [session()->get('stok.Simental'), session()->get('stok.PO'), session()->get('stok.Brahma'), session()->get('stok.Limosin')];
         $percentage = [
-            0.03, 0.03, 0.05, 0.03, 0.02,
-            0.03, 0.03, 0.03, 0.03, 0.03,
-            0.03, 0.03, 0.03, 0.03, 0.03,
-            0.03, 0.06, 0.03, 0.03, 0.03,
-            0.03, 0.03, 0.03, 0.03, 0.03,
-            0.03, 0.03, 0.03, 0.03, 0.06,
-            0.03
+            0.04, 0.02, 0.04, 0.04, 0.02,
+            0.04, 0.02, 0.04, 0.02, 0.04,
+            0.02, 0.04, 0.02, 0.04, 0.02,
+            0.04, 0.04, 0.04, 0.04, 0.02,
+            0.04, 0.02, 0.04, 0.02, 0.04,
+            0.02, 0.04, 0.02, 0.04, 0.04,
+            0.04
         ];
 
         $data = [];
@@ -187,13 +178,13 @@ class DashboardDinasController extends Controller
 
         $jenis = [$Simental, $PO, $Brahma, $Limosin];
         $percentage = [
-            0.03, 0.03, 0.05, 0.03, 0.02,
-            0.03, 0.03, 0.03, 0.03, 0.03,
-            0.03, 0.03, 0.03, 0.03, 0.03,
-            0.03, 0.06, 0.03, 0.03, 0.03,
-            0.03, 0.03, 0.03, 0.03, 0.03,
-            0.03, 0.03, 0.03, 0.03, 0.06,
-            0.03
+            0.04, 0.02, 0.04, 0.04, 0.02,
+            0.04, 0.02, 0.04, 0.02, 0.04,
+            0.02, 0.04, 0.02, 0.04, 0.02,
+            0.04, 0.04, 0.04, 0.04, 0.02,
+            0.04, 0.02, 0.04, 0.02, 0.04,
+            0.02, 0.04, 0.02, 0.04, 0.04,
+            0.04
         ];
         $kecamatan = Kecamatan::all()->pluck('id');
         $jenisSemen = JenisSemen::all()->pluck('id');
@@ -204,7 +195,7 @@ class DashboardDinasController extends Controller
                 $persentase = $percentage[$i];
                 $jumlah = floor($jenisStok * $persentase);
                 StokSb::create([
-                    'periode' => '2024-05-07',
+                    'periode' => date('Y-m-d'),
                     'kecamatan_id' => $kec,
                     'jenis_semen_id' => $jenisSemen[$x],
                     'jumlah' => $jumlah,
@@ -241,5 +232,121 @@ class DashboardDinasController extends Controller
         $laporanIB = LaporanIb::where('id_mantri', $individuals->id)->get();
 
         return view('dinas.layouts.ibDetail', compact('title', 'data', 'laporanIB'));
+    }
+
+    public function pengajuanStok(){
+        $title = "Riwayat Pengajuan";
+        $pending = PengajuanSb::where('is_confirmed', 0)->get();
+        // $notPending = PengajuanSb::where('is_confirmed', "!=", 0)->get();
+
+        return view('dinas.layouts.pengajuanStok', compact('title', 'pending'));
+    }
+
+    public function postPengajuan(Request $request){
+
+        if($request['action'] == 'accept'){
+            $user = Individuals::where('id', $request['userAcc'])->first();
+            $stok = StokSb::where('kecamatan_id', $user->wilayah_kerja[0]->kecamatan_id)->where('status', 'aktif')->get();
+            $stokMantri = StokMantri::where('individuals_id', $request['userAcc'])->get();
+
+            foreach($stok as $value){
+                if(($value->jumlah - $value->used) < $request['jenis-acc-'.$value->jenis_semen_id]){
+                    return redirect()->back()->with('error', 'Stok tidak mencukupi');
+                }else{
+                    PengajuanSb::where('id', $request['idAcc'])->update(['is_confirmed' => 1]);
+                    foreach($stok as $stokUpdate){
+                        StokSb::where('kecamatan_id', $user->wilayah_kerja[0]->kecamatan_id)->where('jenis_semen_id', $stokUpdate->jenis_semen_id)->update(['used' => $stokUpdate->used + $request['jenis-acc-'.$stokUpdate->jenis_semen_id]]);
+                    }
+                    foreach($stokMantri as $stokMantriUpdate){
+                        $stokMantriUpdate->where('jenis_semen_id', $stokMantriUpdate->jenis_semen_id)->update(['total' => $stokMantriUpdate->total + $request['jenis-acc-'.$stokMantriUpdate->jenis_semen_id]]);
+                    }
+                    return redirect()->back()->with('success', 'Pengajuan berhasil diterima');
+                }
+            }
+        }
+        
+        elseif($request['action'] == 'reject'){
+            PengajuanSb::where('id', $request['idReject'])->update(['is_confirmed' => 2]);
+            return redirect()->back()->with('success', 'Pengajuan berhasil ditolak');
+        }
+    }
+
+    public function pengambilanStok(){
+        $title = 'Pengambilan Stok';
+        $pengambilan = PengajuanSb::where('is_confirmed', 1)->where('is_taken', 0)->get();
+
+        return view('dinas.layouts.pengambilanSb', compact('title', 'pengambilan'));
+    }
+
+    public function pengambilanPost(Request $request){
+        PengajuanSb::where('id', $request['id'])->update(['is_taken' => 1]);
+        return redirect()->back()->with('success', 'Pengambilan stok berhasil');
+    }
+
+    public function confirmedPengajuan(){
+        $title = 'Pengajuan Diterima';
+        $confirmed = PengajuanSb::where('is_confirmed', 1)->where('is_taken', 1)->get();
+
+        return view('dinas.layouts.confirmedSb', compact('title', 'confirmed'));
+    }
+
+    public function rejectedPengajuan(){
+        $title = 'Pengajuan Ditolak';
+        $rejected = PengajuanSb::where('is_confirmed', 2)->get();
+
+        return view('dinas.layouts.rejectedSb', compact('title', 'rejected'));
+    }
+
+
+    public function akumulasi()
+    {
+        $title = 'Akumulasi Keberhasilan';
+        $currentYear = date('Y');
+        $years = LaporanIb::selectRaw('YEAR(tgl_ib) as year')->distinct()->orderByDesc('year')->get()->pluck('year');
+        $periods = [
+            ['start' => "{$currentYear}-01-01", 'end' => "{$currentYear}-04-01"],
+            ['start' => "{$currentYear}-04-01", 'end' => "{$currentYear}-07-01"],
+            ['start' => "{$currentYear}-07-01", 'end' => "{$currentYear}-10-01"],
+            ['start' => "{$currentYear}-10-01", 'end' => "{$currentYear}-12-01"],
+        ];
+
+        $akumulasi = [];
+        foreach ($periods as $period) {
+            $akumulasi[] = LaporanIb::where('status_bunting', 1)
+                ->whereBetween('tgl_ib', [$period['start'], $period['end']])
+                ->selectRaw('jenis_semen_id, SUM(status_bunting) as total')
+                ->groupBy('jenis_semen_id')
+                ->orderBy('jenis_semen_id')
+                ->get()
+                ->pluck('total');
+        }
+
+        return view('dinas.layouts.akumulasi', compact('title', 'akumulasi', 'years', 'currentYear'));
+    }
+
+    public function showByYear($year)
+    {
+        $title = 'Akumulasi Keberhasilan';
+        $years = LaporanIb::selectRaw('YEAR(tgl_ib) as year')->distinct()->orderByDesc('year')->get()->pluck('year');
+        $currentYear = $year;
+        $periods = [
+            ['start' => "{$currentYear}-01-01", 'end' => "{$currentYear}-04-01"],
+            ['start' => "{$currentYear}-04-01", 'end' => "{$currentYear}-07-01"],
+            ['start' => "{$currentYear}-07-01", 'end' => "{$currentYear}-10-01"],
+            ['start' => "{$currentYear}-10-01", 'end' => "{$currentYear}-12-01"],
+        ];
+
+        $akumulasi = [];
+        foreach ($periods as $period) {
+            $akumulasi[] = LaporanIb::where('status_bunting', 1)
+                ->whereBetween('tgl_ib', [$period['start'], $period['end']])
+                ->selectRaw('jenis_semen_id, SUM(status_bunting) as total')
+                ->groupBy('jenis_semen_id')
+                ->orderBy('jenis_semen_id')
+                ->get()
+                ->pluck('total');
+        }
+
+        return view('dinas.layouts.akumulasiYear', compact('title', 'akumulasi', 'years', 'currentYear'));
     }
 }

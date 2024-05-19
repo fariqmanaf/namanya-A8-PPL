@@ -63,8 +63,8 @@ class JenisSemen extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function pengajuanSbs()
+    public function detailPengajuan()
     {
-        return $this->hasMany(PengajuanSb::class);
+        return $this->hasMany(DetailPengajuan::class);
     }
 }

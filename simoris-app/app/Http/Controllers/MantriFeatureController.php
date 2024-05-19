@@ -8,11 +8,18 @@ use App\Models\JenisSapi;
 use App\Models\Kecamatan;
 use App\Models\LaporanIb;
 use App\Models\JenisSemen;
+use App\Models\StokMantri;
 use App\Models\Individuals;
+use App\Models\PengajuanSb;
 use App\Models\UserAccounts;
+use App\Models\WilayahKerja;
 use Illuminate\Http\Request;
+use App\Models\DetailPengajuan;
+use Illuminate\Support\Facades\DB;
+use Yoeunes\Toastr\Facades\Toastr;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 class MantriFeatureController extends Controller
 {
@@ -33,13 +40,89 @@ class MantriFeatureController extends Controller
             ->where('periode', $previousPeriod)
             ->groupBy('jenis_semen_id')->get();
 
+        $presentaseMantri = StokMantri::where('individuals_id', Auth::user()->individual['id'])->get();
+        $totalStok = $presentaseMantri->sum('total');
+        $usedStok = $presentaseMantri->sum('used');
+        $percentage = ($usedStok / $totalStok) * 100;
+
         return view('mantri.layouts.distribusi', [
-            'title' => 'Dashboard',
+            'title' => 'Monitoring Distribusi',
             'data' => $latestData,
             'subdata' => $subdata,
             'riwayatStok' => $riwayatStok,
-            'periode' => $previousPeriod
+            'periode' => $previousPeriod,
+            'percentage' => $percentage
         ]);
+    }
+
+    public function indexPost(Request $request){
+
+        $wilayahKerja = WilayahKerja::where('individuals_id', Auth::user()->individual['id'])->first();
+        $stok = StokSb::where('kecamatan_id', $wilayahKerja->kecamatan_id)
+            ->where('status', 'aktif')
+            ->get();
+
+        try {
+            $validatedData = $request->validate([
+                'total_stok' => 'required|numeric',
+                'Simental' => 'required|numeric',
+                'PO' => 'required|numeric',
+                'Brahma' => 'required|numeric',
+                'Limosin' => 'required|numeric',
+            ],[
+                'total_stok.required' => 'Data Tidak Lengkap',
+                'total_stok.numeric' => 'Data Harus Berupa Angka',
+                'Simental.required' => 'Data Tidak Lengkap',
+                'Simental.numeric' => 'Data Harus Berupa Angka',
+                'PO.required' => 'Data Tidak Lengkap',
+                'PO.numeric' => 'Data Harus Berupa Angka',
+                'Brahma.required' => 'Data Tidak Lengkap',
+                'Brahma.numeric' => 'Data Harus Berupa Angka',
+                'Limosin.required' => 'Data Tidak Lengkap',
+                'Limosin.numeric' => 'Data Harus Berupa Angka',
+            ]);
+
+            if(($validatedData['PO'] / $validatedData['total_stok']) * 100 < 10){
+                Toastr::error('Total PO tidak mencapai 10% dari total stok', 'Error');
+                return back();
+            }elseif($validatedData['total_stok'] != ($validatedData['Simental'] + $validatedData['PO'] + $validatedData['Brahma'] + $validatedData['Limosin'])){
+                Toastr::error('Total stok tidak sesuai', 'Error');
+                return back();
+            }else{
+                foreach($stok as $item){
+                    if(($item->jumlah - $item->used) < $validatedData[$item->jenis_sapi['jenis_semen']]){
+                        Toastr::error('Stok tidak mencukupi', 'Error');
+                        return back();
+                    } else{
+                        $jumlah = [$validatedData['Limosin'], $validatedData['Simental'], $validatedData['Brahma'], $validatedData['PO']]; 
+                        $total = $validatedData['total_stok'];
+                        $pengajuanSb = DB::table('pengajuan_sb')->insertGetId([
+                            'individuals_id' => Auth::user()->individual['id'],
+                            'total' => $total,
+                            'is_taken' => 0,
+                            'is_confirmed' => 0,
+                            'tanggal' => date('Y-m-d'),
+                        ]);
+                        
+                        foreach($jumlah as $i => $jumlahItem){
+                            DetailPengajuan::create([
+                                'pengajuan_sb_id' => $pengajuanSb,
+                                'jenis_semen_id' => $i + 1,
+                                'jumlah' => $jumlahItem,
+                            ]);
+                        }
+                        Toastr::success('Data berhasil disimpan menunggu konfirmasi dinas', 'Sukses');
+                        return back();
+                    }
+                }
+            }
+        } catch (ValidationException $e) {
+            $errors = $e->validator->errors();
+            foreach ($errors->all() as $error) {
+                Toastr::error($error, 'Error');
+            }
+            return back()->withErrors($errors)->withInput();
+        }
     }
 
     public function laporanIB(){
@@ -102,6 +185,12 @@ class MantriFeatureController extends Controller
             'id_peternak' => $individuals->id,
             'status_bunting' => 0,
         ]);
+        
+        StokMantri::where('individuals_id', Auth::user()->individual['id'])->where('jenis_semen_id', $validatedData['jenisSemen'])
+            ->update([
+                'used' => StokMantri::where('individuals_id', Auth::user()->individual['id'])->where('jenis_semen_id', $validatedData['jenisSemen'])->value('used') + 1,
+                'total' => StokMantri::where('individuals_id', Auth::user()->individual['id'])->where('jenis_semen_id', $validatedData['jenisSemen'])->value('total') - 1
+            ]);
 
         return redirect()->back()->with('success', 'Data IB berhasil disimpan');
     }
@@ -129,5 +218,80 @@ class MantriFeatureController extends Controller
         $peternak = Individuals::whereIn('id', $laporanIB->pluck('id_peternak'))->get();
 
         return view('mantri.layouts.riwayatIB', compact('title', 'laporanIB', 'peternak'));
+    }
+
+    public function riwayatPengajuan(){
+        $title = 'Riwayat Pengajuan';
+        
+        $notPending = PengajuanSb::where('individuals_id', Auth::user()->individual['id'])->where('is_confirmed', '!=', 0)->orderByDesc('tanggal')->get();
+        $pending = PengajuanSb::where('individuals_id', Auth::user()->individual['id'])->where('is_confirmed', 0)->get();
+
+        return view('mantri.layouts.riwayatPengajuan', compact('title', 'pending', 'notPending'));
+    }
+
+    public function riwayatPost(Request $request){
+        $wilayahKerja = WilayahKerja::where('individuals_id', Auth::user()->individual['id'])->first();
+        $stok = StokSb::where('kecamatan_id', $wilayahKerja->kecamatan_id)
+            ->where('status', 'aktif')
+            ->get();
+            
+        try {
+            $validatedData = $request->validate([
+                'pengajuan_id' => 'required|numeric',
+                'total_stok' => 'required|numeric',
+                'Simental' => 'required|numeric',
+                'PO' => 'required|numeric',
+                'Brahma' => 'required|numeric',
+                'Limosin' => 'required|numeric',
+            ],[
+                'total_stok.required' => 'Data Tidak Lengkap',
+                'total_stok.numeric' => 'Data Harus Berupa Angka',
+                'Simental.required' => 'Data Tidak Lengkap',
+                'Simental.numeric' => 'Data Harus Berupa Angka',
+                'PO.required' => 'Data Tidak Lengkap',
+                'PO.numeric' => 'Data Harus Berupa Angka',
+                'Brahma.required' => 'Data Tidak Lengkap',
+                'Brahma.numeric' => 'Data Harus Berupa Angka',
+                'Limosin.required' => 'Data Tidak Lengkap',
+                'Limosin.numeric' => 'Data Harus Berupa Angka',
+            ]);
+
+            if(($validatedData['PO'] / $validatedData['total_stok']) * 100 < 10){
+                Toastr::error('Total PO tidak mencapai 10% dari total stok', 'Error');
+                return back();
+            }elseif($validatedData['total_stok'] != ($validatedData['Simental'] + $validatedData['PO'] + $validatedData['Brahma'] + $validatedData['Limosin'])){
+                Toastr::error('Total stok tidak sesuai', 'Error');
+                return back();
+            }else{
+                foreach($stok as $item){
+                    if($item->jumlah < $validatedData[$item->jenis_sapi['jenis_semen']]){
+                        Toastr::error('Stok tidak mencukupi', 'Error');
+                        return back();
+                    } else{
+                        $jumlah = [$validatedData['Limosin'], $validatedData['Simental'], $validatedData['Brahma'], $validatedData['PO']]; 
+                        PengajuanSb::where('individuals_id', Auth::user()->individual['id'])
+                        ->where('id', $validatedData['pengajuan_id'])
+                        ->update([
+                            'total' => $validatedData['total_stok'],
+                        ]);
+                        foreach($jumlah as $i => $jumlahItem){
+                            DetailPengajuan::where('pengajuan_sb_id', $validatedData['pengajuan_id'])
+                            ->where('jenis_semen_id', $i + 1)
+                            ->update([
+                                'jumlah' => $jumlahItem,
+                            ]);
+                        }
+                        Toastr::success('Data berhasil disimpan menunggu konfirmasi dinas', 'Sukses');
+                        return back();
+                    }
+                }
+            }
+        } catch (ValidationException $e) {
+            $errors = $e->validator->errors();
+            foreach ($errors->all() as $error) {
+                Toastr::error($error, 'Error');
+            }
+            return back()->withErrors($errors)->withInput();
+        }
     }
 }

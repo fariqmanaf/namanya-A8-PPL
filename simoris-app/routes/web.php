@@ -68,6 +68,14 @@ Route::middleware('dinas')->group(function(){
     Route::put('dashboard/data-mantri/confirm', [DataMantriController::class, 'postConfirm']);
     Route::get('dashboard/laporanIB', [DashboardDinasController::class, 'laporanIB']);
     Route::get('dashboard/laporanIB/{individuals}', [DashboardDinasController::class, 'ibDetail']);
+    Route::get('dashboard/pengajuan-stok', [DashboardDinasController::class, 'pengajuanStok']);
+    Route::post('dashboard/pengajuan-stok', [DashboardDinasController::class, 'postPengajuan']);
+    Route::get('dashboard/pengajuan-stok/pengambilan', [DashboardDinasController::class, 'pengambilanStok']);
+    Route::post('dashboard/pengajuan-stok/pengambilan', [DashboardDinasController::class, 'pengambilanPost']);
+    Route::get('dashboard/pengajuan-stok/confirmed', [DashboardDinasController::class, 'confirmedPengajuan']);
+    Route::get('dashboard/pengajuan-stok/rejected', [DashboardDinasController::class, 'rejectedPengajuan']);
+    Route::get('dashboard/akumulasi', [DashboardDinasController::class, 'akumulasi'])->name('akumulasi');
+    Route::get('dashboard/akumulasi/{year}', [DashboardDinasController::class, 'showByYear'])->name('laporan.year');    
 });
 
 Route::middleware('mantri')->group(function(){
@@ -77,6 +85,7 @@ Route::middleware('mantri')->group(function(){
     Route::get('/home/profile/changepass', [MantriProfileController::class, 'changepass']);
     Route::put('/home/profile/changepass', [MantriProfileController::class, 'updatepass']);
     Route::get('/home/distribusi', [MantriFeatureController::class, 'index']);
+    Route::post('/home/distribusi', [MantriFeatureController::class, 'indexPost']);
     Route::get('/home/laporanIB', [MantriFeatureController::class, 'laporanIB']);
     Route::get('/home/laporanIB/{individuals}', [MantriFeatureController::class, 'dataSapi']);
     Route::post('/home/laporanIB/{individuals}', [MantriFeatureController::class, 'dataSapiPost']);
@@ -84,6 +93,8 @@ Route::middleware('mantri')->group(function(){
     Route::post('/home/laporanIB/{individuals}/sapi-{dataSapi}', [MantriFeatureController::class, 'ibSapiPost']);
     Route::put('/home/laporanIB/{individuals}/sapi-{dataSapi}', [MantriFeatureController::class, 'editIb']);
     Route::get('/home/riwayatIB', [MantriFeatureController::class, 'riwayatIB']);
+    Route::get('/home/riwayat-pengajuan', [MantriFeatureController::class, 'riwayatPengajuan']);
+    Route::post('/home/riwayat-pengajuan', [MantriFeatureController::class, 'riwayatPost']);
 });
 
 Route::middleware('peternak')->group(function(){

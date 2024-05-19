@@ -36,7 +36,7 @@ class LoginController extends Controller
             return redirect('/home');
         } 
         else if($user->status === "disable"){
-          return redirect('/register/mantri/edit')->withErrors('Perizinan Anda Sudah Kadaluarsa, Silahkan Perbarui');
+          return redirect('/register/mantri/edit')->with('error','Perizinan Anda Sudah Kadaluarsa, Silahkan Perbarui');
         } 
         else if($user->status === "pending"){
             $request->session()->invalidate();
@@ -44,7 +44,7 @@ class LoginController extends Controller
             return redirect('/')->withErrors('Akun anda masih dalam pengecekan dinas')->onlyInput('email');
         } 
         else if($user->status === "rejected"){
-          return redirect('/register/mantri/edit')->withErrors('Pengajuan anda ditolak, silahkan edit pengajuan anda');
+          return redirect('/register/mantri/edit')->with('error','Pengajuan anda ditolak, silahkan edit pengajuan anda');
         } 
         else if($user->roles_id === 3){
             return redirect('/main');
@@ -55,7 +55,7 @@ class LoginController extends Controller
       }
 
       else{
-        return redirect('')->withErrors('Data Yang Di Inputkan Salah')->withInput();
+        return redirect('')->with('error','Data Yang Di Inputkan Salah')->withInput();
       }
     }
 

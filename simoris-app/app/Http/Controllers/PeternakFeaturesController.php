@@ -40,16 +40,3 @@ class PeternakFeaturesController extends Controller
         return view('peternak.layouts.laporanIBDetail', compact('title', 'laporanIB', 'inseminator'));
     }
 }
-
-// @foreach($mantriTerdekat as $mantriTerdekat)
-
-//     <p>Nama: {{ $mantriTerdekat->name }}</p>
-//     <p>Alamat: 
-//       {{ $mantriTerdekat->alamat['detail'] }},
-//       {{ $mantriTerdekat->alamat->kelurahan['kelurahan'] }},
-//       {{ $mantriTerdekat->alamat->kecamatan['kecamatan'] }},
-//       {{ $mantriTerdekat->alamat->kabupaten['kabupaten'] }}
-//     </p>
-//     <a id="phone-number" href="https://api.whatsapp.com/send?phone={{ $mantriTerdekat->no_telp }}" target="_blank" class="p-2 bg-blue-600 text-white font-semibold rounded-2xl">Hubungi via WhatsApp</a>
-
-// @endforeach

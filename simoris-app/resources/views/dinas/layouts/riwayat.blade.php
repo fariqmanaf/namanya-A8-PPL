@@ -38,7 +38,7 @@
                     @if($subItem->kecamatan_id === $item->kecamatan_id)
                         <tr id="sub-table-{{ $index }}-{{ $subIndex }}" class="hidden text-center sub-table bg-gray-100 border-b">
                           <td class="px-2 py-2"></td>
-                          <td class="px-2 py-2">{{ $subItem->jenis_sapi['jenis'] }}</td>
+                          <td class="px-2 py-2">{{ $subItem->jenis_sapi['jenis_semen'] }}</td>
                           <td class="px-2 py-2">{{ $subItem->jumlah }}</td>
                           <td class="px-2 py-2">{{ $subItem->sisa_stok }}</td>
                           <td class="px-2 py-2"></td>
