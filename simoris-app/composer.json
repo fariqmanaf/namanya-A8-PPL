@@ -17,6 +17,7 @@
         "yoeunes/toastr": "^2.3"
     },
     "require-dev": {
+        "andyabih/laravel-to-uml": "^1.0",
         "fakerphp/faker": "^1.23",
         "kitloong/laravel-migrations-generator": "^7.0",
         "krlove/eloquent-model-generator": "^2.0",
