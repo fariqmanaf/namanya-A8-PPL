@@ -8,27 +8,22 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('stok_mantri', function (Blueprint $table) {
+        Schema::create('detail_pengajuans', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('individuals_id')->nullable();
             $table->foreignId('jenis_semen_id')->nullable();
-            $table->integer('total')->nullable();
-            $table->integer('used')->nullable();
+            $table->foreignId('pengajuan_sb_id')->nullable();
+            $table->integer('jumlah')->nullable();
         });
     }
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
-        Schema::dropIfExists('stok_mantri');
+        Schema::dropIfExists('detail_pengajuans');
     }
 };

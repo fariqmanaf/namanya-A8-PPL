@@ -1,7 +1,7 @@
 @extends('dinas.layouts.dashboard')
 @vite('resources/js/map.js')
 @section('content')
-    <div class="content-container w-[85vw] bg-[#DDF2FD] flex flex-col items-center h-full ml-[15vw]">
+    <div class="content-container relative w-[85vw] bg-[#DDF2FD] flex flex-col items-center h-full ml-[20vw]">
         @if ($errors->any())
             <div class="alert absolute top-20 z-10">
                 <ul>
@@ -17,12 +17,13 @@
             </div>
         @endif
 
-        <div id="map" style="width: 70%; height: 300px;" class="absolute top-10 right-14"></div>
+        <div id="map" class="absolute top-14 right-14 2xl:right-20 w-[88%] h-[300px]"></div>
 
         <button id="trigger"
-            class="p-1 mt-5 bg-[#427D9D] text-white w-[150px] font-semibold absolute right-20 top-96 rounded-xl text-center input-stok">+
-            Tambah Stok</button>
-        <div class="w-[70vw] justify-center items-center flex flex-col ml-20 mt-96 bg-white rounded-2xl">
+            class="p-1 mt-5 bg-[#427D9D] text-white w-[150px] font-semibold absolute right-20 top-96 2xl:top-[20vw] rounded-xl text-center input-stok">+
+            Tambah Stok
+        </button>
+        <div class="justify-center items-center flex flex-col mt-96 bg-white rounded-2xl w-[70vw] ml-6 2xl:text-lg">
             <div class="text flex flex-row mt-5 w-full justify-start ml-10">
                 <p class="font-bold text-slate-700 mt-1 2xl:text-xl">Data Stok Semen Beku</p>
                 <input id="search-kecamatan" type="text"
@@ -58,7 +59,7 @@
                                         data-index={{ $subIndex }}>
                                         <td id="child-{{ $index }}" class="px-2 py-2"></td>
                                         <td id="child-{{ $index }}" class="px-2 py-2">
-                                            {{ $subItem->jenis_sapi['jenis'] }}</td>
+                                            {{ $subItem->jenis_sapi['jenis_semen'] }}</td>
                                         <td id="child-{{ $index }}" class="px-2 py-2">{{ $subItem->jumlah }}</td>
                                         <td id="child-{{ $index }}" class="px-2 py-2">{{ $subItem->sisa_stok }}
                                         </td>

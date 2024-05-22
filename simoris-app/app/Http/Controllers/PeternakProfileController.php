@@ -49,7 +49,7 @@ class PeternakProfileController extends Controller
                 ->update(['password' => $password]);
         }
         else{
-            return redirect('/main/profile/edit')->withErrors('Password Lama Anda Salah');
+            return redirect('/main/profile/edit')->with('error','Password Lama Anda Salah');
         }
 
         return redirect('/main/profile/edit')->with('success', 'Password Anda Sudah Diperbarui');

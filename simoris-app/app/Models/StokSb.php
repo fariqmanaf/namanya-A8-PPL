@@ -50,6 +50,6 @@ class StokSb extends Model
      */
     public function jenis_sapi()
     {
-        return $this->belongsTo(JenisSapi::class, 'jenis_semen_id');
+        return $this->belongsTo(JenisSemen::class, 'jenis_semen_id');
     }
 }

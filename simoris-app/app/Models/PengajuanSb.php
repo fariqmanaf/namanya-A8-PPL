@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Individuals;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -36,21 +37,18 @@ class PengajuanSb extends Model
     /**
      * @var array
      */
-    protected $fillable = ['id_mantri', 'id_jenis', 'jumlah', 'is_taken', 'tanggal'];
+    protected $guarded = ['id'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function individual()
+    public function individuals()
     {
-        return $this->belongsTo('App\Models\Individual', 'id_mantri');
+        return $this->belongsTo(Individuals::class);
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function jenisSeman()
+    public function detailPengajuan()
     {
-        return $this->belongsTo('App\Models\JenisSeman', 'id_jenis');
+        return $this->hasMany(DetailPengajuan::class);
     }
 }

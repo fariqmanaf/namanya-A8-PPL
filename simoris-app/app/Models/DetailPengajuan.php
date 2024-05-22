@@ -2,27 +2,19 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-/**
- * @property integer $id
- * @property integer $id_mantri
- * @property integer $id_semen
- * @property integer $total
- * @property integer $used
- * @property Individual $individual
- * @property JenisSeman $jenisSeman
- */
-class StokMantri extends Model
+class DetailPengajuan extends Model
 {
     use HasFactory;
+    
     /**
      * The table associated with the model.
      * 
      * @var string
      */
-    protected $table = 'stok_mantri';
+    protected $table = 'detail_pengajuans';
 
     /**
      * Indicates if the IDs are auto-incrementing.
@@ -35,14 +27,14 @@ class StokMantri extends Model
     /**
      * @var array
      */
-    protected $fillable = ['individuals_id', 'jenis_semen_id', 'total', 'used'];
+    protected $guarded = ['id'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function individual()
+    public function pengajuanSb()
     {
-        return $this->belongsTo(Individuals::class);
+        return $this->belongsTo(PengajuanSb::class);
     }
 
     /**
