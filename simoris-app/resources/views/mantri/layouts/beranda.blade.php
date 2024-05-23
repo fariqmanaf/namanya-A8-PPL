@@ -7,7 +7,7 @@
       <div class="box flex gap-6">
         <a href="/home/laporanIB" class="box-pintasan1 h-44 w-44 bg-white rounded-2xl shadow-xl flex flex-col items-center justify-center gap-2 cursor-pointer">
           <img src="{{ asset('/assets/bold/add-ib.svg') }}" alt="">
-          <p class="text-center w-11/12 text-[#427D9D] font-semibold">Buat Laporan IB</p>
+          <p class="text-center w-11/12 text-[#427D9D] font-semibold">Buat Laporan Inseminasi</p>
         </a>
         <div class="box-pintasan2 h-44 w-44 bg-white rounded-2xl shadow-xl flex flex-col items-center justify-center cursor-pointer">
           <img src="{{ asset('/assets/bold/stock-request.svg') }}" alt="" class="my-2">
@@ -24,7 +24,7 @@
         </div>
         <div class="box-pintasan2 h-44 w-44 bg-white rounded-2xl shadow-xl flex flex-col items-center justify-center cursor-pointer">
           <img src="{{ asset('/assets/bold/document-b.svg') }}" alt="" class="my-2">
-          <p class="text-center w-11/12 text-[#427D9D] font-semibold">Riwayat Laporan IB</p>
+          <p class="text-center w-11/12 text-[#427D9D] font-semibold">Riwayat Inseminasi</p>
         </div>
         <div class="box-pintasan2 h-44 w-44 bg-white rounded-2xl shadow-xl flex flex-col items-center justify-center cursor-pointer">
           <img src="{{ asset('/assets/bold/document-b.svg') }}" alt="" class="my-2">

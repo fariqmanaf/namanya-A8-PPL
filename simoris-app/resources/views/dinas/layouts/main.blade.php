@@ -1,21 +1,8 @@
 @extends('dinas.layouts.dashboard')
 @vite('resources/js/map.js')
+
 @section('content')
     <div class="content-container relative w-[85vw] bg-[#DDF2FD] flex flex-col items-center h-full ml-[20vw]">
-        @if ($errors->any())
-            <div class="alert absolute top-20 z-10">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-        @if (session('success'))
-            <div class="alert absolute top-20 z-10">
-                <p>{{ session('success') }}</p>
-            </div>
-        @endif
 
         <div id="map" class="absolute top-14 right-14 2xl:right-20 w-[88%] h-[300px]"></div>
 
@@ -127,12 +114,17 @@
 
                 <div class="button-container mt-3 flex justify-center">
                     <button type="submit"
-                        class="bg-[#427D9D] text-white px-5 py-2 rounded-xl w-[300px] mt-3">Submit</button>
+                        class="bg-[#427D9D] text-white px-5 py-2 rounded-xl w-[300px] mt-3">Simpan</button>
                 </div>
             </form>
         </div>
     </div>
     <script>
+        var toastElements = document.querySelectorAll('.toast');
+        toastElements.forEach(function(toastElement) {
+            toastElement.classList.add('toaster-error');
+        });
+
         document.querySelectorAll('.clickable-row').forEach(row => {
             row.addEventListener('click', function() {
                 const index = parseInt(this.dataset.index);

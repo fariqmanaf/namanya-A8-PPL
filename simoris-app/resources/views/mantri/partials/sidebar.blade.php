@@ -7,26 +7,26 @@
     </div>
   </div>
   <div class="menu-container w-full flex flex-col items-center font-semibold mt-10 gap-5">
-    <div class="menu-1 w-[90%] flex menu rounded-xl px-12 py-3 2xl:py-5 text-[#164863] hover:bg-[#C6F2FF] {{ ($title === "Beranda") ? 'bg-[#C6F2FF]' : '' }}">
+    <a href="/home" class="menu-1 w-[90%] flex menu rounded-xl px-12 py-3 2xl:py-5 text-[#164863] hover:bg-[#C6F2FF] {{ ($title === "Beranda") ? 'bg-[#C6F2FF]' : '' }}">
       <img class="-ml-8 mr-3 w-5 h-5 2xl:w-8 2xl:h-8" src="{{asset('/assets/outline/home-o.svg')}}">
-      <a href="/home" class="w-full text-[14px] 2xl:text-lg">Beranda</a>
-    </div>
-    <div class="menu-2 w-[90%] flex menu rounded-xl px-12 py-3 2xl:py-5 text-[#164863] hover:bg-[#C6F2FF] {{ ($title === "Monitoring Distribusi") ? 'bg-[#C6F2FF]' : '' }}">
+      <span class="w-full text-[14px] 2xl:text-lg">Beranda</span>
+    </a>
+    <a href="/home/distribusi" class="menu-2 w-[90%] flex menu rounded-xl px-12 py-3 2xl:py-5 text-[#164863] hover:bg-[#C6F2FF] {{ ($title === "Monitoring Distribusi") ? 'bg-[#C6F2FF]' : '' }}">
       <img class="-ml-8 mr-3 w-5 h-5 2xl:w-8 2xl:h-8" src="{{asset('/assets/outline/monitoring-o.svg')}}">
-      <a href="/home/distribusi" class="w-full text-[14px] 2xl:text-lg">Monitoring Distribusi</a>
-    </div>
-    <div class="menu-3 w-[90%] flex menu rounded-xl px-12 py-3 2xl:py-5 text-[#164863] hover:bg-[#C6F2FF] {{ ($title === "Riwayat Pengajuan") ? 'bg-[#C6F2FF]' : '' }}">
+      <span class="w-full text-[14px] 2xl:text-lg">Monitoring Distribusi</span>
+    </a>
+    <a href="/home/riwayat-pengajuan" class="menu-3 w-[90%] flex menu rounded-xl px-12 py-3 2xl:py-5 text-[#164863] hover:bg-[#C6F2FF] {{ ($title === "Riwayat Pengajuan") ? 'bg-[#C6F2FF]' : '' }}">
       <img class="-ml-8 mr-3 w-5 h-5 2xl:w-8 2xl:h-8" src="{{asset('/assets/outline/document-o.svg')}}">
-      <a href="/home/riwayat-pengajuan" class="w-full text-[14px] 2xl:text-lg">Riwayat Pengajuan</a>
-    </div>
-    <div class="menu-3 w-[90%] flex menu rounded-xl px-12 py-3 2xl:py-5 text-[#164863] hover:bg-[#C6F2FF] {{ ($title === "Laporan IB") ? 'bg-[#C6F2FF]' : '' }}">
+      <span class="w-full text-[14px] 2xl:text-lg">Riwayat Pengajuan</span>
+    </a>
+    <a href="/home/laporanIB" class="menu-3 w-[90%] flex menu rounded-xl px-12 py-3 2xl:py-5 text-[#164863] hover:bg-[#C6F2FF] {{ ($title === "Laporan IB") ? 'bg-[#C6F2FF]' : '' }}">
       <img class="-ml-8 mr-3 w-5 h-5 2xl:w-8 2xl:h-8" src="{{asset('/assets/outline/monitoring-o.svg')}}">
-      <a href="/home/laporanIB" class="w-full text-[14px] 2xl:text-lg">Laporan IB</a>
-    </div>
-    <div class="menu-4 w-[90%] flex menu rounded-xl px-12 py-3 2xl:py-5 text-[#164863] hover:bg-[#C6F2FF] {{ ($title === "Riwayat IB") ? 'bg-[#C6F2FF]' : '' }}">
+      <span class="w-full text-[14px] 2xl:text-lg">Laporan Inseminasi</span>
+    </a>
+    <a href="/home/riwayatIB" class="menu-4 w-[90%] flex menu rounded-xl px-12 py-3 2xl:py-5 text-[#164863] hover:bg-[#C6F2FF] {{ ($title === "Riwayat IB") ? 'bg-[#C6F2FF]' : '' }}">
       <img class="-ml-8 mr-3 w-5 h-5 2xl:w-8 2xl:h-8" src="{{asset('/assets/outline/document-o.svg')}}">
-      <a href="/home/riwayatIB" class="w-full text-[14px] 2xl:text-lg">Riwayat Laporan IB</a>
-    </div>
+      <span class="w-full text-[14px] 2xl:text-lg">Riwayat Inseminasi</span>
+    </a>
   </div>
   <div id="profile" class="profile flex absolute bottom-0 cursor-pointer mb-5 w-full gap-2 2xl:gap-3">
     <img class="dinas h-10 w-10 rounded-full ml-3" src="https://www.freeiconspng.com/thumbs/profile-icon-png/profile-icon-9.png" alt="profile" class="w-20 h-20 rounded-full">

@@ -9,20 +9,7 @@
   <style>*{margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif}html{height: 100%};@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');</style>
 </head>
 <body class="flex flex-col h-screen bg-[#DDF2FD] items-center justify-center">
-  @if($errors->any())
-    <div class="alert absolute top-10 left-10 w-60 text-sm bg-red-500 text-white rounded-xl">
-      <ul>
-        @foreach($errors->all() as $error)
-        <li class="mb-2 ml-2">{{ "- ".$error }}</li>
-        @endforeach
-      </ul>
-    </div>
-  @endif
-  @if(session()->has('success'))
-    <div class="p-1 alert absolute top-10 left-10 w-60 text-sm bg-green-500 text-white rounded-xl">
-      {{ session('success') }}
-    </div>
-  @endif
+
   <a href="/dashboard" class="-ml-[400px] mb-3 font-semibold text-slate-600 2xl:-ml-[500px]">< Kembali</a>
   <div class="form-container flex flex-col bg-white h-[550px] w-[500px] justify-start items-center rounded-2xl shadow-xl">
     <p class="text-center font-bold text-xl my-8">PROFIL</p>
@@ -35,7 +22,7 @@
       @csrf
       <input id="input1" name="old_password" class="invisible w-96 -mt-[38px] rounded-full text-sm my-3 2xl:w-[450px] 2xl:text-lg" type="password" placeholder="Masukkan Password lama">
       <input id="input2" type="password" class="invisible w-96 -mt-[50px] rounded-full text-sm 2xl:w-[450px] 2xl:text-lg" name="new_password" placeholder="Masukkan Password Baru">
-      <button id="input3" type="submit" class="invisible p-1 w-40 mt-8 bg-[#DDF2FD] rounded-full text-slate-600 text-sm 2xl:p-2">Submit</button>
+      <button id="input3" type="submit" class="invisible p-1 w-40 mt-8 bg-[#DDF2FD] rounded-full text-slate-600 text-sm 2xl:p-2">Simpan</button>
     </form>
   </div>
 </body>

@@ -2,15 +2,6 @@
 
 @section('content')
   <div class="formcontainer h-[100dvh] w-screen flex flex-col justify-center items-center bg-[#DDF2FD]">
-    @if($errors->any())
-      <div class="alert z-10 mb-3 absolute top-24">
-        <ul>
-          @foreach($errors->all() as $error)
-            <li>{{ $error }}</li>
-          @endforeach
-        </ul>
-      </div>
-    @endif
     <img src="{{asset("assets/bg.png")}}" class="z-0 absolute top-0 mt-7 w-full" alt="">
     
     <a href="/" class="mb-2 z-10 mr-80 2xl:mr-[470px] 2xl:text-xl">< Kembali</a>

@@ -12,8 +12,10 @@ use App\Models\Sertifikasi;
 use App\Models\UserAccounts;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Yoeunes\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 
 class MantriProfileController extends Controller
 {
@@ -69,7 +71,7 @@ class MantriProfileController extends Controller
                 ->update(['password' => $password]);
         }
         else{
-            return redirect('/home/profile/changepass')->withErrors('Password Lama Anda Salah');
+            return redirect('/home/profile/changepass')->with('error','Password Lama Anda Salah');
         }
 
         return redirect('/home/profile/changepass')->with('success', 'Password Anda Sudah Diperbarui');
@@ -96,39 +98,44 @@ class MantriProfileController extends Controller
      */
     public function update(Request $request)
     {
-        $alamatData = $request->validate([
-            'kabupaten_id' => 'required',
-            'kecamatan_id' => 'required',
-            'kelurahan_id' => 'required',
-            'detail' => 'required'
-        ]);
-
-        $individuals_user = Individuals::where('id', Auth::user()->individuals_id)->first();
-        $profilData = $request->validate([
-            'nik' => ['required', Rule::unique('individuals')->ignore($individuals_user, 'nik')],
-            'name' => 'required|max:255|min:3',
-            'tgl_lahir' => 'required|date',
-            'no_telp' => 'required|numeric'
-        ]); 
-
-        $akunrules = [
-            'email' => ['required','email:dns', Rule::unique('user_accounts')->ignore(Auth::user()->email, 'email')],
-        ];
-        
-        $validatedData = $request->validate($akunrules);
-
-        // if (isset($validatedData['password'])) {
-        //     $validatedData['password'] = Hash::make($validatedData['password']);
-        // }
-
-        UserAccounts::where('id', Auth::user()->id)
-            ->update($validatedData);
-        Individuals::where('id', Auth::user()->individuals_id)
-            ->update($profilData);
-        Alamat::where('id', $individuals_user->alamats_id)
-            ->update($alamatData);
-
-        return redirect('/home/profile')->with('success', 'Account Has Been Updated!');
+        try{
+            $alamatData = $request->validate([
+                'kabupaten_id' => 'required',
+                'kecamatan_id' => 'required',
+                'kelurahan_id' => 'required',
+                'detail' => 'required'
+            ]);
+    
+            $individuals_user = Individuals::where('id', Auth::user()->individuals_id)->first();
+            $profilData = $request->validate([
+                'nik' => ['required', Rule::unique('individuals')->ignore($individuals_user, 'nik')],
+                'name' => 'required|max:255|min:3',
+                'tgl_lahir' => 'required|date',
+                'no_telp' => 'required|numeric'
+            ]); 
+    
+            $akunrules = [
+                'email' => ['required','email:dns', Rule::unique('user_accounts')->ignore(Auth::user()->email, 'email')],
+            ];
+            
+            $validatedData = $request->validate($akunrules);
+    
+            UserAccounts::where('id', Auth::user()->id)
+                ->update($validatedData);
+            Individuals::where('id', Auth::user()->individuals_id)
+                ->update($profilData);
+            Alamat::where('id', $individuals_user->alamats_id)
+                ->update($alamatData);
+    
+            return redirect('/home/profile')->with('success', 'Account Has Been Updated!');
+        }
+        catch (ValidationException $e) {
+            $errors = $e->validator->errors();
+            foreach ($errors->all() as $error) {
+                Toastr::error($error, 'Error');
+            }
+            return back()->withErrors($errors)->withInput();
+        }
     }
 
     /**

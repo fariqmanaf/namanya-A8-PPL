@@ -28,7 +28,7 @@
         <input id="search-sapi" type="text" class="p-1 rounded-full ml-14 w-96 bg-gray-200 border border-transparent" placeholder=" Cari Laporan....">
       </div>
       <button id="trigger"
-        class="bg-[#427D9D] text-white w-[170px] mr-12 font-semibold rounded-xl text-center input-stok">
+        class="bg-[#427D9D] text-white w-[170px] 2xl:w-[200px] mr-12 font-semibold rounded-xl text-center input-stok">
         + Tambah Laporan
       </button>
     </div>
@@ -115,7 +115,8 @@
               <label for="tanggalIB">Tanggal IB</label>
               <input type="date" name="tanggalIB" class="w-[334px] bg-[#F1F1F1] border-transparent rounded-xl text-sm">
               <label for="jenisSemen" class="mt-4">Jenis Semen</label>
-              <select name="jenisSemen" id="jenisSemen" class="input-regist2 w-[40%] bg-[#F1F1F1] border-transparent rounded-xl text-[#888888]">
+              <select name="jenisSemen" id="jenisSemen" class="w-[80%] bg-[#F1F1F1] border-transparent rounded-xl text-[#888888]">
+                  <option value="" disabled selected>Tambah Sapi</option>
                 @foreach ($jenisSemen as $item)
                   <option value="{{ $item->id }}">{{ $item->jenis_semen }}</option>
                 @endforeach

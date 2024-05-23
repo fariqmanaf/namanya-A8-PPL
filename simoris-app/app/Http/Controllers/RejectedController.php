@@ -72,7 +72,7 @@ class RejectedController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         $session = session();
-        $session->flash('update', 'Anda Berhasil Mengedit Pengajuan Anda, Cek Secara Berkala');
+        $session->flash('success', 'Anda Berhasil Mengedit Pengajuan Anda, Cek Secara Berkala');
         return redirect('/');
     }
 

@@ -116,7 +116,7 @@
                       <p class="mb-2">{{ $sertif->tanggal_expired }}</p>
                     </div>
                   </div>
-                  <div id="bukti-sertifikasi-{{ $mantri->id }}" data-name="{{ $sertif->bukti }}" class="preview-gambar w-72 h-14 flex items-center justify-center bg-gray-200 text-xs rounded-xl">{{ ($sertif->bukti) }}</div>
+                  <div id="bukti-sertifikasi-{{ $mantri->id }}" data-name="{{ $sertif->bukti }}" class="preview-gambar w-72 h-14 flex items-center justify-center bg-gray-200 text-xs rounded-xl cursor-pointer">{{ ($sertif->bukti) }}</div>
                   <div class="flex flex-row w-full justify-center items-center gap-x-3 mt-2">
                     <button type="button" class="px-12 py-1 rounded-lg text-white font-semibold text-sm bg-[#FE6666] hover:bg-[#d15353]" id="tolakSertif-{{ $mantri->id }}">Tolak</button>
                     <button type="button" class="px-12 py-1 rounded-lg text-white font-semibold text-sm bg-[#66C57A] hover:bg-[#5db671]" id="setujuSertif-{{ $mantri->id }}">Setujui</button>
@@ -140,7 +140,7 @@
                       <p class="mb-2">{{ $izin->tanggal_expired }}</p>
                     </div>
                   </div>
-                  <div id="bukti-izin-{{ $mantri->id }}" data-name="{{ $izin->bukti }}" class="preview-gambar w-72 h-14 flex items-center justify-center bg-gray-200 text-xs rounded-xl">{{ ($izin->bukti) }}</div>
+                  <div id="bukti-izin-{{ $mantri->id }}" data-name="{{ $izin->bukti }}" class="preview-gambar w-72 h-14 flex items-center justify-center bg-gray-200 text-xs rounded-xl cursor-pointer">{{ ($izin->bukti) }}</div>
                   <div class="flex flex-row w-full justify-center items-center gap-x-3 mt-2">
                     <button type="button" class="px-12 py-1 rounded-lg text-white font-semibold text-sm bg-[#FE6666] hover:bg-[#d15353]" id="tolakIzin-{{ $mantri->id }}">Tolak</button>
                     <button type="button" class="px-12 py-1 rounded-lg text-white font-semibold text-sm bg-[#66C57A] hover:bg-[#5db671]" id="setujuIzin-{{ $mantri->id }}">Setujui</button>
@@ -217,6 +217,22 @@
     setuju.forEach(button => {
         button.addEventListener('click', function() {
             const id = this.id.split('-')[1];
+            const tolak  = document.getElementById('tolakSertif-' + id);
+            tolak.classList.toggle('hidden');
+        });
+    });
+
+    tolak.forEach(button => {
+        button.addEventListener('click', function() {
+            const id = this.id.split('-')[1];
+            const setuju = document.getElementById('setujuSertif-' + id);
+            setuju.classList.toggle('hidden');
+        });
+    });
+
+    setuju.forEach(button => {
+        button.addEventListener('click', function() {
+            const id = this.id.split('-')[1];
             const input = document.getElementById('is_accepted-sertif-' + id);
             const info = document.getElementById('informationSertif-' + id);
             input.value = 1;
@@ -236,6 +252,22 @@
     
     const setuju2 = document.querySelectorAll('[id^=setujuIzin-]');
     const tolak2 = document.querySelectorAll('[id^=tolakIzin-]');
+
+    setuju2.forEach(button => {
+        button.addEventListener('click', function() {
+            const id = this.id.split('-')[1];
+            const tolak  = document.getElementById('tolakIzin-' + id);
+            tolak.classList.toggle('hidden');
+        });
+    });
+
+    tolak2.forEach(button => {
+        button.addEventListener('click', function() {
+            const id = this.id.split('-')[1];
+            const setuju = document.getElementById('setujuIzin-' + id);
+            setuju.classList.toggle('hidden');
+        });
+    });
 
     setuju2.forEach(button => {
         button.addEventListener('click', function() {

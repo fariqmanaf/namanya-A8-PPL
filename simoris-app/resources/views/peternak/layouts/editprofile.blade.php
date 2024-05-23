@@ -38,7 +38,7 @@
       <div class="input1 flex gap-2">
         <div class="tanggal-lahir flex flex-col">
           <label for="">Tanggal Lahir</label>
-          <input class="w-[150px] 2xl:w-[215px] text-gray-500 bg-[#F1F1F1] border-transparent rounded-xl text-sm" type="date" name="tgl_lahir" value="{{ $profil->tgl_lahir }}">
+          <input class="w-[150px] 2xl:w-[215px] text-gray-500 bg-[#F1F1F1] border-transparent rounded-xl text-sm" type="date" name="tgl_lahir" value="{{ $profil->tgl_lahir }}" readonly>
         </div>
         <div class="nik flex flex-col">
           <label for="">Nomor Induk Kependudukan</label>

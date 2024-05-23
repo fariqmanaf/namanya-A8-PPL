@@ -43,7 +43,11 @@ class MantriFeatureController extends Controller
         $presentaseMantri = StokMantri::where('individuals_id', Auth::user()->individual['id'])->get();
         $totalStok = $presentaseMantri->sum('total');
         $usedStok = $presentaseMantri->sum('used');
-        $percentage = ($usedStok / $totalStok) * 100;
+        if($presentaseMantri->count() > 0){
+            $percentage = ($totalStok != 0) ? ($usedStok / $totalStok) * 100 : 0;
+        } else {
+            $percentage = 50;
+        }
 
         return view('mantri.layouts.distribusi', [
             'title' => 'Monitoring Distribusi',
@@ -142,21 +146,26 @@ class MantriFeatureController extends Controller
     }
 
     public function dataSapiPost(Request $request){
-        $validatedData = $request->validate([
-            'jenisSapi' => 'required',
-            'ciri' => 'required',
-        ],[
-            'jenisSapi.required' => 'Data Tidak Lengkap',
-            'ciri.required' => 'Data Tidak Lengkap',
-        ]);
-
-        DataSapi::create([
-            'jenis_sapi_id' => $validatedData['jenisSapi'],
-            'individuals_id' => $request['id'],
-            'detail' => $validatedData['ciri'],
-        ]);
-
-        return redirect()->back()->with('success', 'Data berhasil disimpan');
+        try{
+            $validatedData = $request->validate([
+                'jenisSapi' => 'required',
+                'ciri' => 'required',
+            ],[
+                'jenisSapi.required' => 'Data Tidak Lengkap',
+                'ciri.required' => 'Data Tidak Lengkap',
+            ]);
+    
+            DataSapi::create([
+                'jenis_sapi_id' => $validatedData['jenisSapi'],
+                'individuals_id' => $request['id'],
+                'detail' => $validatedData['ciri'],
+            ]);
+    
+            return redirect()->back()->with('success', 'Data berhasil disimpan');
+        }
+        catch(\Exception $e){
+            return redirect()->back()->with('error','Data Tidak Lengkap');
+        }
     }
 
     public function ibSapi(Individuals $individuals, DataSapi $dataSapi){
@@ -257,7 +266,7 @@ class MantriFeatureController extends Controller
             ]);
 
             if(($validatedData['PO'] / $validatedData['total_stok']) * 100 < 10){
-                Toastr::error('Total PO tidak mencapai 10% dari total stok', 'Error');
+                Toastr::error('Pengajuan Gagal, Total PO tidak mencapai 10% dari total stok', 'Error');
                 return back();
             }elseif($validatedData['total_stok'] != ($validatedData['Simental'] + $validatedData['PO'] + $validatedData['Brahma'] + $validatedData['Limosin'])){
                 Toastr::error('Total stok tidak sesuai', 'Error');

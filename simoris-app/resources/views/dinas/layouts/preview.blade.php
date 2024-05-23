@@ -28,7 +28,7 @@
           <input type="hidden" name="PO" value="{{ session('stok.PO') }}">
           <input type="hidden" name="Brahma" value="{{ session('stok.Brahma') }}">
           <input type="hidden" name="Limosin" value="{{ session('stok.Limosin') }}">
-          <button class="p-1 rounded-xl text-center bg-[#427D9D] text-white w-[150px]" type="submit">Submit</button>
+          <button class="p-1 rounded-xl text-center bg-[#427D9D] text-white w-[150px]" type="submit">Konfirmasi</button>
         </form>
       </div>
       <table class="mt-4 cursor-pointer rounded-xl w-full font-light 2xl:text-lg">

@@ -17,21 +17,17 @@
         </tr>
       </thead>
       <tbody>
-        @foreach($mantri as $mantri)
-          @foreach($wilayahKerja as $wiker)
-            @if($mantri->individual->wilayah_kerja->pluck('kecamatan_id') == $wiker->pluck('id'))
-              <tr class="clickable-row border-b text-sm text-center">
+        @foreach($mantri as $index => $x)
+              <tr class="clickable-row border-b text-sm 2xl:text-lg text-center">
                 <td class="px-4 py-4">{{ $loop->iteration }}.</td>
-                <td class="px-4 py-4">{{ $mantri->individual['name'] }}</td>
-                <td class="px-4 py-4">{{ $wiker->value('kecamatan') }}</td>
+                <td class="px-4 py-4">{{ $x->individual['name'] }}</td>
+                <td class="px-4 py-4">{{ $x->individual->wilayah_kerja[0]->kecamatan['kecamatan'] }}</td>
                 <td class="px-4 py-4">
-                  <a href="/dashboard/laporanIB/{{ $mantri->individual['id'] }}" class="open-modal">
+                  <a href="/dashboard/laporanIB/{{ $x->individual['id'] }}" class="open-modal">
                     <img src="{{ asset('assets/icon/view.svg') }}" alt="View" class="h-5 w-5">
                   </a>
                 </td>
               </tr>
-            @endif
-          @endforeach
         @endforeach
       </tbody>
     </table>

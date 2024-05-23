@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\UserAccounts;
 use Illuminate\Http\Request;
+use Yoeunes\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Validation\ValidationException;
 
 class DinasProfileController extends Controller
 {
@@ -57,24 +59,33 @@ class DinasProfileController extends Controller
      */
     public function update(Request $request)
     {
-        $request->validate([
-            'old_password' => 'required',
-            'new_password' => 'required|min:8|max:255'],
-        [
-            'password.min' => 'Kata sandi minimal harus :min karakter.',
-            'password.max' => 'Kata sandi maksimal :max karakter.',
-        ]);
-    
-        if (Hash::check($request->old_password, Auth::user()->password)) {
-            $password = Hash::make($request->new_password);
-            UserAccounts::where('id', Auth::user()->id)
-                ->update(['password' => $password]);
+        try{
+            $request->validate([
+                'old_password' => 'required',
+                'new_password' => 'required|min:8|max:255'],
+            [
+                'password.min' => 'Kata sandi minimal harus :min karakter.',
+                'password.max' => 'Kata sandi maksimal :max karakter.',
+            ]);
+        
+            if (Hash::check($request->old_password, Auth::user()->password)) {
+                $password = Hash::make($request->new_password);
+                UserAccounts::where('id', Auth::user()->id)
+                    ->update(['password' => $password]);
+            }
+            else{
+                return redirect('/dashboard/changepass')->with('error','Password Lama Anda Salah');
+            }
+        
+            return redirect('/dashboard/changepass')->with('success', 'Password Berhasil Di Update');
         }
-        else{
-            return redirect('/dashboard/changepass')->with('error','Password Lama Anda Salah');
+        catch (ValidationException $e) {
+            $errors = $e->validator->errors();
+            foreach ($errors->all() as $error) {
+                Toastr::error($error, 'Error');
+            }
+            return back()->withErrors($errors)->withInput();
         }
-    
-        return redirect('/dashboard/changepass')->with('success', 'Password Berhasil Di Update');
     }
 
     /**

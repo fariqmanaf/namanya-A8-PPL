@@ -35,7 +35,7 @@
       @csrf
       <input id="input1" name="old_password" class="invisible w-96 -mt-[38px] rounded-full text-sm my-3 2xl:w-[450px] 2xl:text-lg" type="password" placeholder="Masukkan Password lama">
       <input id="input2" type="password" class="invisible w-96 -mt-[50px] rounded-full text-sm 2xl:w-[450px] 2xl:text-lg" name="new_password" placeholder="Masukkan Password Baru">
-      <button id="input3" type="submit" class="invisible p-1 w-40 mt-8 bg-[#DDF2FD] rounded-full text-slate-600 text-sm 2xl:p-2">Submit</button>
+      <button id="input3" type="submit" class="invisible p-1 w-40 mt-8 bg-[#DDF2FD] rounded-full text-slate-600 text-sm 2xl:p-2">Simpan</button>
     </form>
   </div>
 </body>
