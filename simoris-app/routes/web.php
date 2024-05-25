@@ -82,6 +82,7 @@ Route::middleware('mantri')->group(function(){
     Route::get('/home', [MantriProfileController::class, 'index']);
     Route::get('/home/profile', [MantriProfileController::class, 'edit']);
     Route::put('/home/profile', [MantriProfileController::class, 'update']);
+    Route::get('/home/profile/document', [MantriProfileController::class, 'dokumenMantri']);
     Route::get('/home/profile/changepass', [MantriProfileController::class, 'changepass']);
     Route::put('/home/profile/changepass', [MantriProfileController::class, 'updatepass']);
     Route::get('/home/distribusi', [MantriFeatureController::class, 'index']);

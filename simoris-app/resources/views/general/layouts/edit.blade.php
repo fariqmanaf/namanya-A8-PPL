@@ -2,21 +2,6 @@
 
 @section('content')
 <div class="formcontainer h-[100dvh] w-screen flex flex-col justify-center items-center bg-[#DDF2FD]">
-
-  @if(session()->has('success'))
-    <div class="p-1 bg-slate-400">
-      {{ session('success') }}
-    </div>
-  @endif
-  @if($errors->any())
-    <div class="text-center">
-      <ul>
-        @foreach($errors->all() as $error)
-          <li>{{ $error }}</li>
-        @endforeach
-      </ul>
-    </div>
-  @endif
       
   <img src="{{asset("assets/bg.png")}}" class="z-0 absolute top-0 mt-7 w-full" alt="">
   

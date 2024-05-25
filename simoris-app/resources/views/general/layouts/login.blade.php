@@ -2,25 +2,6 @@
 
 @section('content')
   <div class="formcontainer h-[100dvh] w-screen flex flex-row justify-center items-center bg-[#DDF2FD] gap-x-24 2xl:gap-x-48 inset-x-0 px-10">
-    @if($errors->any())
-      <div class="absolute top-20 z-10 alert bg-slate-400">
-        <ul>
-          @foreach($errors->all() as $error)
-            <li>{{ $error }}</li>
-          @endforeach
-        </ul>
-      </div>
-    @endif
-    @if(session()->has('success'))
-      <div class="p-1 bg-slate-400 z-10 absolute top-20">
-        {{ session('success') }}
-      </div>
-    @endif
-    @if(session()->has('update'))
-      <div class="p-1 bg-slate-400 z-10 absolute top-20">
-        {{ session('update') }}
-      </div>
-    @endif
 
     <img src="{{asset("assets/bg-hero.png")}}" class="absolute z-0 w-full top-0" alt="bg-hero">
 
@@ -38,16 +19,40 @@
       <form action="" method="POST" class="flex flex-col gap-y-9">
         @csrf
         <input type="email" class="@error('email') is-invalid @enderror w-80 h-11 rounded-lg 2xl:w-96 2xl:h-14 2xl:rounded-xl" name="email" placeholder="example@mail.com" value="{{ old('email') }}" autofocus required>
-        <input type="password" class="w-80 h-11 rounded-lg 2xl:w-96 2xl:h-14 2xl:rounded-xl" name="password" placeholder="*********" required>
-        <a href="" class="text-xs 2xl:text-base font-medium text-black/50 hover:text-black/65 right-0 text-right -mt-7">Lupa Password?</a>
-        <button type="submit" class="btn-login">Masuk</button>
+        <div class="password-container">        
+          <input type="password" id="password" class="w-80 h-11 rounded-lg 2xl:w-96 2xl:h-14 2xl:rounded-xl" name="password" placeholder="*********" required>
+          <span class="toggle-password" onclick="togglePassword()">&#128065;</span>
+        </div>
+        {{-- <a href="" class="text-xs 2xl:text-base font-medium text-black/50 hover:text-black/65 right-0 text-right -mt-7">Lupa Password?</a> --}}
+        <button type="submit" class="btn-login">Login</button>
       </form>
       <div class="flex flex-col justify-center items-center mt-8">
         <p class="text-black/60 text-xs 2xl:text-lg font-medium">Belum punya akun?</p>
-        <a href="/register" class="underline text-xs 2xl:text-lg font-semibold text-[#164863] hover:text-[#5c7281] ease-in-out duration-100">Daftar Sekarang</a>
+        <a href="/register" class="underline text-xs 2xl:text-lg font-semibold text-[#164863] hover:text-[#5c7281] ease-in-out duration-100">Registrasi</a>
       </div>
       
     </div>
-
   </div>
+  <style>
+    .toggle-password {
+      position: absolute;
+      top: 53%;
+      right: 12.5%;
+      cursor: pointer;
+    }
+  </style>
+  <script>
+    function togglePassword() {
+    const passwordInput = document.getElementById("password");
+    const toggleIcon = document.querySelector(".toggle-password");
+
+    if (passwordInput.type === "password") {
+      passwordInput.type = "text";
+      toggleIcon.innerHTML = "&#128064;";
+    } else {
+      passwordInput.type = "password";
+      toggleIcon.innerHTML = "&#128065;";
+    }
+  }
+  </script>
 @endsection

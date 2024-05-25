@@ -9,26 +9,9 @@
   <style>*{margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif}html{height: 100%};@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');</style>
 </head>
 <body class="flex flex-col h-screen bg-[#DDF2FD] items-center justify-center">
-
-  {{-- error handling --}}
-  @if($errors->any())
-    <div class="alert absolute top-10 left-10 w-60 text-sm bg-red-500 text-white rounded-xl">
-      <ul>
-        @foreach($errors->all() as $error)
-        <li class="mb-2 ml-2">{{ "- ".$error }}</li>
-        @endforeach
-      </ul>
-    </div>
-  @endif
-  @if(session()->has('success'))
-    <div class="p-1 alert absolute top-10 left-10 w-60 text-sm bg-green-500 text-white rounded-xl">
-      {{ session('success') }}
-    </div>
-  @endif
-  {{--  --}}
   
   <a href="/home" class="-ml-[450px] mb-3 font-semibold text-slate-600 2xl:-ml-[600px] 2xl:text-xl">< Kembali</a>
-  <div class="flex flex-col bg-white h-[600px] w-[550px] justify-start items-center rounded-2xl shadow-xl 2xl:h-[700px] 2xl:w-[700px]">
+  <div class="flex flex-col bg-white h-[630px] w-[550px] justify-start items-center rounded-2xl shadow-xl 2xl:h-[730px] 2xl:w-[700px]">
     <p class="text-center font-bold text-xl my-3">PROFIL</p>
     <img src="https://www.freeiconspng.com/thumbs/profile-icon-png/profile-icon-9.png" alt="Logo Dinas" class="h-24 w-24 rounded-full mb-5 border border-black">
     <form action="" method="post" class="justify-center flex flex-col items-center text-xs gap-3 w-10/12 2xl:gap-5">
@@ -38,7 +21,7 @@
       <div class="input1 flex gap-2">
         <div class="tanggal-lahir flex flex-col">
           <label for="">Tanggal Lahir</label>
-          <input class="w-[150px] 2xl:w-[215px] text-gray-500 bg-[#F1F1F1] border-transparent rounded-xl text-sm" type="date" name="tgl_lahir" value="{{ $profil->tgl_lahir }}">
+          <input class="w-[150px] 2xl:w-[215px] text-gray-500 bg-[#F1F1F1] border-transparent rounded-xl text-sm" type="date" name="tgl_lahir" value="{{ $profil->tgl_lahir }}" readonly>
         </div>
         <div class="nik flex flex-col">
           <label for="">Nomor Induk Kependudukan</label>
@@ -52,7 +35,7 @@
         </div>
         <div class="email flex flex-col">
           <label for="">Email</label>
-          <input class="w-[270px] 2xl:w-[330px] text-gray-500 bg-[#F1F1F1] border-transparent rounded-xl text-sm" type="text" name="email" value="{{ $akun->email }}">
+          <input class="w-[270px] 2xl:w-[330px] text-gray-500 bg-[#F1F1F1] border-transparent rounded-xl text-sm" type="text" name="email" value="{{ $akun->email }}" readonly>
         </div>
       </div>
       <div class="input3 flex gap-2">
@@ -84,6 +67,9 @@
       <div class="input4 w-full">
         <label for="" class="text-xs">Alamat Lengkap</label>
         <input class="text-gray-500 bg-[#F1F1F1] border-transparent rounded-xl text-sm w-full" type="text" name="detail" id="" value="{{ $alamat->detail }}">
+      </div>
+      <div class="dokumen w-full">
+        <a href="/home/profile/document" class="w-full"><p id="button" class="text-xs bg-blue-100 button-pw w-full shadow-[2px_2px_2px_2px_rgba(0,0,0,0.2)] p-2 rounded-xl flex justify-between cursor-pointer 2xl:w-full">Cek Dokumen <span>></span></p></a>
       </div>
       <div class="input5 w-full">
         <label for="" class="text-xs">Password</label>

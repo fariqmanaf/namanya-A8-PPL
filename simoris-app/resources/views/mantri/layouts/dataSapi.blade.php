@@ -84,7 +84,8 @@
           <p class="text-xl font-bold text-center text-[#427D9D]">Tambah Data Sapi</p>
           <div class="total-container flex flex-col text-center mt-5 items-center 2xl:gap-3">
               <label for="jenisSapi" class="">Jenis Sapi</label>
-              <select name="jenisSapi" id="jenisSapi" class="input-regist2 w-[40%] bg-[#F1F1F1] border-transparent rounded-xl text-[#888888]">
+              <select name="jenisSapi" id="jenisSapi" class="w-[60%] bg-[#F1F1F1] border-transparent rounded-xl text-[#888888]">
+                <option value="" disabled selected>Tambah Sapi</option>
                 @foreach ($jenisSapi as $item)
                   <option value="{{ $item->id }}">{{ $item->jenis }}</option>
                 @endforeach

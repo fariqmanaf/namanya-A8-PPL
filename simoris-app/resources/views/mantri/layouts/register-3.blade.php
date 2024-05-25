@@ -2,15 +2,6 @@
 
 @section('content')
   <div class="formcontainer h-[100dvh] w-screen flex flex-col mt-5 items-center bg-[#DDF2FD]">
-    @if($errors->any())
-      <div class="alert absolute">
-        <ul>
-          @foreach($errors->all() as $error)
-            <li>{{ $error }}</li>
-          @endforeach
-        </ul>
-      </div>
-    @endif
     <img src="{{asset("assets/bg.png")}}" class="z-0 absolute top-0 mt-7 w-full" alt="">
     <a href="/register/mantri/step-2" class="mb-2 z-10 mr-80 text-sm 2xl:mr-[470px] 2xl:text-xl">< Kembali</a>
     <div class="form-regist3 z-10 w-[434px] h-[570px] bg-[#FFFF] rounded-2xl shadow-xl">
@@ -43,7 +34,7 @@
             <div class="flex items-center justify-center w-full 2xl:w-[470px]">
               <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-14 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-[#F1F1F1] hover:bg-gray-100 dark:border-gray-400 dark:hover:border-gray-500 dark:hover:bg-slate-200 2xl:h-20">
                   <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                      <p id="file-name" class="text-sm text-gray-500 dark:text-gray-400  2xl:text-lg">Klik Untuk Unggah Sertifikasi</p>
+                      <p id="file-name" class="text-sm text-gray-500 dark:text-gray-400 text-center  2xl:text-lg">Klik Untuk Unggah Sertifikasi <span class="text-center italic text-xs 2xl:text-sm">(max 2mb)</span></p>
                   </div>
                   <input id="dropzone-file" onchange="displayFileName()" name="bukti_sertifikasi" type="file" class="hidden" />
               </label>
@@ -68,7 +59,7 @@
             <div class="flex items-center justify-center w-full 2xl:w-[470px]">
               <label for="dropzone-file2" class="flex flex-col items-center justify-center w-full h-14 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-[#F1F1F1] hover:bg-gray-100 dark:border-gray-400 dark:hover:border-gray-500 dark:hover:bg-slate-200 2xl:h-20">
                   <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                      <p id="file-name2" class="text-sm text-gray-500 dark:text-gray-400  2xl:text-lg">Klik Untuk Unggah Surat Izin</p>
+                      <p id="file-name2" class="text-sm text-gray-500 dark:text-gray-400  2xl:text-lg text-center">Klik Untuk Unggah Surat Izin <span class="text-center italic text-xs 2xl:text-sm">(max 2mb)</span></p>
                   </div>
                   <input id="dropzone-file2" onchange="displayFileName2()" name="bukti_suratizin" type="file" class="hidden" />
               </label>

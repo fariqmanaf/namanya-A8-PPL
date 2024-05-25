@@ -21,7 +21,7 @@
       </thead>
       <tbody>
         @foreach($laporanIB as $laporan)
-          <tr class="clickable-row border-b text-sm text-center">
+          <tr class="clickable-row border-b text-sm 2xl:text-lg text-center">
             <td class="px-4 py-4">{{ $loop->iteration }}.</td>
             <td class="px-4 py-4">{{ $laporan->dataSapi['id'] }}</td>
             <td class="px-4 py-4">{{ $laporan->dataSapi->jenisSapi['jenis'] }}</td>

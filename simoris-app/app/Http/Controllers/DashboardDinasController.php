@@ -6,15 +6,12 @@ use App\Models\StokSb;
 use App\Models\Kecamatan;
 use App\Models\LaporanIb;
 use App\Models\JenisSemen;
+use App\Models\StokMantri;
 use App\Models\Individuals;
 use App\Models\PengajuanSb;
-use App\Models\StokMantri;
 use App\Models\UserAccounts;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
-use Bagusindrayana\LaravelMaps\LaravelMaps;
-use Bagusindrayana\LaravelMaps\Mapbox\MapboxMarker;
+use Illuminate\Support\Facades\Validator;
 
 class DashboardDinasController extends Controller
 {
@@ -80,32 +77,39 @@ class DashboardDinasController extends Controller
      */
     public function createStok(Request $request)
     {
-        $validatedData = $request->validate([
-            'total_stok' => 'required',
-            'Simental' => 'required',
-            'PO' => 'required',
-            'Brahma' => 'required',
-            'Limosin' => 'required',
-        ]);
+        try{
 
-        $total_sisa = request('sisa-1') + request('sisa-2') + request('sisa-3') + request('sisa-4');
-        $total_stok = $validatedData['total_stok'] += $total_sisa;
-        $Simental = $validatedData['Simental'] += request('sisa-1');
-        $PO = $validatedData['PO'] += request('sisa-2');
-        $Brahma = $validatedData['Brahma'] += request('sisa-3');
-        $Limosin = $validatedData['Limosin'] += request('sisa-4');
-
-        $totalJenis = $Simental + $PO + $Brahma + $Limosin;
-        if ($total_stok != $totalJenis) {
-            return redirect('/dashboard')->with('error','Total stok tidak sesuai dengan jumlah jenis semen');
-        } else {
-            session()->put('stok.total_stok', $total_stok);
-            session()->put('stok.Simental', $Simental);
-            session()->put('stok.PO', $PO);
-            session()->put('stok.Brahma', $Brahma);
-            session()->put('stok.Limosin', $Limosin);
-
-            return redirect('/dashboard/preview');
+            $validatedData = $request->validate([
+                'total_stok' => 'required|numeric',
+                'Simental' => 'required|numeric',
+                'PO' => 'required|numeric',
+                'Brahma' => 'required|numeric',
+                'Limosin' => 'required|numeric',
+            ]);
+    
+            $total_sisa = request('sisa-1') + request('sisa-2') + request('sisa-3') + request('sisa-4');
+            $total_stok = $validatedData['total_stok'] += $total_sisa;
+            $Simental = $validatedData['Simental'] += request('sisa-1');
+            $PO = $validatedData['PO'] += request('sisa-2');
+            $Brahma = $validatedData['Brahma'] += request('sisa-3');
+            $Limosin = $validatedData['Limosin'] += request('sisa-4');
+    
+            $totalJenis = $Simental + $PO + $Brahma + $Limosin;
+    
+            if ($total_stok != $totalJenis) {
+                return redirect('/dashboard')->with('error','Total stok tidak sesuai dengan jumlah jenis semen');
+            } else {
+                session()->put('stok.total_stok', $total_stok);
+                session()->put('stok.Simental', $Simental);
+                session()->put('stok.PO', $PO);
+                session()->put('stok.Brahma', $Brahma);
+                session()->put('stok.Limosin', $Limosin);
+    
+                return redirect('/dashboard/preview');
+            }
+        }
+        catch(\Exception $e){
+            return redirect('/dashboard')->with('error','Terdapat Kesalahan Dalam Mengisi Data');
         }
     }
 
@@ -217,12 +221,9 @@ class DashboardDinasController extends Controller
     public function laporanIB()
     {
         $title = "Laporan IB";
-        $mantri = UserAccounts::where('roles_id', 2)->get();
-        foreach($mantri as $key => $value){
-            $wilayahKerja[] = Kecamatan::where('id', $value->individual->wilayah_kerja->pluck('kecamatan_id'))->get();
-        }
+        $mantri = UserAccounts::where('roles_id', 2)->where('status', 'enable')->get();
 
-        return view('dinas.layouts.laporanIbDinas', compact('title', 'mantri', 'wilayahKerja'));
+        return view('dinas.layouts.laporanIbDinas', compact('title', 'mantri'));
     }
 
     public function ibDetail(Individuals $individuals)
@@ -257,8 +258,19 @@ class DashboardDinasController extends Controller
                     foreach($stok as $stokUpdate){
                         StokSb::where('kecamatan_id', $user->wilayah_kerja[0]->kecamatan_id)->where('jenis_semen_id', $stokUpdate->jenis_semen_id)->update(['used' => $stokUpdate->used + $request['jenis-acc-'.$stokUpdate->jenis_semen_id]]);
                     }
-                    foreach($stokMantri as $stokMantriUpdate){
-                        $stokMantriUpdate->where('jenis_semen_id', $stokMantriUpdate->jenis_semen_id)->update(['total' => $stokMantriUpdate->total + $request['jenis-acc-'.$stokMantriUpdate->jenis_semen_id]]);
+                    if($stokMantri->isEmpty()){
+                        foreach($stok as $stokMantriCreate){
+                            StokMantri::create([
+                                'individuals_id' => $request['userAcc'],
+                                'jenis_semen_id' => $stokMantriCreate->jenis_semen_id,
+                                'total' => $request['jenis-acc-'.$stokMantriCreate->jenis_semen_id],
+                                'used' => 0
+                            ]);
+                        }
+                    }else{
+                        foreach($stokMantri as $stokMantriUpdate){
+                            $stokMantriUpdate->where('jenis_semen_id', $stokMantriUpdate->jenis_semen_id)->update(['total' => $stokMantriUpdate->total + $request['jenis-acc-'.$stokMantriUpdate->jenis_semen_id]]);
+                        }
                     }
                     return redirect()->back()->with('success', 'Pengajuan berhasil diterima');
                 }
