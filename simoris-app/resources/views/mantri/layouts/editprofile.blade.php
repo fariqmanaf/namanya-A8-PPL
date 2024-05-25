@@ -11,7 +11,7 @@
 <body class="flex flex-col h-screen bg-[#DDF2FD] items-center justify-center">
   
   <a href="/home" class="-ml-[450px] mb-3 font-semibold text-slate-600 2xl:-ml-[600px] 2xl:text-xl">< Kembali</a>
-  <div class="flex flex-col bg-white h-[600px] w-[550px] justify-start items-center rounded-2xl shadow-xl 2xl:h-[700px] 2xl:w-[700px]">
+  <div class="flex flex-col bg-white h-[630px] w-[550px] justify-start items-center rounded-2xl shadow-xl 2xl:h-[730px] 2xl:w-[700px]">
     <p class="text-center font-bold text-xl my-3">PROFIL</p>
     <img src="https://www.freeiconspng.com/thumbs/profile-icon-png/profile-icon-9.png" alt="Logo Dinas" class="h-24 w-24 rounded-full mb-5 border border-black">
     <form action="" method="post" class="justify-center flex flex-col items-center text-xs gap-3 w-10/12 2xl:gap-5">
@@ -35,7 +35,7 @@
         </div>
         <div class="email flex flex-col">
           <label for="">Email</label>
-          <input class="w-[270px] 2xl:w-[330px] text-gray-500 bg-[#F1F1F1] border-transparent rounded-xl text-sm" type="text" name="email" value="{{ $akun->email }}">
+          <input class="w-[270px] 2xl:w-[330px] text-gray-500 bg-[#F1F1F1] border-transparent rounded-xl text-sm" type="text" name="email" value="{{ $akun->email }}" readonly>
         </div>
       </div>
       <div class="input3 flex gap-2">
@@ -67,6 +67,9 @@
       <div class="input4 w-full">
         <label for="" class="text-xs">Alamat Lengkap</label>
         <input class="text-gray-500 bg-[#F1F1F1] border-transparent rounded-xl text-sm w-full" type="text" name="detail" id="" value="{{ $alamat->detail }}">
+      </div>
+      <div class="dokumen w-full">
+        <a href="/home/profile/document" class="w-full"><p id="button" class="text-xs bg-blue-100 button-pw w-full shadow-[2px_2px_2px_2px_rgba(0,0,0,0.2)] p-2 rounded-xl flex justify-between cursor-pointer 2xl:w-full">Cek Dokumen <span>></span></p></a>
       </div>
       <div class="input5 w-full">
         <label for="" class="text-xs">Password</label>

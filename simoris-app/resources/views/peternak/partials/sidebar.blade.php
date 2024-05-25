@@ -24,7 +24,7 @@
     <img class="dinas h-10 w-10 rounded-full ml-3" src="https://www.freeiconspng.com/thumbs/profile-icon-png/profile-icon-9.png" alt="profile">
     <div class="text ml-2">
       <p class="font-bold text-[13px] 2xl:text-base">{{ Auth::user()->individual['name'] }}</p>
-      <p class="text-xs 2xl:text-base">{{ Auth::user()->email }}</p>
+      <p class="text-xs 2xl:text-base">{{ Str::limit(Auth::user()->email, 22, '...') }}</p>
     </div>
     <img class="w-7 h-7 mt-1 relative ml-6 right-0  hover:scale-110 2xl:w-10 2xl:h-10 2xl:ml-10" src="https://img.icons8.com/windows/32/settings--v1.png" alt="settings--v1"/>
   </div>

@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 
 class PeternakProfileController extends Controller
 {
@@ -35,24 +36,30 @@ class PeternakProfileController extends Controller
 
     public function updatepass(Request $request)
     {
-        $request->validate([
-            'old_password' => 'required',
-            'new_password' => 'required|min:8|max:255'],
-        [
-            'password.min' => 'Kata sandi minimal harus :min karakter.',
-            'password.max' => 'Kata sandi maksimal :max karakter.',
-        ]);
+        try{
+            $request->validate([
+                'old_password' => 'required',
+                'new_password' => 'required|min:8|max:255'],
+            [
+                'new_password.min' => 'Kata sandi minimal harus :min karakter.',
+                'new_password.max' => 'Kata sandi maksimal :max karakter.',
+                'new_password.required' => 'Kata sandi baru tidak boleh kosong.',
+                'old_password.required' => 'Kata sandi lama tidak boleh kosong.'
+            ]);
+        
+            if (Hash::check($request->old_password, Auth::user()->password)) {
+                $password = Hash::make($request->new_password);
+                UserAccounts::where('id', Auth::user()->id)
+                    ->update(['password' => $password]);
+            }
+            else{
+                return redirect('/main/profile/edit')->with('error','Password Lama Anda Salah');
+            }
     
-        if (Hash::check($request->old_password, Auth::user()->password)) {
-            $password = Hash::make($request->new_password);
-            UserAccounts::where('id', Auth::user()->id)
-                ->update(['password' => $password]);
-        }
-        else{
+            return redirect('/main/profile/edit')->with('success', 'Password Anda Sudah Diperbarui');
+        } catch (ValidationException $e) {
             return redirect('/main/profile/edit')->with('error','Password Lama Anda Salah');
         }
-
-        return redirect('/main/profile/edit')->with('success', 'Password Anda Sudah Diperbarui');
     }
 
     /**
@@ -141,7 +148,7 @@ class PeternakProfileController extends Controller
         Alamat::where('id', $individuals_user->alamats_id)
             ->update($alamatData);
 
-        return redirect('/main/profile')->with('success', 'Account Has Been Updated!');
+        return redirect('/main/profile')->with('success', 'Profil Berhasil Diperbarui!');
     }
 
     /**

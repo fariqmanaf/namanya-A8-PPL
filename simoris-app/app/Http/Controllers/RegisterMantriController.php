@@ -43,6 +43,11 @@ class RegisterMantriController extends Controller
                 'verifiedpw' => 'required',
                 'roles_id' => 'required',
                 'status' => 'required',
+            ],[
+                'email.unique' => 'Email Sudah Terdaftar',
+                'email.email' => 'Domain Email Tidak Valid',
+                'password.min' => 'Password Minimal 8 Karakter',
+                'password.max' => 'Password Maksimal 255 Karakter',
             ]);
 
             if($validatedData['password'] !== $validatedData['verifiedpw']){

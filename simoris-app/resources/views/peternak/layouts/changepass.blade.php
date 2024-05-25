@@ -9,20 +9,7 @@
   <style>*{margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif}html{height: 100%};@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');</style>
 </head>
 <body class="flex flex-col h-screen bg-[#DDF2FD] items-center justify-center">
-  @if($errors->any())
-    <div class="alert absolute top-10 left-10 w-60 text-sm bg-red-500 text-white rounded-xl">
-      <ul>
-        @foreach($errors->all() as $error)
-        <li class="mb-2 ml-2">{{ "- ".$error }}</li>
-        @endforeach
-      </ul>
-    </div>
-  @endif
-  @if(session()->has('success'))
-    <div class="p-1 alert absolute top-10 left-10 w-60 text-sm bg-green-500 text-white rounded-xl">
-      {{ session('success') }}
-    </div>
-  @endif
+
   <a href="/main/profile" class="-ml-[400px] mb-3 font-semibold text-slate-600 2xl:-ml-[500px]">< Kembali</a>
   <div class="form-container flex flex-col bg-white h-[550px] w-[500px] justify-start items-center rounded-2xl shadow-xl">
     <p class="text-center font-bold text-xl my-8">PROFIL</p>

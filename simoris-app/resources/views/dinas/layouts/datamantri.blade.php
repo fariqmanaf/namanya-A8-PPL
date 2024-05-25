@@ -19,7 +19,7 @@
         </thead>
         <tbody>
             @foreach($dataMantri as $mantri)
-              <tr class="text-center clickable-row border-b" data-target="#modal-{{ $mantri->id }}">
+              <tr class="text-left clickable-row border-b" data-target="#modal-{{ $mantri->id }}">
                 <td class="px-4 py-4">
                   {{ $loop->iteration }}.
                 </td>
@@ -107,7 +107,7 @@
                     <p class="mb-2">{{ $sertif->tanggal_expired }}</p>
                   </div>
                 </div>
-                <div id="bukti-sertifikasi-{{ $mantri->id }}" class="preview-gambar w-72 h-14 flex items-center justify-center bg-gray-200 text-xs rounded-xl">{{ ($sertif->bukti) }}</div>
+                <div id="bukti-sertifikasi-{{ $mantri->id }}" class="preview-gambar w-72 h-14 flex items-center justify-center bg-gray-200 text-xs rounded-xl cursor-pointer">{{ ($sertif->bukti) }}</div>
                 <p class="text-xs mt-5 2xl:text-md">* klik teks untuk memunculkan & klik gambar menghilangkan</p>
               </div>
             @endforeach
@@ -125,7 +125,7 @@
                     <p class="mb-2">{{ $izin->tanggal_expired }}</p>
                   </div>
                 </div>
-                <div id="bukti-izin-{{ $mantri->id }}" class="preview-gambar w-72 h-14 flex items-center justify-center bg-gray-200 text-xs rounded-xl">{{ ($izin->bukti) }}</div>
+                <div id="bukti-izin-{{ $mantri->id }}" class="preview-gambar w-72 h-14 flex items-center justify-center bg-gray-200 text-xs rounded-xl cursor-pointer">{{ ($izin->bukti) }}</div>
               </div>
             @endforeach
         </div>

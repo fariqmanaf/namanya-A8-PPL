@@ -18,7 +18,7 @@
       </thead>
       <tbody>
         @foreach($mantri as $index => $x)
-              <tr class="clickable-row border-b text-sm 2xl:text-lg text-center">
+              <tr class="clickable-row border-b text-sm 2xl:text-lg text-left">
                 <td class="px-4 py-4">{{ $loop->iteration }}.</td>
                 <td class="px-4 py-4">{{ $x->individual['name'] }}</td>
                 <td class="px-4 py-4">{{ $x->individual->wilayah_kerja[0]->kecamatan['kecamatan'] }}</td>
